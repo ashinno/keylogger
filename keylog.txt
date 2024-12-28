@@ -1,0 +1,427 @@
+2024-12-28 22:15:49,038: Mouse clicked at (1128, 1056) with Button.left in python.exe
+2024-12-28 22:15:49,097: Mouse released at (1128, 1056) with Button.left in python.exe
+2024-12-28 22:15:49,633: Mouse clicked at (1009, 566) with Button.left in python.exe
+2024-12-28 22:15:49,705: Mouse released at (1009, 566) with Button.left in python.exe
+2024-12-28 22:15:52,299: Special key pressed: Key.ctrl_l in python.exe
+2024-12-28 22:15:52,462: Key pressed:  in python.exe
+2024-12-28 22:15:52,587: Key released: Key.ctrl_l in python.exe
+2024-12-28 22:15:52,599: Key released: 'a' in python.exe
+2024-12-28 22:15:52,711: Special key pressed: Key.backspace in python.exe
+2024-12-28 22:15:52,823: Key released: Key.backspace in python.exe
+2024-12-28 22:15:53,136: Special key pressed: Key.shift in python.exe
+2024-12-28 22:15:53,374: Key pressed: Y in python.exe
+2024-12-28 22:15:53,424: Key released: 'Y' in python.exe
+2024-12-28 22:15:53,436: Key released: Key.shift in python.exe
+2024-12-28 22:15:53,836: Special key pressed: Key.shift in python.exe
+2024-12-28 22:15:53,936: Special key pressed: Key.backspace in python.exe
+2024-12-28 22:15:54,036: Key released: Key.backspace in python.exe
+2024-12-28 22:15:54,486: Key pressed: T in python.exe
+2024-12-28 22:15:54,523: Key released: Key.shift in python.exe
+2024-12-28 22:15:54,587: Key released: 't' in python.exe
+2024-12-28 22:15:54,949: Key pressed: e in python.exe
+2024-12-28 22:15:55,036: Key released: 'e' in python.exe
+2024-12-28 22:15:55,175: Key pressed: s in python.exe
+2024-12-28 22:15:55,212: Key released: 's' in python.exe
+2024-12-28 22:15:55,274: Key pressed: t in python.exe
+2024-12-28 22:15:55,373: Key released: 't' in python.exe
+2024-12-28 22:15:55,686: Special key pressed: Key.space in python.exe
+2024-12-28 22:15:55,761: Key released: Key.space in python.exe
+2024-12-28 22:15:56,174: Key pressed: k in python.exe
+2024-12-28 22:15:56,237: Key released: 'k' in python.exe
+2024-12-28 22:15:56,299: Key pressed: e in python.exe
+2024-12-28 22:15:56,412: Key released: 'e' in python.exe
+2024-12-28 22:15:56,637: Key pressed: y in python.exe
+2024-12-28 22:15:56,725: Key released: 'y' in python.exe
+2024-12-28 22:15:56,999: Key pressed: l in python.exe
+2024-12-28 22:15:57,123: Key released: 'l' in python.exe
+2024-12-28 22:15:57,274: Key pressed: o in python.exe
+2024-12-28 22:15:57,373: Key released: 'o' in python.exe
+2024-12-28 22:15:58,461: Key pressed: g in python.exe
+2024-12-28 22:15:58,562: Key released: 'g' in python.exe
+2024-12-28 22:15:58,649: Key pressed: g in python.exe
+2024-12-28 22:15:58,811: Key released: 'g' in python.exe
+2024-12-28 22:15:58,923: Key pressed: e in python.exe
+2024-12-28 22:15:59,099: Key pressed: r in python.exe
+2024-12-28 22:15:59,124: Key released: 'e' in python.exe
+2024-12-28 22:15:59,264: Key released: 'r' in python.exe
+2024-12-28 22:16:00,764: Mouse clicked at (310, 929) with Button.left in python.exe
+2024-12-28 22:16:00,820: Mouse released at (310, 929) with Button.left in python.exe
+2024-12-28 22:16:01,611: Special key pressed: Key.ctrl_l in python.exe
+2024-12-28 22:16:01,762: Key pressed:  in python.exe
+2024-12-28 22:16:01,899: Key released: '\x03' in python.exe
+2024-12-28 22:16:01,999: Key released: Key.ctrl_l in python.exe
+2024-12-28 22:16:02,511: Special key pressed: Key.ctrl_l in python.exe
+2024-12-28 22:16:02,624: Key released: Key.ctrl_l in python.exe
+2024-12-28 22:16:03,111: Special key pressed: Key.esc in python.exe
+2024-12-28 22:16:03,236: Key released: Key.esc in python.exe
+2024-12-28 22:20:35,448: Mouse clicked at (1128, 1054) with Button.left in python.exe
+2024-12-28 22:20:35,504: Mouse released at (1128, 1054) with Button.left in python.exe
+2024-12-28 22:20:37,167: Mouse clicked at (1019, 653) with Button.left in python.exe
+2024-12-28 22:20:37,239: Mouse released at (1019, 653) with Button.left in python.exe
+2024-12-28 22:20:38,212: Special key pressed: Key.ctrl_l in python.exe
+2024-12-28 22:20:38,450: Key pressed:  in python.exe
+2024-12-28 22:20:38,562: Key released: Key.ctrl_l in python.exe
+2024-12-28 22:20:38,588: Key released: 'a' in python.exe
+2024-12-28 22:20:39,251: Key pressed: t in python.exe
+2024-12-28 22:20:39,351: Key released: 't' in python.exe
+2024-12-28 22:20:39,438: Key pressed: e in python.exe
+2024-12-28 22:20:39,550: Key released: 'e' in python.exe
+2024-12-28 22:20:39,738: Key pressed: s in python.exe
+2024-12-28 22:20:39,889: Key released: 's' in python.exe
+2024-12-28 22:20:39,913: Key pressed: t in python.exe
+2024-12-28 22:20:40,025: Key released: 't' in python.exe
+2024-12-28 22:20:40,275: Special key pressed: Key.space in python.exe
+2024-12-28 22:20:40,362: Text input: atest  in python.exe
+2024-12-28 22:20:40,363: Key released: Key.space in python.exe
+2024-12-28 22:20:40,888: Key pressed: k in python.exe
+2024-12-28 22:20:40,975: Key released: 'k' in python.exe
+2024-12-28 22:20:41,088: Key pressed: e in python.exe
+2024-12-28 22:20:41,163: Key released: 'e' in python.exe
+2024-12-28 22:20:41,239: Key pressed: y in python.exe
+2024-12-28 22:20:41,300: Key released: 'y' in python.exe
+2024-12-28 22:20:41,613: Key pressed: l in python.exe
+2024-12-28 22:20:41,712: Key released: 'l' in python.exe
+2024-12-28 22:20:42,100: Key pressed: o in python.exe
+2024-12-28 22:20:42,200: Key released: 'o' in python.exe
+2024-12-28 22:20:42,313: Key pressed: o in python.exe
+2024-12-28 22:20:42,413: Key released: 'o' in python.exe
+2024-12-28 22:20:42,550: Key pressed: g in python.exe
+2024-12-28 22:20:42,675: Key released: 'g' in python.exe
+2024-12-28 22:20:42,825: Key pressed: e in python.exe
+2024-12-28 22:20:43,063: Key released: 'e' in python.exe
+2024-12-28 22:20:43,151: Key pressed: r in python.exe
+2024-12-28 22:20:43,312: Key released: 'r' in python.exe
+2024-12-28 22:20:45,819: Mouse clicked at (687, 993) with Button.left in python.exe
+2024-12-28 22:20:45,915: Mouse released at (687, 993) with Button.left in python.exe
+2024-12-28 22:20:46,338: Special key pressed: Key.esc in python.exe
+2024-12-28 22:20:46,475: Key released: Key.esc in python.exe
+2024-12-28 22:20:48,204: Mouse clicked at (745, 1003) with Button.left in python.exe
+2024-12-28 22:20:48,285: Mouse released at (745, 1003) with Button.left in python.exe
+2024-12-28 22:20:49,407: Mouse clicked at (578, 965) with Button.left in python.exe
+2024-12-28 22:20:49,498: Mouse released at (578, 965) with Button.left in python.exe
+2024-12-28 22:20:50,905: Mouse clicked at (578, 965) with Button.left in python.exe
+2024-12-28 22:20:50,990: Mouse released at (578, 965) with Button.left in python.exe
+2024-12-28 22:20:52,211: Mouse scrolled at (1019, 1013) with delta (0, -1) in python.exe
+2024-12-28 22:20:52,265: Mouse scrolled at (1019, 1013) with delta (0, -1) in python.exe
+2024-12-28 22:20:52,309: Mouse scrolled at (1019, 1013) with delta (0, -1) in python.exe
+2024-12-28 22:20:52,393: Mouse scrolled at (1019, 1013) with delta (0, -1) in python.exe
+2024-12-28 22:20:52,698: Mouse clicked at (972, 1048) with Button.left in python.exe
+2024-12-28 22:20:52,791: Mouse released at (972, 1048) with Button.left in python.exe
+2024-12-28 22:20:54,314: Mouse clicked at (501, 990) with Button.left in python.exe
+2024-12-28 22:20:54,372: Mouse released at (501, 990) with Button.left in python.exe
+2024-12-28 22:20:56,976: Mouse clicked at (563, 1001) with Button.left in python.exe
+2024-12-28 22:20:57,044: Mouse released at (563, 1001) with Button.left in python.exe
+2024-12-28 22:20:58,109: Mouse clicked at (244, 1008) with Button.left in python.exe
+2024-12-28 22:20:58,181: Mouse released at (244, 1008) with Button.left in python.exe
+2024-12-28 22:20:59,086: Mouse clicked at (563, 1009) with Button.left in python.exe
+2024-12-28 22:20:59,172: Mouse released at (563, 1009) with Button.left in python.exe
+2024-12-28 22:21:00,751: Mouse clicked at (145, 162) with Button.left in python.exe
+2024-12-28 22:21:00,839: Mouse released at (145, 162) with Button.left in python.exe
+2024-12-28 22:21:01,241: Mouse clicked at (160, 154) with Button.left in python.exe
+2024-12-28 22:21:01,331: Mouse released at (160, 154) with Button.left in python.exe
+2024-12-28 22:21:01,411: Mouse clicked at (160, 154) with Button.left in python.exe
+2024-12-28 22:21:01,480: Mouse released at (160, 154) with Button.left in python.exe
+2024-12-28 22:21:02,245: Mouse scrolled at (1112, 540) with delta (0, -1) in python.exe
+2024-12-28 22:21:02,282: Mouse scrolled at (1183, 495) with delta (0, -1) in python.exe
+2024-12-28 22:21:02,307: Mouse scrolled at (1215, 479) with delta (0, -1) in python.exe
+2024-12-28 22:21:02,336: Mouse scrolled at (1230, 468) with delta (0, -1) in python.exe
+2024-12-28 22:21:02,362: Mouse scrolled at (1237, 460) with delta (0, -1) in python.exe
+2024-12-28 22:21:02,389: Mouse scrolled at (1243, 449) with delta (0, -1) in python.exe
+2024-12-28 22:21:02,425: Mouse scrolled at (1256, 427) with delta (0, -1) in python.exe
+2024-12-28 22:21:03,206: Mouse clicked at (1421, 309) with Button.left in python.exe
+2024-12-28 22:21:03,496: Mouse released at (1422, 384) with Button.left in python.exe
+2024-12-28 22:21:04,026: Mouse clicked at (1415, 365) with Button.left in python.exe
+2024-12-28 22:21:06,730: Mouse released at (1391, 688) with Button.left in python.exe
+2024-12-28 22:21:07,305: Mouse clicked at (622, 958) with Button.left in python.exe
+2024-12-28 22:21:07,359: Mouse released at (622, 958) with Button.left in python.exe
+2024-12-28 22:21:09,810: Mouse scrolled at (956, 512) with delta (0, -1) in python.exe
+2024-12-28 22:21:09,837: Mouse scrolled at (956, 512) with delta (0, -1) in python.exe
+2024-12-28 22:21:09,866: Mouse scrolled at (956, 512) with delta (0, -1) in python.exe
+2024-12-28 22:21:09,896: Mouse scrolled at (956, 512) with delta (0, -1) in python.exe
+2024-12-28 22:21:09,940: Mouse scrolled at (956, 512) with delta (0, -1) in python.exe
+2024-12-28 22:21:09,994: Mouse scrolled at (956, 512) with delta (0, -1) in python.exe
+2024-12-28 22:21:12,012: Mouse scrolled at (956, 512) with delta (0, 1) in python.exe
+2024-12-28 22:21:12,037: Mouse scrolled at (956, 512) with delta (0, 1) in python.exe
+2024-12-28 22:21:12,065: Mouse scrolled at (956, 512) with delta (0, 1) in python.exe
+2024-12-28 22:21:12,086: Mouse scrolled at (956, 512) with delta (0, 1) in python.exe
+2024-12-28 22:21:12,124: Mouse scrolled at (956, 512) with delta (0, 1) in python.exe
+2024-12-28 22:21:12,825: Mouse scrolled at (956, 512) with delta (0, -1) in python.exe
+2024-12-28 22:21:12,852: Mouse scrolled at (956, 512) with delta (0, -1) in python.exe
+2024-12-28 22:21:12,870: Mouse scrolled at (956, 512) with delta (0, -1) in python.exe
+2024-12-28 22:21:12,892: Mouse scrolled at (956, 512) with delta (0, -1) in python.exe
+2024-12-28 22:21:12,914: Mouse scrolled at (956, 512) with delta (0, -1) in python.exe
+2024-12-28 22:21:13,709: Mouse clicked at (676, 1008) with Button.left in python.exe
+2024-12-28 22:21:13,780: Mouse released at (676, 1008) with Button.left in python.exe
+2024-12-28 22:21:17,291: Mouse clicked at (675, 994) with Button.left in python.exe
+2024-12-28 22:21:17,380: Mouse released at (675, 994) with Button.left in python.exe
+2024-12-28 22:21:23,213: Mouse scrolled at (1106, 646) with delta (0, 1) in python.exe
+2024-12-28 22:21:23,250: Mouse scrolled at (1106, 645) with delta (0, 1) in python.exe
+2024-12-28 22:21:23,301: Mouse scrolled at (1106, 645) with delta (0, 1) in python.exe
+2024-12-28 22:21:23,367: Mouse scrolled at (1106, 645) with delta (0, 1) in python.exe
+2024-12-28 22:21:23,743: Mouse scrolled at (1106, 645) with delta (0, 1) in python.exe
+2024-12-28 22:21:23,760: Mouse scrolled at (1106, 645) with delta (0, 1) in python.exe
+2024-12-28 22:21:23,779: Mouse scrolled at (1106, 645) with delta (0, 1) in python.exe
+2024-12-28 22:21:23,795: Mouse scrolled at (1106, 645) with delta (0, 1) in python.exe
+2024-12-28 22:21:23,814: Mouse scrolled at (1106, 645) with delta (0, 1) in python.exe
+2024-12-28 22:21:23,831: Mouse scrolled at (1106, 645) with delta (0, 1) in python.exe
+2024-12-28 22:21:25,676: Mouse scrolled at (1106, 645) with delta (0, -1) in python.exe
+2024-12-28 22:21:25,738: Mouse scrolled at (1106, 645) with delta (0, -1) in python.exe
+2024-12-28 22:21:25,794: Mouse scrolled at (1106, 645) with delta (0, -1) in python.exe
+2024-12-28 22:21:25,848: Mouse scrolled at (1106, 645) with delta (0, -1) in python.exe
+2024-12-28 22:21:26,508: Mouse scrolled at (1247, 624) with delta (0, -1) in python.exe
+2024-12-28 22:21:26,546: Mouse scrolled at (1247, 624) with delta (0, -1) in python.exe
+2024-12-28 22:21:26,596: Mouse scrolled at (1247, 624) with delta (0, -1) in python.exe
+2024-12-28 22:21:27,208: Mouse clicked at (302, 955) with Button.left in python.exe
+2024-12-28 22:21:27,270: Mouse released at (302, 955) with Button.left in python.exe
+2024-12-28 22:21:28,846: Mouse clicked at (148, 1034) with Button.left in python.exe
+2024-12-28 22:21:28,913: Mouse released at (148, 1034) with Button.left in python.exe
+2024-12-28 22:21:30,029: Mouse scrolled at (1324, 592) with delta (0, 1) in python.exe
+2024-12-28 22:21:30,077: Mouse scrolled at (1324, 592) with delta (0, 1) in python.exe
+2024-12-28 22:21:30,123: Mouse scrolled at (1324, 592) with delta (0, 1) in python.exe
+2024-12-28 22:21:30,979: Mouse clicked at (1418, 483) with Button.left in python.exe
+2024-12-28 22:21:31,256: Mouse released at (1423, 336) with Button.left in python.exe
+2024-12-28 22:21:31,908: Mouse clicked at (1523, 574) with Button.left in python.exe
+2024-12-28 22:21:31,979: Mouse released at (1523, 574) with Button.left in python.exe
+2024-12-28 22:21:41,607: Mouse scrolled at (897, 595) with delta (0, -1) in python.exe
+2024-12-28 22:21:41,633: Mouse scrolled at (897, 595) with delta (0, -1) in python.exe
+2024-12-28 22:21:41,658: Mouse scrolled at (897, 595) with delta (0, -1) in python.exe
+2024-12-28 22:21:41,682: Mouse scrolled at (897, 595) with delta (0, -1) in python.exe
+2024-12-28 22:21:41,721: Mouse scrolled at (897, 595) with delta (0, -1) in python.exe
+2024-12-28 22:21:41,775: Mouse scrolled at (897, 595) with delta (0, -1) in python.exe
+2024-12-28 22:21:42,445: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:42,481: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:42,523: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:42,556: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:43,416: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:43,451: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:43,491: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:43,523: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:43,562: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:43,598: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:43,645: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:44,549: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:44,577: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:44,600: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:44,626: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:44,650: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:44,677: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:44,705: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:44,739: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:44,849: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:45,358: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:45,392: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:45,429: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:45,460: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:45,498: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:45,535: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:45,623: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:46,078: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:46,120: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:46,146: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:46,174: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:46,196: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:46,226: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:46,250: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:46,279: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:46,306: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:46,347: Mouse scrolled at (901, 570) with delta (0, -1) in python.exe
+2024-12-28 22:21:47,465: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:47,491: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:47,510: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:47,530: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:47,545: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:47,568: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:47,594: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:48,169: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:48,196: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:48,228: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:48,252: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:48,303: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:49,835: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:49,860: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:49,877: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:49,895: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:49,911: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:49,946: Mouse scrolled at (901, 570) with delta (0, 1) in python.exe
+2024-12-28 22:21:52,544: Mouse scrolled at (753, 479) with delta (0, 1) in python.exe
+2024-12-28 22:21:52,598: Mouse scrolled at (753, 479) with delta (0, 1) in python.exe
+2024-12-28 22:21:52,627: Mouse scrolled at (753, 479) with delta (0, 1) in python.exe
+2024-12-28 22:21:53,262: Mouse scrolled at (753, 479) with delta (0, 1) in python.exe
+2024-12-28 22:21:53,324: Mouse scrolled at (753, 479) with delta (0, 1) in python.exe
+2024-12-28 22:21:53,361: Mouse scrolled at (753, 479) with delta (0, 1) in python.exe
+2024-12-28 22:21:53,384: Mouse scrolled at (753, 479) with delta (0, 1) in python.exe
+2024-12-28 22:21:55,360: Mouse scrolled at (753, 479) with delta (0, 1) in python.exe
+2024-12-28 22:21:55,517: Mouse scrolled at (753, 479) with delta (0, 1) in python.exe
+2024-12-28 22:21:55,826: Mouse scrolled at (753, 479) with delta (0, 1) in python.exe
+2024-12-28 22:21:56,882: Mouse scrolled at (753, 479) with delta (0, 1) in python.exe
+2024-12-28 22:21:57,016: Mouse scrolled at (753, 479) with delta (0, 1) in python.exe
+2024-12-28 22:21:59,571: Mouse scrolled at (1321, 471) with delta (0, 1) in python.exe
+2024-12-28 22:22:03,039: Mouse scrolled at (987, 583) with delta (0, -1) in python.exe
+2024-12-28 22:22:03,068: Mouse scrolled at (987, 583) with delta (0, -1) in python.exe
+2024-12-28 22:22:03,108: Mouse scrolled at (987, 583) with delta (0, -1) in python.exe
+2024-12-28 22:22:03,145: Mouse scrolled at (987, 583) with delta (0, -1) in python.exe
+2024-12-28 22:22:03,209: Mouse scrolled at (987, 583) with delta (0, -1) in python.exe
+2024-12-28 22:22:04,038: Mouse clicked at (376, 1006) with Button.left in python.exe
+2024-12-28 22:22:04,096: Mouse released at (376, 1006) with Button.left in python.exe
+2024-12-28 22:22:05,584: Mouse clicked at (249, 1021) with Button.left in python.exe
+2024-12-28 22:22:05,665: Mouse released at (249, 1021) with Button.left in python.exe
+2024-12-28 22:22:06,464: Mouse clicked at (248, 1023) with Button.left in python.exe
+2024-12-28 22:22:06,539: Mouse released at (248, 1023) with Button.left in python.exe
+2024-12-28 22:22:10,604: Mouse scrolled at (1748, 363) with delta (0, 1) in python.exe
+2024-12-28 22:22:10,637: Mouse scrolled at (1739, 382) with delta (0, 1) in python.exe
+2024-12-28 22:22:10,660: Mouse scrolled at (1731, 396) with delta (0, 1) in python.exe
+2024-12-28 22:22:10,693: Mouse scrolled at (1721, 408) with delta (0, 1) in python.exe
+2024-12-28 22:22:10,740: Mouse scrolled at (1717, 414) with delta (0, 1) in python.exe
+2024-12-28 22:22:11,201: Mouse scrolled at (1717, 414) with delta (0, 1) in python.exe
+2024-12-28 22:22:11,219: Mouse scrolled at (1717, 414) with delta (0, 1) in python.exe
+2024-12-28 22:22:11,244: Mouse scrolled at (1717, 414) with delta (0, 1) in python.exe
+2024-12-28 22:22:11,263: Mouse scrolled at (1717, 414) with delta (0, 1) in python.exe
+2024-12-28 22:22:11,288: Mouse scrolled at (1717, 414) with delta (0, 1) in python.exe
+2024-12-28 22:22:11,313: Mouse scrolled at (1717, 414) with delta (0, 1) in python.exe
+2024-12-28 22:22:12,656: Mouse clicked at (438, 62) with Button.left in python.exe
+2024-12-28 22:22:12,717: Mouse released at (438, 62) with Button.left in python.exe
+2024-12-28 22:22:13,082: Mouse clicked at (899, 248) with Button.left in python.exe
+2024-12-28 22:22:13,147: Mouse released at (899, 248) with Button.left in python.exe
+2024-12-28 22:22:13,893: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:13,924: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:13,956: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:13,977: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,010: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,045: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,376: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,396: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,417: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,432: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,451: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,465: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,488: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,807: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,829: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,845: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,863: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,878: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,897: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:14,915: Mouse scrolled at (1717, 441) with delta (0, 1) in python.exe
+2024-12-28 22:22:15,924: Mouse clicked at (1876, 449) with Button.left in python.exe
+2024-12-28 22:22:19,693: Mouse released at (1866, 336) with Button.left in python.exe
+2024-12-28 22:22:20,054: Mouse scrolled at (1808, 405) with delta (0, 1) in python.exe
+2024-12-28 22:22:20,098: Mouse scrolled at (1806, 410) with delta (0, 1) in python.exe
+2024-12-28 22:22:20,170: Mouse scrolled at (1804, 414) with delta (0, 1) in python.exe
+2024-12-28 22:22:20,332: Mouse scrolled at (1803, 416) with delta (0, 1) in python.exe
+2024-12-28 22:22:20,337: Mouse scrolled at (1803, 416) with delta (0, 1) in python.exe
+2024-12-28 22:22:20,368: Mouse scrolled at (1803, 416) with delta (0, -1) in python.exe
+2024-12-28 22:22:20,425: Mouse scrolled at (1801, 426) with delta (0, -1) in python.exe
+2024-12-28 22:22:20,449: Mouse scrolled at (1800, 427) with delta (0, -1) in python.exe
+2024-12-28 22:22:20,467: Mouse scrolled at (1800, 427) with delta (0, -1) in python.exe
+2024-12-28 22:22:20,489: Mouse scrolled at (1800, 427) with delta (0, -1) in python.exe
+2024-12-28 22:22:20,511: Mouse scrolled at (1800, 427) with delta (0, -1) in python.exe
+2024-12-28 22:22:20,549: Mouse scrolled at (1800, 427) with delta (0, -1) in python.exe
+2024-12-28 22:22:21,233: Mouse clicked at (1871, 341) with Button.left in python.exe
+2024-12-28 22:22:23,031: Mouse released at (1874, 417) with Button.left in python.exe
+2024-12-28 22:22:23,598: Mouse scrolled at (1748, 388) with delta (0, 1) in python.exe
+2024-12-28 22:22:23,704: Mouse scrolled at (1748, 388) with delta (0, 1) in python.exe
+2024-12-28 22:22:24,706: Mouse clicked at (1829, 318) with Button.left in python.exe
+2024-12-28 22:22:24,764: Mouse released at (1829, 318) with Button.left in python.exe
+2024-12-28 22:22:27,477: Mouse clicked at (277, 1028) with Button.left in python.exe
+2024-12-28 22:22:27,544: Mouse released at (277, 1028) with Button.left in python.exe
+2024-12-28 22:22:28,446: Mouse clicked at (201, 712) with Button.left in python.exe
+2024-12-28 22:22:28,498: Mouse released at (201, 712) with Button.left in python.exe
+2024-12-28 22:22:38,940: Mouse clicked at (1111, 1073) with Button.left in python.exe
+2024-12-28 22:22:38,940: Mouse clicked at (1111, 1073) with Button.left in python.exe
+2024-12-28 22:22:38,990: Mouse released at (1111, 1073) with Button.left in python.exe
+2024-12-28 22:22:38,990: Mouse released at (1111, 1073) with Button.left in python.exe
+2024-12-28 22:22:40,100: Key pressed: s in python.exe
+2024-12-28 22:22:40,238: Key pressed: a in python.exe
+2024-12-28 22:22:40,313: Key released: 's' in python.exe
+2024-12-28 22:22:40,315: Key released: 'a' in python.exe
+2024-12-28 22:22:40,363: Key pressed: x in python.exe
+2024-12-28 22:22:40,402: Key released: 'x' in python.exe
+2024-12-28 22:22:40,438: Key pressed: a in python.exe
+2024-12-28 22:22:40,441: Key pressed: s in python.exe
+2024-12-28 22:22:40,551: Key released: 'a' in python.exe
+2024-12-28 22:22:40,562: Key released: 's' in python.exe
+2024-12-28 22:22:40,688: Key pressed: a in python.exe
+2024-12-28 22:22:40,692: Key pressed: s in python.exe
+2024-12-28 22:22:40,813: Key released: 's' in python.exe
+2024-12-28 22:22:40,814: Key released: 'a' in python.exe
+2024-12-28 22:22:40,926: Key pressed: a in python.exe
+2024-12-28 22:22:40,955: Key pressed: s in python.exe
+2024-12-28 22:22:41,051: Key released: 's' in python.exe
+2024-12-28 22:22:41,063: Key released: 'a' in python.exe
+2024-12-28 22:22:41,076: Key pressed: d in python.exe
+2024-12-28 22:22:41,189: Key pressed: a in python.exe
+2024-12-28 22:22:41,201: Key pressed: s in python.exe
+2024-12-28 22:22:41,226: Key released: 'd' in python.exe
+2024-12-28 22:22:41,327: Key released: 's' in python.exe
+2024-12-28 22:22:41,338: Key released: 'a' in python.exe
+2024-12-28 22:22:41,525: Mouse clicked at (411, 868) with Button.left in python.exe
+2024-12-28 22:22:41,526: Mouse clicked at (411, 868) with Button.left in python.exe
+2024-12-28 22:22:41,571: Mouse released at (411, 868) with Button.left in python.exe
+2024-12-28 22:22:41,572: Mouse released at (411, 868) with Button.left in python.exe
+2024-12-28 22:22:42,076: Special key pressed: Key.ctrl_l in python.exe
+2024-12-28 22:22:42,188: Key pressed:  in python.exe
+2024-12-28 22:22:43,588: Mouse clicked at (159, 182) with Button.left in python.exe
+2024-12-28 22:22:43,671: Mouse released at (159, 182) with Button.left in python.exe
+2024-12-28 22:22:48,766: Mouse clicked at (134, 708) with Button.left in python.exe
+2024-12-28 22:22:48,812: Mouse released at (134, 708) with Button.left in python.exe
+2024-12-28 22:22:49,632: Mouse scrolled at (249, 848) with delta (0, -1) in python.exe
+2024-12-28 22:22:49,701: Mouse scrolled at (249, 824) with delta (0, -1) in python.exe
+2024-12-28 22:22:50,483: Mouse clicked at (181, 726) with Button.left in python.exe
+2024-12-28 22:22:50,551: Mouse released at (181, 726) with Button.left in python.exe
+2024-12-28 22:34:16,368: Mouse clicked at (863, 971) with Button.left in python.exe
+2024-12-28 22:34:16,423: Mouse released at (863, 971) with Button.left in python.exe
+2024-12-28 22:34:19,422: Mouse clicked at (1044, 1062) with Button.left in python.exe
+2024-12-28 22:34:19,508: Mouse released at (1044, 1062) with Button.left in python.exe
+2024-12-28 22:34:20,044: Mouse clicked at (1035, 560) with Button.left in python.exe
+2024-12-28 22:34:20,112: Mouse released at (1038, 554) with Button.left in python.exe
+2024-12-28 22:34:22,466: Key pressed: 1 in python.exe
+2024-12-28 22:34:22,541: Key released: '1' in python.exe
+2024-12-28 22:34:22,741: Key pressed: 2 in python.exe
+2024-12-28 22:34:22,828: Key released: '2' in python.exe
+2024-12-28 22:34:23,041: Key pressed: 3 in python.exe
+2024-12-28 22:34:23,128: Key released: '3' in python.exe
+2024-12-28 22:34:23,329: Key pressed: 4 in python.exe
+2024-12-28 22:34:23,429: Key released: '4' in python.exe
+2024-12-28 22:34:23,603: Key pressed: 5 in python.exe
+2024-12-28 22:34:23,678: Key released: '5' in python.exe
+2024-12-28 22:34:25,792: Mouse clicked at (677, 957) with Button.left in python.exe
+2024-12-28 22:34:25,869: Mouse released at (677, 957) with Button.left in python.exe
+2024-12-28 22:34:28,341: Special key pressed: Key.ctrl_l in python.exe
+2024-12-28 22:34:28,853: Special key pressed: Key.ctrl_l in python.exe
+2024-12-28 22:34:28,882: Special key pressed: Key.ctrl_l in python.exe
+2024-12-28 22:34:28,912: Special key pressed: Key.ctrl_l in python.exe
+2024-12-28 22:34:28,916: Key pressed:  in python.exe
+Mouse clicked at (1043, 994) with Button.left in python.exe
+Mouse released at (1043, 994) with Button.left in python.exe
+Mouse clicked at (390, 419) with Button.left in python.exe
+Mouse released at (390, 419) with Button.left in python.exe
+Mouse clicked at (390, 419) with Button.right in python.exe
+Mouse released at (390, 419) with Button.right in python.exe
+Mouse clicked at (350, 548) with Button.left in python.exe
+Mouse released at (350, 548) with Button.left in python.exe
+Mouse clicked at (1284, 219) with Button.left in python.exe
+Mouse released at (1285, 219) with Button.left in python.exe
+Key pressed: t in python.exe
+Key pressed: r in python.exe
+Key released: 't' in python.exe
+Key released: 'r' in python.exe
+Key pressed: r in python.exe
+Key released: 'r' in python.exe
+Key pressed: f in python.exe
+Key released: 'f' in python.exe
+Key pressed: g in python.exe
+Key pressed: f in python.exe
+Key released: 'g' in python.exe
+Key released: 'f' in python.exe
+Key pressed: 1 in python.exe
+Key released: '1' in python.exe
+Key pressed: 2 in python.exe
+Key released: '2' in python.exe
+Key pressed: 3 in python.exe
+Key released: '3' in python.exe
+Key pressed: 4 in python.exe
+Key released: '4' in python.exe
+Key pressed: 3 in python.exe
+Key released: '3' in python.exe
+Mouse clicked at (146, 882) with Button.left in python.exe
+Mouse released at (146, 882) with Button.left in python.exe
