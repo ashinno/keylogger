@@ -1,7 +1,0 @@
-2024-12-27 19:03:30,340: Key pressed: d
-2024-12-27 19:03:33,665: Key pressed: d
-2024-12-27 19:03:34,015: Key pressed: d
-2024-12-27 19:03:34,103: Key pressed: f
-2024-12-27 19:03:34,290: Key pressed: d
-2024-12-27 19:03:34,415: Key pressed: f
-2024-12-27 19:03:48,190: Special key pressed: Key.esc
