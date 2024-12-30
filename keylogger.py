@@ -128,7 +128,6 @@ try:
     mouse_listener.start()
 except Exception as e:
     logging.error(f"Error setting up mouse listener: {e}")
-
 # Set up the key combination listener
 try:
     key_combination_listener = keyboard.Listener(on_press=on_key_combination)
