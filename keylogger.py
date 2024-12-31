@@ -26,6 +26,7 @@ def get_active_window_process_name():
 current_text = deque()
 log_buffer = deque()
 active_window_name = get_active_window_process_name()
+active_window_start_time = time.time()
 
 def log_event(message):
     log_buffer.append(message)
@@ -37,12 +38,18 @@ def flush_log_buffer():
         while log_buffer:
             log_file.write(log_buffer.popleft() + "\n")
 
+def log_time_spent_on_window(window_name, start_time):
+    time_spent = time.time() - start_time
+    log_event(f"Time spent on {window_name}: {time_spent:.2f} seconds")
+
 def on_press(key):
-    global active_window_name
+    global active_window_name, active_window_start_time
     try:
         new_window_name = get_active_window_process_name()
         if new_window_name != active_window_name:
+            log_time_spent_on_window(active_window_name, active_window_start_time)
             active_window_name = new_window_name
+            active_window_start_time = time.time()
         log_event(f"Key pressed: {key.char} in {active_window_name}")
     except AttributeError:
         log_event(f"Special key pressed: {key} in {active_window_name}")
@@ -50,11 +57,13 @@ def on_press(key):
         logging.error(f"Error in on_press: {e}")
 
 def on_release(key):
-    global current_text, active_window_name
+    global current_text, active_window_name, active_window_start_time
     try:
         new_window_name = get_active_window_process_name()
         if new_window_name != active_window_name:
+            log_time_spent_on_window(active_window_name, active_window_start_time)
             active_window_name = new_window_name
+            active_window_start_time = time.time()
         if hasattr(key, 'char') and key.char is not None:
             current_text.append(key.char)
         elif key == keyboard.Key.space:
@@ -73,11 +82,13 @@ def on_release(key):
         logging.error(f"Error in on_release: {e}")
 
 def on_click(x, y, button, pressed):
-    global active_window_name
+    global active_window_name, active_window_start_time
     try:
         new_window_name = get_active_window_process_name()
         if new_window_name != active_window_name:
+            log_time_spent_on_window(active_window_name, active_window_start_time)
             active_window_name = new_window_name
+            active_window_start_time = time.time()
         if pressed:
             log_event(f"Mouse clicked at ({x}, {y}) with {button} in {active_window_name}")
         else:
@@ -86,11 +97,13 @@ def on_click(x, y, button, pressed):
         logging.error(f"Error in on_click: {e}")
 
 def on_scroll(x, y, dx, dy):
-    global active_window_name
+    global active_window_name, active_window_start_time
     try:
         new_window_name = get_active_window_process_name()
         if new_window_name != active_window_name:
+            log_time_spent_on_window(active_window_name, active_window_start_time)
             active_window_name = new_window_name
+            active_window_start_time = time.time()
         log_event(f"Mouse scrolled at ({x}, {y}) with delta ({dx}, {dy}) in {active_window_name}")
     except Exception as e:
         logging.error(f"Error in on_scroll: {e}")
@@ -116,12 +129,14 @@ def periodic_flush():
         flush_log_buffer()
 
 def log_active_window():
-    global active_window_name
+    global active_window_name, active_window_start_time
     while True:
         time.sleep(5)  # Adjust the interval as needed
         new_window_name = get_active_window_process_name()
         if new_window_name != active_window_name:
+            log_time_spent_on_window(active_window_name, active_window_start_time)
             active_window_name = new_window_name
+            active_window_start_time = time.time()
             log_event(f"Active window: {active_window_name}")
 
 # Set up the keyboard listener
