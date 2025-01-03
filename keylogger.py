@@ -102,6 +102,16 @@ def on_scroll(x, y, dx, dy):
     except Exception as e:
         logging.error(f"Error in on_scroll: {e}")
 
+def on_move(x, y):
+    global active_window_name
+    try:
+        new_window_name = get_active_window_process_name()
+        if new_window_name != active_window_name:
+            active_window_name = new_window_name
+        log_event(f"Mouse moved to ({x}, {y}) in {active_window_name}")
+    except Exception as e:
+        logging.error(f"Error in on_move: {e}")
+
 def stop_listeners():
     try:
         keyboard_listener.stop()
@@ -142,7 +152,7 @@ except Exception as e:
 
 # Set up the mouse listener
 try:
-    mouse_listener = mouse.Listener(on_click=on_click, on_scroll=on_scroll)
+    mouse_listener = mouse.Listener(on_click=on_click, on_scroll=on_scroll, on_move=on_move)
     mouse_listener.start()
 except Exception as e:
     logging.error(f"Error setting up mouse listener: {e}")
