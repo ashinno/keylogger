@@ -83,10 +83,11 @@ def on_click(x, y, button, pressed):
             log_time_spent_on_window(active_window_name, active_window_start_time)
             active_window_name = new_window_name
             active_window_start_time = time.time()
+        timestamp = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
         if pressed:
-            log_event(f"Mouse clicked at ({x}, {y}) with {button} in {active_window_name}")
+            log_event(f"Mouse clicked at ({x}, {y}) with {button} in {active_window_name} at {timestamp}")
         else:
-            log_event(f"Mouse released at ({x}, {y}) with {button} in {active_window_name}")
+            log_event(f"Mouse released at ({x}, {y}) with {button} in {active_window_name} at {timestamp}")
     except Exception as e:
         logging.error(f"Error in on_click: {e}")
 
