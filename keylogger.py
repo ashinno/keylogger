@@ -18,11 +18,11 @@ def get_active_window_process_name():
     try:
         active_window = psutil.Process(os.getpid())
         return active_window.name()
-    except Exception as e:
+    except psutil.Error as e:
         logging.error(f"Error getting active window process name: {e}")
         return "Unknown"
 
-# Initialize a deque to store the current text input
+# Initialize global variables
 current_text = deque()
 log_buffer = deque()
 active_window_name = get_active_window_process_name()
@@ -31,7 +31,7 @@ pressed_keys = set()
 
 def log_event(message):
     log_buffer.append(message)
-    if len(log_buffer) >= 10:  # Adjust the buffer size as needed
+    if len(log_buffer) >= 10:
         flush_log_buffer()
 
 def flush_log_buffer():
@@ -43,27 +43,25 @@ def log_time_spent_on_window(window_name, start_time):
     time_spent = time.time() - start_time
     log_event(f"Time spent on {window_name}: {time_spent:.2f} seconds")
 
+def handle_window_change():
+    global active_window_name, active_window_start_time
+    new_window_name = get_active_window_process_name()
+    if new_window_name != active_window_name:
+        log_time_spent_on_window(active_window_name, active_window_start_time)
+        active_window_name = new_window_name
+        active_window_start_time = time.time()
+
 def on_press(key):
-    global active_window_name, active_window_start_time, pressed_keys
     try:
-        new_window_name = get_active_window_process_name()
-        if new_window_name != active_window_name:
-            log_time_spent_on_window(active_window_name, active_window_start_time)
-            active_window_name = new_window_name
-            active_window_start_time = time.time()
+        handle_window_change()
         pressed_keys.add(key)
         log_event(f"Key pressed: {key} in {active_window_name}")
     except Exception as e:
         logging.error(f"Error in on_press: {e}")
 
 def on_release(key):
-    global current_text, active_window_name, active_window_start_time, pressed_keys
     try:
-        new_window_name = get_active_window_process_name()
-        if new_window_name != active_window_name:
-            log_time_spent_on_window(active_window_name, active_window_start_time)
-            active_window_name = new_window_name
-            active_window_start_time = time.time()
+        handle_window_change()
         if hasattr(key, 'char') and key.char is not None:
             current_text.append(key.char)
         elif key == keyboard.Key.space:
@@ -71,12 +69,12 @@ def on_release(key):
         elif key == keyboard.Key.enter:
             current_text.append('\n')
 
-        if key == keyboard.Key.space or key == keyboard.Key.enter:
+        if key in {keyboard.Key.space, keyboard.Key.enter}:
             log_event(f"Text input: {''.join(current_text)} in {active_window_name}")
             current_text.clear()
 
         log_event(f"Key released: {key} in {active_window_name}")
-        pressed_keys.remove(key)
+        pressed_keys.discard(key)
         if pressed_keys:
             log_event(f"Shortcut used: {', '.join(str(k) for k in pressed_keys)} in {active_window_name}")
         if key == keyboard.Key.esc:
@@ -85,28 +83,16 @@ def on_release(key):
         logging.error(f"Error in on_release: {e}")
 
 def on_click(x, y, button, pressed):
-    global active_window_name, active_window_start_time
     try:
-        new_window_name = get_active_window_process_name()
-        if new_window_name != active_window_name:
-            log_time_spent_on_window(active_window_name, active_window_start_time)
-            active_window_name = new_window_name
-            active_window_start_time = time.time()
-        if pressed:
-            log_event(f"Mouse clicked at ({x}, {y}) with {button} in {active_window_name}")
-        else:
-            log_event(f"Mouse released at ({x}, {y}) with {button} in {active_window_name}")
+        handle_window_change()
+        action = "clicked" if pressed else "released"
+        log_event(f"Mouse {action} at ({x}, {y}) with {button} in {active_window_name}")
     except Exception as e:
         logging.error(f"Error in on_click: {e}")
 
 def on_scroll(x, y, dx, dy):
-    global active_window_name, active_window_start_time
     try:
-        new_window_name = get_active_window_process_name()
-        if new_window_name != active_window_name:
-            log_time_spent_on_window(active_window_name, active_window_start_time)
-            active_window_name = new_window_name
-            active_window_start_time = time.time()
+        handle_window_change()
         log_event(f"Mouse scrolled at ({x}, {y}) with delta ({dx}, {dy}) in {active_window_name}")
     except Exception as e:
         logging.error(f"Error in on_scroll: {e}")
@@ -128,19 +114,14 @@ def on_key_combination(key):
 
 def periodic_flush():
     while True:
-        time.sleep(10)  # Adjust the interval as needed
+        time.sleep(10)
         flush_log_buffer()
 
 def log_active_window():
-    global active_window_name, active_window_start_time
     while True:
-        time.sleep(5)  # Adjust the interval as needed
-        new_window_name = get_active_window_process_name()
-        if new_window_name != active_window_name:
-            log_time_spent_on_window(active_window_name, active_window_start_time)
-            active_window_name = new_window_name
-            active_window_start_time = time.time()
-            log_event(f"Active window: {active_window_name}")
+        time.sleep(5)
+        handle_window_change()
+        log_event(f"Active window: {active_window_name}")
 
 # Set up the keyboard listener
 try:
