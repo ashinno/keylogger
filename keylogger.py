@@ -39,11 +39,14 @@ except ImportError:
 key = Fernet.generate_key()
 cipher_suite = Fernet(key)
 
-# Configure logging to a file
+# Configure logging to a file and console
 logging.basicConfig(
-    filename="keylog.txt",
     level=logging.DEBUG,
-    format="%(asctime)s: %(message)s"
+    format="%(asctime)s: %(message)s",
+    handlers=[
+        logging.FileHandler("keylog.txt"),
+        logging.StreamHandler()
+    ]
 )
 
 # Global variables for logging state
