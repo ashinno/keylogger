@@ -59,10 +59,6 @@ The keylogger will start capturing and logging user activities. The log data wil
 
 This keylogger is intended for educational purposes only. Ensure you have proper authorization before using it on any system. Unauthorized use of keyloggers is illegal and unethical.
 
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
-
 ## Acknowledgements
 
 - `pynput` for keyboard and mouse event capturing.
