@@ -48,16 +48,14 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
-logging.getLogger().handlers[1].setLevel(logging.INFO)  # Set terminal handler to INFO level
-# Global variables for logging state
+logging.getLogger().handlers[1].setLevel(logging.INFO)
 current_text = deque()
 log_buffer = deque()
 active_window_name = None
 active_window_start_time = time.time()
 pressed_keys = set()
-clipboard_content = None  # For clipboard changes
-usage_stats = defaultdict(float)  # For application usage statistics
-
+clipboard_content = None
+usage_stats = defaultdict(float)
 stop_event = threading.Event()
 
 def get_active_window_process_name() -> str:
