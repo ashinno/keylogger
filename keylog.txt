@@ -1,0 +1,95 @@
+2025-02-21 11:03:11,715: Screenshot captured: screenshot_20250221-110311.png
+2025-02-21 11:03:15,341: Mouse pressed at (525, 941) with Button.left in pycharm64.exe - Keylogger – keylogger.py
+2025-02-21 11:03:15,560: Time spent on pycharm64.exe - Keylogger – keylogger.py: 3.98 seconds
+2025-02-21 11:03:15,561: Mouse released at (525, 941) with Button.left in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:16,516: Key pressed: 'a' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:16,581: Key pressed: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:16,603: Active window: WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:16,697: Key released: 'a' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:16,697: Shortcut used: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:16,784: Key released: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Screenshot captured: screenshot_20250221-110311.png
+Mouse pressed at (525, 941) with Button.left in pycharm64.exe - Keylogger – keylogger.py
+Time spent on pycharm64.exe - Keylogger – keylogger.py: 3.98 seconds
+Mouse released at (525, 941) with Button.left in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Key pressed: 'a' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Key pressed: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Active window: WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Key released: 'a' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Shortcut used: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Key released: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:17,206: Key pressed: 'h' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:17,285: Key released: 'h' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:17,528: Key pressed: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:17,671: Key released: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:17,776: Key pressed: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:17,898: Key released: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:18,100: Key pressed: 'e' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:18,228: Key released: 'e' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:18,256: Key pressed: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:18,317: Key released: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Key pressed: 'h' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Key released: 'h' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Key pressed: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Key released: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Key pressed: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Key released: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Key pressed: 'e' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Key released: 'e' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Key pressed: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Key released: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:20,294: Mouse pressed at (1316, 974) with Button.left in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+2025-02-21 11:03:20,516: Time spent on WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger: 4.96 seconds
+2025-02-21 11:03:20,516: Mouse released at (1316, 974) with Button.left in pycharm64.exe - Keylogger – keylogger.py
+Mouse pressed at (1316, 974) with Button.left in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
+Time spent on WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger: 4.96 seconds
+Mouse released at (1316, 974) with Button.left in pycharm64.exe - Keylogger – keylogger.py
+2025-02-21 11:03:21,604: Active window: pycharm64.exe - Keylogger – keylogger.py
+2025-02-21 11:03:21,749: Key pressed: Key.ctrl_l in pycharm64.exe - Keylogger – keylogger.py
+2025-02-21 11:03:21,979: Key pressed: '\x03' in pycharm64.exe - Keylogger – keylogger.py
+2025-04-02 22:57:04,655: Screenshot captured: screenshot_20250402-225704.png
+2025-04-02 22:57:09,532: Active window: Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:10,853: Mouse pressed at (1681, 967) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:10,932: Mouse released at (1681, 966) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:11,729: Key pressed: 's' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:11,841: Key pressed: 'a' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:11,941: Key pressed: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:11,954: Key released: 's' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:11,954: Shortcut used: 'l', 'a' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:12,004: Key released: 'a' in Trae.exe - keylogger.py - Keylogger - Trae
+Screenshot captured: screenshot_20250402-225704.png
+Active window: Trae.exe - keylogger.py - Keylogger - Trae
+Mouse pressed at (1681, 967) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+Mouse released at (1681, 966) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+Key pressed: 's' in Trae.exe - keylogger.py - Keylogger - Trae
+Key pressed: 'a' in Trae.exe - keylogger.py - Keylogger - Trae
+Key pressed: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
+Key released: 's' in Trae.exe - keylogger.py - Keylogger - Trae
+Shortcut used: 'l', 'a' in Trae.exe - keylogger.py - Keylogger - Trae
+Key released: 'a' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:12,004: Shortcut used: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:12,054: Key released: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:12,203: Key pressed: 'u' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:12,291: Key released: 'u' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:12,466: Key pressed: 't' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:12,554: Key released: 't' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:12,678: Key pressed: Key.space in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:12,766: Text input: salut in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:12,766: Key released: Key.space in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:14,257: Mouse pressed at (869, 1026) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+Shortcut used: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
+Key released: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
+Key pressed: 'u' in Trae.exe - keylogger.py - Keylogger - Trae
+Key released: 'u' in Trae.exe - keylogger.py - Keylogger - Trae
+Key pressed: 't' in Trae.exe - keylogger.py - Keylogger - Trae
+Key released: 't' in Trae.exe - keylogger.py - Keylogger - Trae
+Key pressed: Key.space in Trae.exe - keylogger.py - Keylogger - Trae
+Text input: salut in Trae.exe - keylogger.py - Keylogger - Trae
+Key released: Key.space in Trae.exe - keylogger.py - Keylogger - Trae
+Mouse pressed at (869, 1026) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:14,304: Mouse released at (869, 1026) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+Mouse released at (869, 1026) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:14,533: Active window: Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:14,729: Screenshot captured: screenshot_20250402-225714.png
+2025-04-02 22:57:15,491: Key pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-02 22:57:15,603: Key pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
