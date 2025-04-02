@@ -12,8 +12,6 @@ from PIL import ImageGrab
 import requests
 import string
 
-
-
 # Windows-specific imports
 if platform.system() == "Windows":
     try:
@@ -98,7 +96,8 @@ def handle_window_change() -> None:
     global active_window_name, active_window_start_time
     new_window_name = get_active_window_process_name()
     if new_window_name != active_window_name:
-        log_time_spent_on_window(active_window_name, active_window_start_time)
+        if active_window_name is not None:
+            log_time_spent_on_window(active_window_name, active_window_start_time)
         active_window_name = new_window_name
         active_window_start_time = time.time()
 
@@ -135,7 +134,7 @@ def on_release(key) -> None:
 
         if key == keyboard.Key.esc:
             stop_listeners()
-            return False
+            return None
     except Exception as e:
         logging.error(f"Error in on_release: {e}")
 
@@ -164,7 +163,7 @@ def stop_listeners() -> None:
         mouse_listener.stop()
         key_combination_listener.stop()
         if clipboard_available and 'clipboard_thread' in globals():
-            clipboard_thread.do_run = False
+            stop_event.set()  # Signal the clipboard thread to stop using the shared event
     except Exception as e:
         logging.error(f"Error stopping listeners: {e}")
 
@@ -320,7 +319,7 @@ active_window_thread.start()
 
 if clipboard_available:
     clipboard_thread = threading.Thread(target=monitor_clipboard, daemon=True)
-    clipboard_thread.do_run = True
+    setattr(clipboard_thread, "do_run", True)
     clipboard_thread.start()
 
 screenshot_thread = threading.Thread(target=periodic_screenshot_capture, daemon=True)
