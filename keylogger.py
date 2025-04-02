@@ -173,7 +173,7 @@ def on_key_combination(key) -> None:
     try:
         if key == keyboard.KeyCode.from_char('\x03'):
             stop_listeners()
-            return False
+            return None
     except Exception as e:
         logging.error(f"Error in on_key_combination: {e}")
 
