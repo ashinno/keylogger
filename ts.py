@@ -7,69 +7,43 @@ class LogParser:
         self.active_window = None
 
     def parse_log_entry(self, log_entry: str) -> Optional[str]:
-        """Parse a single log entry and return a human-readable sentence."""
+        """Parse a single log entry. Return action strings or None if accumulating text."""
         # Remove timestamp if present
         log_entry = re.sub(r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}: ', '', log_entry)
 
-        # Handle different types of log entries
-        if 'Text input:' in log_entry:
-            match = re.search(r'Text input: (.*?) in', log_entry)
-            if match:
-                return f"Typed: {match.group(1)}"
+        # Handle key presses for text reconstruction
+        if 'Key pressed:' in log_entry:
+            key_match = re.search(r"Key pressed: (.*?)(?: in |$)", log_entry)
+            if key_match:
+                key_info = key_match.group(1).strip()
 
-        elif 'Key pressed:' in log_entry:
-            match = re.search(r"Key pressed: ['\"](.*?)['\"]", log_entry)
-            if match:
-                key = match.group(1)
-                if key.isalnum() and len(key) == 1:
-                    self.current_text.append(key)
-                    return None # Accumulate text
-                elif key == 'Key.backspace':
-                    return 'Pressed Backspace'
-                elif key == 'Key.space':
+                char_match = re.search(r"^'(.)'", key_info)
+                if char_match:
+                    char = char_match.group(1)
+                    # Handle specific escaped characters if necessary
+                    if char == '\\':
+                        self.current_text.append('\\') # Append literal backslash
+                    else:
+                        self.current_text.append(char)
+                    return None # Accumulate character
+
+                elif key_info == 'Key.space':
                     self.current_text.append(' ')
                     return None # Accumulate space
-                elif key == 'Key.enter':
-                    return 'Pressed Enter'
-                elif key.startswith('Key.'):
-                    # Handle other special keys if needed, e.g., Shift, Ctrl, Alt, Tab, Delete
-                    # For now, just return a generic message or None
-                    # return f"Pressed {key.split('.')[-1]}"
-                    return None
-                # Potentially handle other non-alphanumeric keys if necessary
-                return None
+                elif key_info == 'Key.backspace':
+                    return 'Action: Backspace'
+                elif key_info == 'Key.enter':
+                    return 'Action: Enter'
+                elif key_info.startswith('Key.') or key_info.startswith("'\\x"):
+                    return None # Ignore other special keys and control chars
+            return None # Ignore if no relevant key press info found
 
-        elif 'Screenshot captured:' in log_entry:
-            match = re.search(r'Screenshot captured: (.*?)$', log_entry)
-            if match:
-                return f"Screenshot taken: {match.group(1)}"
+        # Ignore other event types for text report
+        elif any(kw in log_entry for kw in ['Mouse pressed', 'Mouse released', 'Mouse scrolled', 'Screenshot captured', 'Text input:', 'Key released:', 'Shortcut used:', 'Active window:']):
+             # Active window changes are handled separately in process_log
+             return None # Ignore these events
 
-        elif 'Active window:' in log_entry:
-            match = re.search(r'Active window: (.*?)$', log_entry)
-            if match:
-                new_window = match.group(1)
-                if new_window != self.active_window:
-                    # Flush any pending text before switching window context
-                    flushed_text = self._flush_current_text()
-                    self.active_window = new_window
-                    if flushed_text:
-                        return f"{flushed_text}\nSwitched to window: {new_window}"
-                    else:
-                        return f"Switched to window: {new_window}"
-
-        elif 'Mouse pressed' in log_entry:
-            match = re.search(r'Mouse pressed at \((\d+), (\d+)\)', log_entry)
-            if match:
-                x, y = match.group(1), match.group(2)
-                return f"Mouse clicked at ({x}, {y})"
-
-        elif 'Mouse scrolled' in log_entry:
-            match = re.search(r'Mouse scrolled at \((\d+), (\d+)\) with delta \((.*?)\) in', log_entry)
-            if match:
-                x, y, delta = match.group(1), match.group(2), match.group(3)
-                direction = "up" if "-1" in delta else "down" # Basic direction detection
-                return f"Mouse scrolled {direction} at ({x}, {y})"
-
+        # Return None for any other unhandled lines
         return None
 
     def _flush_current_text(self) -> Optional[str]:
@@ -78,53 +52,83 @@ class LogParser:
             sentence = ''.join(self.current_text).strip()
             self.current_text = []
             if sentence:
+                # Return only the sentence, context added in process_log
                 return f"Typed: '{sentence}'"
         return None
 
     def process_log(self, log_entries: List[str]) -> List[str]:
-        """Process multiple log entries and return human-readable sentences."""
-        readable_entries = []
+        """Process multiple log entries and return human-readable sentences focused on typed text."""
+        readable_output = []
+        current_window = None
+        self.current_text = [] # Ensure text buffer is clear at start
 
         for entry in log_entries:
-            parsed = self.parse_log_entry(entry)
-            # Handle backspace in the accumulated text
-            if parsed == 'Pressed Backspace':
+            # Check for window change first
+            window_match = re.search(r'Active window: (.*?)$', entry)
+            if window_match:
+                # Remove timestamp if present before extracting window name
+                clean_entry = re.sub(r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}: ', '', entry)
+                window_match = re.search(r'Active window: (.*?)$', clean_entry)
+                if window_match:
+                    new_window = window_match.group(1).strip()
+                    if new_window != current_window:
+                        flushed = self._flush_current_text() # Flush text on window change
+                        if flushed:
+                            readable_output.append(f"[{current_window or 'Unknown Window'}] {flushed}")
+                        current_window = new_window
+                        self.active_window = new_window # Update parser's window context
+                        # Optionally log window switch:
+                        # readable_output.append(f"--- Switched to window: {current_window} ---")
+                continue # Don't process the window change line further
+
+            # Process the entry for key presses or actions
+            parsed_action = self.parse_log_entry(entry)
+
+            if parsed_action == 'Action: Backspace':
                 if self.current_text:
                     self.current_text.pop()
-                # Optionally add the 'Pressed Backspace' message itself
-                # readable_entries.append(parsed)
-            elif parsed == 'Pressed Enter':
+            elif parsed_action == 'Action: Enter':
                 flushed = self._flush_current_text()
                 if flushed:
-                    readable_entries.append(flushed)
-                readable_entries.append("Pressed Enter") # Add Enter press explicitly
-            elif parsed:
-                # Handle multi-line output from window switch
-                if "\n" in parsed:
-                    readable_entries.extend(parsed.split('\n'))
-                else:
-                    readable_entries.append(parsed)
+                    readable_output.append(f"[{current_window or 'Unknown Window'}] {flushed}")
+                # Optionally add an explicit Enter marker:
+                readable_output.append(f"[{current_window or 'Unknown Window'}] [Enter]")
+                self.current_text = [] # Clear buffer after Enter
 
-        # Flush any remaining text at the end
+            # Note: parse_log_entry now only returns actions or None for accumulation
+            # Text is accumulated internally and flushed on window change, Enter, or end of log.
+
+        # Flush any remaining text at the very end
         final_text = self._flush_current_text()
         if final_text:
-            readable_entries.append(final_text)
+            readable_output.append(f"[{current_window or 'Unknown Window'}] {final_text}")
 
-        return readable_entries
+        # Filter out potential empty strings if any None results were added inadvertently
+        return [line for line in readable_output if line and line.strip()]
 
 def main():
     parser = LogParser()
+    log_file_path = 'keylog.txt'
+    output_file_path = 'readable_log_report.txt'
     try:
-        with open('keylog.txt', 'r', encoding='utf-8', errors='ignore') as f:
+        with open(log_file_path, 'r', encoding='utf-8', errors='ignore') as f:
             log_entries = f.readlines()
-    except UnicodeDecodeError as e:
-        print(f"Error reading file: {e}")
+    except FileNotFoundError:
+        print(f"Error: Log file not found at {log_file_path}")
+        return
+    except Exception as e:
+        print(f"Error reading file {log_file_path}: {e}")
         return
 
-    # Process logs in real-time
     readable_entries = parser.process_log(log_entries)
-    for entry in readable_entries:
-        print(entry)
+
+    try:
+        with open(output_file_path, 'w', encoding='utf-8') as f:
+            for entry in readable_entries:
+                f.write(entry + '\n')
+        print(f"Readable log report saved to: {output_file_path}")
+    except Exception as e:
+        print(f"Error writing report file {output_file_path}: {e}")
 
 if __name__ == "__main__":
     main()

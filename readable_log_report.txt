@@ -1,0 +1,5 @@
+[Unknown Window] Typed: 'Hey'
+[Trae.exe - keylog.txt - Keylogger - Trae] Typed: 'eHeyeHeyeySaSalutlut moi moi c cesest At Ash'
+[Trae.exe - readable_log_report.txt - Keylogger - Trae] Typed: 'sh'
+[(.*?)$', clean_entry)] Typed: 'e'
+[Trae.exe - keylogger.py - Keylogger - Trae] Typed: 'saesalutlut'

@@ -117,3 +117,608 @@ Key pressed: Key.ctrl_l in Trae.exe - keylog.txt - Keylogger - Trae
 Key pressed: '\x03' in Trae.exe - keylog.txt - Keylogger - Trae
 2025-04-24 12:25:34,274: Active window: Trae.exe - keylog.txt - Keylogger - Trae
  in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:32:02,990: Mouse pressed at (1578, 970) with Button.left in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:03,028: Mouse released at (1578, 970) with Button.left in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:03,134: Screenshot captured: screenshots\screenshot_20250424-123202.png
+2025-04-24 12:32:03,416: Key pressed: Key.shift in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:03,891: Key pressed: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:03,953: Key released: Key.shift in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:03,954: Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,041: Key pressed: 'a' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,091: Key released: 's' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,091: Shortcut used: 'S', 'a' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Mouse pressed at (1578, 970) with Button.left in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Mouse released at (1578, 970) with Button.left in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Screenshot captured: screenshots\screenshot_20250424-123202.png
+Key pressed: Key.shift in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: Key.shift in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: 'a' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: 's' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'S', 'a' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,104: Key pressed: 'l' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,154: Key released: 'a' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,154: Shortcut used: 'l', 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,267: Key released: 'l' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,267: Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,292: Key pressed: 'u' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,380: Key released: 'u' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,380: Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,454: Key pressed: 't' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,566: Key released: 't' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: 'l' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: 'a' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'l', 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: 'l' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: 'u' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: 'u' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: 't' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: 't' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,567: Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,616: Key pressed: Key.space in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,716: Text input: salut in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,716: Key released: Key.space in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,717: Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,803: Key pressed: 'm' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,879: Key released: 'm' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,879: Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:04,954: Key pressed: 'o' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,054: Key pressed: 'i' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: Key.space in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Text input: salut in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: Key.space in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: 'm' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: 'm' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: 'o' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: 'i' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,104: Key released: 'o' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,104: Shortcut used: 'i', 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,166: Key released: 'i' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,166: Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,303: Key pressed: Key.space in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,366: Text input: moi in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,367: Key released: Key.space in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,367: Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,479: Key pressed: 'c' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,604: Key released: 'c' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: 'o' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'i', 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: 'i' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: Key.space in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Text input: moi in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: Key.space in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: 'c' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: 'c' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,605: Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,641: Key pressed: "'" in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,728: Key pressed: 'e' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,742: Key released: "'" in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,742: Shortcut used: 'S', 'e' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,816: Key released: 'e' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,817: Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:05,929: Key pressed: 's' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:06,053: Key released: 's' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:06,053: Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: "'" in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: 'e' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: "'" in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'S', 'e' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: 'e' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: 's' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: 's' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:06,378: Key pressed: 't' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:06,490: Key released: 't' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:06,490: Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:06,941: Key pressed: Key.space in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,003: Text input: c'est in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,003: Key released: Key.space in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,003: Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,216: Key pressed: Key.shift in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,466: Key pressed: 'A' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,604: Key released: Key.shift in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: 't' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: 't' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: Key.space in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Text input: c'est in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: Key.space in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: Key.shift in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: 'A' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: Key.shift in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,605: Shortcut used: 'A', 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,629: Key pressed: 's' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,692: Key released: 'a' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,692: Shortcut used: 'A', 'S', 's' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,766: Key released: 's' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,767: Shortcut used: 'A', 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,804: Key pressed: 'h' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,879: Key released: 'h' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,879: Shortcut used: 'A', 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:07,945: Active window: Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'A', 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: 's' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: 'a' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'A', 'S', 's' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: 's' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'A', 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: 'h' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key released: 'h' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Shortcut used: 'A', 'S' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Active window: Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:08,703: Mouse pressed at (1374, 965) with Button.left in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:08,748: Mouse released at (1374, 965) with Button.left in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:09,924: Mouse pressed at (1097, 971) with Button.left in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:09,984: Mouse released at (1097, 971) with Button.left in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:10,141: Key pressed: Key.ctrl_l in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:10,417: Key pressed: '\x03' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Mouse pressed at (1374, 965) with Button.left in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Mouse released at (1374, 965) with Button.left in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Mouse pressed at (1097, 971) with Button.left in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Mouse released at (1097, 971) with Button.left in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: Key.ctrl_l in Trae.exe - readable_log_report.txt - Keylogger - Trae
+Key pressed: '\x03' in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:12,946: Active window: Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:45,000: Clipboard changed: import re
+from typing import List, Optional
+
+class LogParser:
+    def __init__(self):
+        self.current_text = []
+        self.active_window = None
+
+    def parse_log_entry(self, log_entry: str) -> Optional[str]:
+        """Parse a single log entry. Return action strings or None if accumulating text."""
+        # Remove timestamp if present
+        log_entry = re.sub(r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}: ', '', log_entry)
+
+        # Handle key presses for text reconstruction
+        if 'Key pressed:' in log_entry:
+            key_match = re.search(r"Key pressed: (.*?)(?: in |$)", log_entry)
+            if key_match:
+                key_info = key_match.group(1).strip()
+
+                char_match = re.search(r"^'(.)'", key_info)
+                if char_match:
+                    char = char_match.group(1)
+                    # Handle specific escaped characters if necessary
+                    if char == '\\':
+                        self.current_text.append('\\') # Append literal backslash
+                    else:
+                        self.current_text.append(char)
+                    return None # Accumulate character
+
+                elif key_info == 'Key.space':
+                    self.current_text.append(' ')
+                    return None # Accumulate space
+                elif key_info == 'Key.backspace':
+                    return 'Action: Backspace'
+                elif key_info == 'Key.enter':
+                    return 'Action: Enter'
+                elif key_info.startswith('Key.') or key_info.startswith("'\\x"):
+                    return None # Ignore other special keys and control chars
+            return None # Ignore if no relevant key press info found
+
+        # Ignore other event types for text report
+        elif any(kw in log_entry for kw in ['Mouse pressed', 'Mouse released', 'Mouse scrolled', 'Screenshot captured', 'Text input:', 'Key released:', 'Shortcut used:', 'Active window:']):
+             # Active window changes are handled separately in process_log
+             return None # Ignore these events
+
+        # Return None for any other unhandled lines
+        return None
+
+    def _flush_current_text(self) -> Optional[str]:
+        """Helper function to format and clear the current text buffer."""
+        if self.current_text:
+            sentence = ''.join(self.current_text).strip()
+            self.current_text = []
+            if sentence:
+                # Return only the sentence, context added in process_log
+                return f"Typed: '{sentence}'"
+        return None
+
+    def process_log(self, log_entries: List[str]) -> List[str]:
+        """Process multiple log entries and return human-readable sentences focused on typed text."""
+        readable_output = []
+        current_window = None
+        self.current_text = [] # Ensure text buffer is clear at start
+
+        for entry in log_entries:
+            # Check for window change first
+            window_match = re.search(r'Active window: (.*?)$', entry)
+            if window_match:
+                # Remove timestamp if present before extracting window name
+                clean_entry = re.sub(r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}: ', '', entry)
+                window_match = re.search(r'Active window: (.*?)$', clean_entry)
+                if window_match:
+                    new_window = window_match.group(1).strip()
+                    if new_window != current_window:
+                        flushed = self._flush_current_text() # Flush text on window change
+                        if flushed:
+                            readable_output.append(f"[{current_window or 'Unknown Window'}] {flushed}")
+                        current_window = new_window
+                        self.active_window = new_window # Update parser's window context
+                        # Optionally log window switch:
+                        # readable_output.append(f"--- Switched to window: {current_window} ---")
+                continue # Don't process the window change line further
+
+            # Process the entry for key presses or actions
+            parsed_action = self.parse_log_entry(entry)
+
+            if parsed_action == 'Action: Backspace':
+                if self.current_text:
+                    self.current_text.pop()
+            elif parsed_action == 'Action: Enter':
+                flushed = self._flush_current_text()
+                if flushed:
+                    readable_output.append(f"[{current_window or 'Unknown Window'}] {flushed}")
+                # Optionally add an explicit Enter marker:
+                readable_output.append(f"[{current_window or 'Unknown Window'}] [Enter]")
+                self.current_text = [] # Clear buffer after Enter
+
+            # Note: parse_log_entry now only returns actions or None for accumulation
+            # Text is accumulated internally and flushed on window change, Enter, or end of log.
+
+        # Flush any remaining text at the very end
+        final_text = self._flush_current_text()
+        if final_text:
+            readable_output.append(f"[{current_window or 'Unknown Window'}] {final_text}")
+
+        # Filter out potential empty strings if any None results were added inadvertently
+        return [line for line in readable_output if line and line.strip()]
+
+def main():
+    parser = LogParser()
+    log_file_path = 'keylog.txt'
+    output_file_path = 'readable_log_report.txt'
+    try:
+        with open(log_file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            log_entries = f.readlines()
+    except FileNotFoundError:
+        print(f"Error: Log file not found at {log_file_path}")
+        return
+    except Exception as e:
+        print(f"Error reading file {log_file_path}: {e}")
+        return
+
+    readable_entries = parser.process_log(log_entries)
+
+    try:
+        with open(output_file_path, 'w', encoding='utf-8') as f:
+            for entry in readable_entries:
+                f.write(entry + '\n')
+        print(f"Readable log report saved to: {output_file_path}")
+    except Exception as e:
+        print(f"Error writing report file {output_file_path}: {e}")
+
+if __name__ == "__main__":
+    main() in Trae.exe - readable_log_report.txt - Keylogger - Trae
+2025-04-24 12:32:45,041: Clipboard changed: import re
+from typing import List, Optional
+
+class LogParser:
+    def __init__(self):
+        self.current_text = []
+        self.active_window = None
+
+    def parse_log_entry(self, log_entry: str) -> Optional[str]:
+        """Parse a single log entry. Return action strings or None if accumulating text."""
+        # Remove timestamp if present
+        log_entry = re.sub(r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}: ', '', log_entry)
+
+        # Handle key presses for text reconstruction
+        if 'Key pressed:' in log_entry:
+            key_match = re.search(r"Key pressed: (.*?)(?: in |$)", log_entry)
+            if key_match:
+                key_info = key_match.group(1).strip()
+
+                char_match = re.search(r"^'(.)'", key_info)
+                if char_match:
+                    char = char_match.group(1)
+                    # Handle specific escaped characters if necessary
+                    if char == '\\':
+                        self.current_text.append('\\') # Append literal backslash
+                    else:
+                        self.current_text.append(char)
+                    return None # Accumulate character
+
+                elif key_info == 'Key.space':
+                    self.current_text.append(' ')
+                    return None # Accumulate space
+                elif key_info == 'Key.backspace':
+                    return 'Action: Backspace'
+                elif key_info == 'Key.enter':
+                    return 'Action: Enter'
+                elif key_info.startswith('Key.') or key_info.startswith("'\\x"):
+                    return None # Ignore other special keys and control chars
+            return None # Ignore if no relevant key press info found
+
+        # Ignore other event types for text report
+        elif any(kw in log_entry for kw in ['Mouse pressed', 'Mouse released', 'Mouse scrolled', 'Screenshot captured', 'Text input:', 'Key released:', 'Shortcut used:', 'Active window:']):
+             # Active window changes are handled separately in process_log
+             return None # Ignore these events
+
+        # Return None for any other unhandled lines
+        return None
+
+    def _flush_current_text(self) -> Optional[str]:
+        """Helper function to format and clear the current text buffer."""
+        if self.current_text:
+            sentence = ''.join(self.current_text).strip()
+            self.current_text = []
+            if sentence:
+                # Return only the sentence, context added in process_log
+                return f"Typed: '{sentence}'"
+        return None
+
+    def process_log(self, log_entries: List[str]) -> List[str]:
+        """Process multiple log entries and return human-readable sentences focused on typed text."""
+        readable_output = []
+        current_window = None
+        self.current_text = [] # Ensure text buffer is clear at start
+
+        for entry in log_entries:
+            # Check for window change first
+            window_match = re.search(r'Active window: (.*?)$', entry)
+            if window_match:
+                # Remove timestamp if present before extracting window name
+                clean_entry = re.sub(r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}: ', '', entry)
+                window_match = re.search(r'Active window: (.*?)$', clean_entry)
+                if window_match:
+                    new_window = window_match.group(1).strip()
+                    if new_window != current_window:
+                        flushed = self._flush_current_text() # Flush text on window change
+                        if flushed:
+                            readable_output.append(f"[{current_window or 'Unknown Window'}] {flushed}")
+                        current_window = new_window
+                        self.active_window = new_window # Update parser's window context
+                        # Optionally log window switch:
+                        # readable_output.append(f"--- Switched to window: {current_window} ---")
+                continue # Don't process the window change line further
+
+            # Process the entry for key presses or actions
+            parsed_action = self.parse_log_entry(entry)
+
+            if parsed_action == 'Action: Backspace':
+                if self.current_text:
+                    self.current_text.pop()
+            elif parsed_action == 'Action: Enter':
+                flushed = self._flush_current_text()
+                if flushed:
+                    readable_output.append(f"[{current_window or 'Unknown Window'}] {flushed}")
+                # Optionally add an explicit Enter marker:
+                readable_output.append(f"[{current_window or 'Unknown Window'}] [Enter]")
+                self.current_text = [] # Clear buffer after Enter
+
+            # Note: parse_log_entry now only returns actions or None for accumulation
+            # Text is accumulated internally and flushed on window change, Enter, or end of log.
+
+        # Flush any remaining text at the very end
+        final_text = self._flush_current_text()
+        if final_text:
+            readable_output.append(f"[{current_window or 'Unknown Window'}] {final_text}")
+
+        # Filter out potential empty strings if any None results were added inadvertently
+        return [line for line in readable_output if line and line.strip()]
+
+def main():
+    parser = LogParser()
+    log_file_path = 'keylog.txt'
+    output_file_path = 'readable_log_report.txt'
+    try:
+        with open(log_file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            log_entries = f.readlines()
+    except FileNotFoundError:
+        print(f"Error: Log file not found at {log_file_path}")
+        return
+    except Exception as e:
+        print(f"Error reading file {log_file_path}: {e}")
+        return
+
+    readable_entries = parser.process_log(log_entries)
+
+    try:
+        with open(output_file_path, 'w', encoding='utf-8') as f:
+            for entry in readable_entries:
+                f.write(entry + '\n')
+        print(f"Readable log report saved to: {output_file_path}")
+    except Exception as e:
+        print(f"Error writing report file {output_file_path}: {e}")
+
+if __name__ == "__main__":
+    main() in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:32:45,395: Clipboard changed: import re
+from typing import List, Optional
+
+class LogParser:
+    def __init__(self):
+        self.current_text = []
+        self.active_window = None
+
+    def parse_log_entry(self, log_entry: str) -> Optional[str]:
+        """Parse a single log entry. Return action strings or None if accumulating text."""
+        # Remove timestamp if present
+        log_entry = re.sub(r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}: ', '', log_entry)
+
+        # Handle key presses for text reconstruction
+        if 'Key pressed:' in log_entry:
+            key_match = re.search(r"Key pressed: (.*?)(?: in |$)", log_entry)
+            if key_match:
+                key_info = key_match.group(1).strip()
+
+                char_match = re.search(r"^'(.)'", key_info)
+                if char_match:
+                    char = char_match.group(1)
+                    # Handle specific escaped characters if necessary
+                    if char == '\\':
+                        self.current_text.append('\\') # Append literal backslash
+                    else:
+                        self.current_text.append(char)
+                    return None # Accumulate character
+
+                elif key_info == 'Key.space':
+                    self.current_text.append(' ')
+                    return None # Accumulate space
+                elif key_info == 'Key.backspace':
+                    return 'Action: Backspace'
+                elif key_info == 'Key.enter':
+                    return 'Action: Enter'
+                elif key_info.startswith('Key.') or key_info.startswith("'\\x"):
+                    return None # Ignore other special keys and control chars
+            return None # Ignore if no relevant key press info found
+
+        # Ignore other event types for text report
+        elif any(kw in log_entry for kw in ['Mouse pressed', 'Mouse released', 'Mouse scrolled', 'Screenshot captured', 'Text input:', 'Key released:', 'Shortcut used:', 'Active window:']):
+             # Active window changes are handled separately in process_log
+             return None # Ignore these events
+
+        # Return None for any other unhandled lines
+        return None
+
+    def _flush_current_text(self) -> Optional[str]:
+        """Helper function to format and clear the current text buffer."""
+        if self.current_text:
+            sentence = ''.join(self.current_text).strip()
+            self.current_text = []
+            if sentence:
+                # Return only the sentence, context added in process_log
+                return f"Typed: '{sentence}'"
+        return None
+
+    def process_log(self, log_entries: List[str]) -> List[str]:
+        """Process multiple log entries and return human-readable sentences focused on typed text."""
+        readable_output = []
+        current_window = None
+        self.current_text = [] # Ensure text buffer is clear at start
+
+        for entry in log_entries:
+            # Check for window change first
+            window_match = re.search(r'Active window: (.*?)$', entry)
+            if window_match:
+                # Remove timestamp if present before extracting window name
+                clean_entry = re.sub(r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}: ', '', entry)
+                window_match = re.search(r'Active window: (.*?)$', clean_entry)
+                if window_match:
+                    new_window = window_match.group(1).strip()
+                    if new_window != current_window:
+                        flushed = self._flush_current_text() # Flush text on window change
+                        if flushed:
+                            readable_output.append(f"[{current_window or 'Unknown Window'}] {flushed}")
+                        current_window = new_window
+                        self.active_window = new_window # Update parser's window context
+                        # Optionally log window switch:
+                        # readable_output.append(f"--- Switched to window: {current_window} ---")
+                continue # Don't process the window change line further
+
+            # Process the entry for key presses or actions
+            parsed_action = self.parse_log_entry(entry)
+
+            if parsed_action == 'Action: Backspace':
+                if self.current_text:
+                    self.current_text.pop()
+            elif parsed_action == 'Action: Enter':
+                flushed = self._flush_current_text()
+                if flushed:
+                    readable_output.append(f"[{current_window or 'Unknown Window'}] {flushed}")
+                # Optionally add an explicit Enter marker:
+                readable_output.append(f"[{current_window or 'Unknown Window'}] [Enter]")
+                self.current_text = [] # Clear buffer after Enter
+
+            # Note: parse_log_entry now only returns actions or None for accumulation
+            # Text is accumulated internally and flushed on window change, Enter, or end of log.
+
+        # Flush any remaining text at the very end
+        final_text = self._flush_current_text()
+        if final_text:
+            readable_output.append(f"[{current_window or 'Unknown Window'}] {final_text}")
+
+        # Filter out potential empty strings if any None results were added inadvertently
+        return [line for line in readable_output if line and line.strip()]
+
+def main():
+    parser = LogParser()
+    log_file_path = 'keylog.txt'
+    output_file_path = 'readable_log_report.txt'
+    try:
+        with open(log_file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            log_entries = f.readlines()
+    except FileNotFoundError:
+        print(f"Error: Log file not found at {log_file_path}")
+        return
+    except Exception as e:
+        print(f"Error reading file {log_file_path}: {e}")
+        return
+
+    readable_entries = parser.process_log(log_entries)
+
+    try:
+        with open(output_file_path, 'w', encoding='utf-8') as f:
+            for entry in readable_entries:
+                f.write(entry + '\n')
+        print(f"Readable log report saved to: {output_file_path}")
+    except Exception as e:
+        print(f"Error writing report file {output_file_path}: {e}")
+
+if __name__ == "__main__":
+    main() in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:34:36,397: Screenshot captured: screenshots\screenshot_20250424-123436.png
+2025-04-24 12:34:38,680: Key pressed: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:38,804: Key released: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:40,886: Mouse pressed at (1535, 917) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:40,912: Mouse released at (1535, 917) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:41,262: Active window: Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:41,943: Key pressed: 's' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:42,042: Key pressed: 'a' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:42,155: Key released: 's' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:42,155: Shortcut used: 'a' in Trae.exe - keylogger.py - Keylogger - Trae
+Screenshot captured: screenshots\screenshot_20250424-123436.png
+Key pressed: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
+Key released: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
+Mouse pressed at (1535, 917) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+Mouse released at (1535, 917) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+Active window: Trae.exe - keylogger.py - Keylogger - Trae
+Key pressed: 's' in Trae.exe - keylogger.py - Keylogger - Trae
+Key pressed: 'a' in Trae.exe - keylogger.py - Keylogger - Trae
+Key released: 's' in Trae.exe - keylogger.py - Keylogger - Trae
+Shortcut used: 'a' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:42,205: Key released: 'a' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:42,641: Key pressed: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:42,754: Key released: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:43,391: Key pressed: 'u' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:43,491: Key released: 'u' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:43,554: Key pressed: 't' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:43,642: Key released: 't' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:45,055: Mouse scrolled at (824, 1021) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:45,114: Mouse scrolled at (824, 1021) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:45,823: Mouse pressed at (784, 1010) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+Key released: 'a' in Trae.exe - keylogger.py - Keylogger - Trae
+Key pressed: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
+Key released: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
+Key pressed: 'u' in Trae.exe - keylogger.py - Keylogger - Trae
+Key released: 'u' in Trae.exe - keylogger.py - Keylogger - Trae
+Key pressed: 't' in Trae.exe - keylogger.py - Keylogger - Trae
+Key released: 't' in Trae.exe - keylogger.py - Keylogger - Trae
+Mouse scrolled at (824, 1021) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+Mouse scrolled at (824, 1021) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+Mouse pressed at (784, 1010) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:45,892: Mouse released at (784, 1010) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+Mouse released at (784, 1010) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:46,262: Active window: Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:46,521: Screenshot captured: screenshots\screenshot_20250424-123446.png
+2025-04-24 12:34:46,742: Key pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:34:46,855: Key pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+Active window: Trae.exe - keylogger.py - Keylogger - Trae
+Screenshot captured: screenshots\screenshot_20250424-123446.png
+Key pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+Key pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
