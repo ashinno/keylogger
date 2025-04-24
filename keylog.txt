@@ -1,186 +1,119 @@
-2025-02-21 11:03:11,715: Screenshot captured: screenshot_20250221-110311.png
-2025-02-21 11:03:15,341: Mouse pressed at (525, 941) with Button.left in pycharm64.exe - Keylogger – keylogger.py
-2025-02-21 11:03:15,560: Time spent on pycharm64.exe - Keylogger – keylogger.py: 3.98 seconds
-2025-02-21 11:03:15,561: Mouse released at (525, 941) with Button.left in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:16,516: Key pressed: 'a' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:16,581: Key pressed: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:16,603: Active window: WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:16,697: Key released: 'a' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:16,697: Shortcut used: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:16,784: Key released: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Screenshot captured: screenshot_20250221-110311.png
-Mouse pressed at (525, 941) with Button.left in pycharm64.exe - Keylogger – keylogger.py
-Time spent on pycharm64.exe - Keylogger – keylogger.py: 3.98 seconds
-Mouse released at (525, 941) with Button.left in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Key pressed: 'a' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Key pressed: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Active window: WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Key released: 'a' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Shortcut used: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Key released: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:17,206: Key pressed: 'h' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:17,285: Key released: 'h' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:17,528: Key pressed: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:17,671: Key released: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:17,776: Key pressed: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:17,898: Key released: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:18,100: Key pressed: 'e' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:18,228: Key released: 'e' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:18,256: Key pressed: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:18,317: Key released: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Key pressed: 'h' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Key released: 'h' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Key pressed: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Key released: 's' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Key pressed: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Key released: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Key pressed: 'e' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Key released: 'e' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Key pressed: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Key released: 't' in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:20,294: Mouse pressed at (1316, 974) with Button.left in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-2025-02-21 11:03:20,516: Time spent on WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger: 4.96 seconds
-2025-02-21 11:03:20,516: Mouse released at (1316, 974) with Button.left in pycharm64.exe - Keylogger – keylogger.py
-Mouse pressed at (1316, 974) with Button.left in WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger
-Time spent on WindowsTerminal.exe - MINGW64:/d/Projects/Master/Keylogger: 4.96 seconds
-Mouse released at (1316, 974) with Button.left in pycharm64.exe - Keylogger – keylogger.py
-2025-02-21 11:03:21,604: Active window: pycharm64.exe - Keylogger – keylogger.py
-2025-02-21 11:03:21,749: Key pressed: Key.ctrl_l in pycharm64.exe - Keylogger – keylogger.py
-2025-02-21 11:03:21,979: Key pressed: '\x03' in pycharm64.exe - Keylogger – keylogger.py
-2025-04-02 22:57:04,655: Screenshot captured: screenshot_20250402-225704.png
-2025-04-02 22:57:09,532: Active window: Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:10,853: Mouse pressed at (1681, 967) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:10,932: Mouse released at (1681, 966) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:11,729: Key pressed: 's' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:11,841: Key pressed: 'a' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:11,941: Key pressed: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:11,954: Key released: 's' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:11,954: Shortcut used: 'l', 'a' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:12,004: Key released: 'a' in Trae.exe - keylogger.py - Keylogger - Trae
-Screenshot captured: screenshot_20250402-225704.png
-Active window: Trae.exe - keylogger.py - Keylogger - Trae
-Mouse pressed at (1681, 967) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse released at (1681, 966) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-Key pressed: 's' in Trae.exe - keylogger.py - Keylogger - Trae
-Key pressed: 'a' in Trae.exe - keylogger.py - Keylogger - Trae
-Key pressed: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
-Key released: 's' in Trae.exe - keylogger.py - Keylogger - Trae
-Shortcut used: 'l', 'a' in Trae.exe - keylogger.py - Keylogger - Trae
-Key released: 'a' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:12,004: Shortcut used: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:12,054: Key released: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:12,203: Key pressed: 'u' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:12,291: Key released: 'u' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:12,466: Key pressed: 't' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:12,554: Key released: 't' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:12,678: Key pressed: Key.space in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:12,766: Text input: salut in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:12,766: Key released: Key.space in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:14,257: Mouse pressed at (869, 1026) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-Shortcut used: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
-Key released: 'l' in Trae.exe - keylogger.py - Keylogger - Trae
-Key pressed: 'u' in Trae.exe - keylogger.py - Keylogger - Trae
-Key released: 'u' in Trae.exe - keylogger.py - Keylogger - Trae
-Key pressed: 't' in Trae.exe - keylogger.py - Keylogger - Trae
-Key released: 't' in Trae.exe - keylogger.py - Keylogger - Trae
-Key pressed: Key.space in Trae.exe - keylogger.py - Keylogger - Trae
-Text input: salut in Trae.exe - keylogger.py - Keylogger - Trae
-Key released: Key.space in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse pressed at (869, 1026) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:14,304: Mouse released at (869, 1026) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse released at (869, 1026) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:14,533: Active window: Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:14,729: Screenshot captured: screenshot_20250402-225714.png
-2025-04-02 22:57:15,491: Key pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 22:57:15,603: Key pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:51,312: Screenshot captured: screenshot_20250402-235451.png
-2025-04-02 23:54:54,805: Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:54,826: Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:54,845: Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:54,868: Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:54,925: Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:55,527: Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:55,539: Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:55,552: Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:55,564: Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Screenshot captured: screenshot_20250402-235451.png
-Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:55,579: Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:55,611: Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:56,188: Mouse scrolled at (792, 967) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:56,201: Active window: Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:56,213: Mouse scrolled at (792, 967) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:56,252: Mouse scrolled at (792, 967) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:56,307: Mouse scrolled at (792, 967) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:56,369: Mouse scrolled at (792, 967) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:57,236: Mouse pressed at (1686, 971) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:57,290: Mouse released at (1686, 971) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse scrolled at (702, 902) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse scrolled at (792, 967) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Active window: Trae.exe - keylogger.py - Keylogger - Trae
-Mouse scrolled at (792, 967) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse scrolled at (792, 967) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse scrolled at (792, 967) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse scrolled at (792, 967) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse pressed at (1686, 971) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse released at (1686, 971) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:58,477: Key pressed: 't' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:58,576: Key pressed: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:58,626: Key released: 't' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:58,626: Shortcut used: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:58,713: Key released: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:58,838: Key pressed: 's' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:59,026: Key released: 's' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:59,076: Key pressed: 't' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:54:59,212: Key released: 't' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:01,121: Mouse pressed at (1366, 815) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-Key pressed: 't' in Trae.exe - keylogger.py - Keylogger - Trae
-Key pressed: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
-Key released: 't' in Trae.exe - keylogger.py - Keylogger - Trae
-Shortcut used: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
-Key released: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
-Key pressed: 's' in Trae.exe - keylogger.py - Keylogger - Trae
-Key released: 's' in Trae.exe - keylogger.py - Keylogger - Trae
-Key pressed: 't' in Trae.exe - keylogger.py - Keylogger - Trae
-Key released: 't' in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse pressed at (1366, 815) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:01,181: Mouse released at (1366, 815) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse released at (1366, 815) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:01,202: Active window: Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:01,392: Screenshot captured: screenshot_20250402-235501.png
-2025-04-02 23:55:03,573: Mouse pressed at (1718, 984) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:03,917: Mouse released at (1540, 963) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:04,476: Key pressed: 'r' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:04,551: Key pressed: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:04,589: Key released: 'r' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:04,589: Shortcut used: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:04,664: Key released: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:04,875: Key pressed: 'm' in Trae.exe - keylogger.py - Keylogger - Trae
-Active window: Trae.exe - keylogger.py - Keylogger - Trae
-Screenshot captured: screenshot_20250402-235501.png
-Mouse pressed at (1718, 984) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-Mouse released at (1540, 963) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-Key pressed: 'r' in Trae.exe - keylogger.py - Keylogger - Trae
-Key pressed: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
-Key released: 'r' in Trae.exe - keylogger.py - Keylogger - Trae
-Shortcut used: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
-Key released: 'e' in Trae.exe - keylogger.py - Keylogger - Trae
-Key pressed: 'm' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:05,012: Key pressed: 'o' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:05,051: Key released: 'm' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:05,052: Shortcut used: 'o' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:05,164: Key released: 'o' in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:06,109: Mouse pressed at (1315, 992) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:06,171: Mouse released at (1315, 991) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:06,203: Active window: Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:06,314: Key pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
-2025-04-02 23:55:06,464: Key pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:25:24,393: Screenshot captured: screenshots\screenshot_20250424-122524.png
+2025-04-24 12:25:24,862: Mouse pressed at (1503, 931) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:24,929: Mouse released at (1503, 931) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:25,640: Key pressed: Key.backspace in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:25,739: Key released: Key.backspace in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:25,827: Key pressed: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,077: Key pressed: 'H' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,152: Key released: 'H' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,152: Shortcut used: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,277: Key released: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+Screenshot captured: screenshots\screenshot_20250424-122524.png
+Mouse pressed at (1503, 931) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+Mouse released at (1503, 931) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: Key.backspace in Trae.exe - keylog.txt - Keylogger - Trae
+Key released: Key.backspace in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: 'H' in Trae.exe - keylog.txt - Keylogger - Trae
+Key released: 'H' in Trae.exe - keylog.txt - Keylogger - Trae
+Shortcut used: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+Key released: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,316: Key pressed: 'e' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,452: Key released: 'e' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,478: Key pressed: 'y' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,578: Key released: 'y' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:29,273: Active window: Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:30,802: Mouse pressed at (1181, 1018) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:30,919: Mouse released at (1181, 1018) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:31,114: Key pressed: Key.ctrl_l in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:31,239: Key pressed: '\x03' in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: 'e' in Trae.exe - keylog.txt - Keylogger - Trae
+Key released: 'e' in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: 'y' in Trae.exe - keylog.txt - Keylogger - Trae
+Key released: 'y' in Trae.exe - keylog.txt - Keylogger - Trae
+Active window: Trae.exe - keylog.txt - Keylogger - Trae
+Mouse pressed at (1181, 1018) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+Mouse released at (1181, 1018) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: Key.ctrl_l in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: '\x03' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:34,274: Active window: Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:41,969: Clipboard changed: 2025-04-24 12:25:24,393: Screenshot captured: screenshots\screenshot_20250424-122524.png
+2025-04-24 12:25:24,862: Mouse pressed at (1503, 931) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:24,929: Mouse released at (1503, 931) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:25,640: Key pressed: Key.backspace in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:25,739: Key released: Key.backspace in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:25,827: Key pressed: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,077: Key pressed: 'H' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,152: Key released: 'H' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,152: Shortcut used: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,277: Key released: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+Screenshot captured: screenshots\screenshot_20250424-122524.png
+Mouse pressed at (1503, 931) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+Mouse released at (1503, 931) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: Key.backspace in Trae.exe - keylog.txt - Keylogger - Trae
+Key released: Key.backspace in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: 'H' in Trae.exe - keylog.txt - Keylogger - Trae
+Key released: 'H' in Trae.exe - keylog.txt - Keylogger - Trae
+Shortcut used: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+Key released: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,316: Key pressed: 'e' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,452: Key released: 'e' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,478: Key pressed: 'y' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,578: Key released: 'y' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:29,273: Active window: Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:30,802: Mouse pressed at (1181, 1018) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:30,919: Mouse released at (1181, 1018) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:31,114: Key pressed: Key.ctrl_l in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:31,239: Key pressed: '\x03' in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: 'e' in Trae.exe - keylog.txt - Keylogger - Trae
+Key released: 'e' in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: 'y' in Trae.exe - keylog.txt - Keylogger - Trae
+Key released: 'y' in Trae.exe - keylog.txt - Keylogger - Trae
+Active window: Trae.exe - keylog.txt - Keylogger - Trae
+Mouse pressed at (1181, 1018) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+Mouse released at (1181, 1018) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: Key.ctrl_l in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: '\x03' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:34,274: Active window: Trae.exe - keylog.txt - Keylogger - Trae
+ in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:42,326: Clipboard changed: 2025-04-24 12:25:24,393: Screenshot captured: screenshots\screenshot_20250424-122524.png
+2025-04-24 12:25:24,862: Mouse pressed at (1503, 931) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:24,929: Mouse released at (1503, 931) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:25,640: Key pressed: Key.backspace in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:25,739: Key released: Key.backspace in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:25,827: Key pressed: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,077: Key pressed: 'H' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,152: Key released: 'H' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,152: Shortcut used: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,277: Key released: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+Screenshot captured: screenshots\screenshot_20250424-122524.png
+Mouse pressed at (1503, 931) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+Mouse released at (1503, 931) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: Key.backspace in Trae.exe - keylog.txt - Keylogger - Trae
+Key released: Key.backspace in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: 'H' in Trae.exe - keylog.txt - Keylogger - Trae
+Key released: 'H' in Trae.exe - keylog.txt - Keylogger - Trae
+Shortcut used: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+Key released: Key.shift in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,316: Key pressed: 'e' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,452: Key released: 'e' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,478: Key pressed: 'y' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:26,578: Key released: 'y' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:29,273: Active window: Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:30,802: Mouse pressed at (1181, 1018) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:30,919: Mouse released at (1181, 1018) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:31,114: Key pressed: Key.ctrl_l in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:31,239: Key pressed: '\x03' in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: 'e' in Trae.exe - keylog.txt - Keylogger - Trae
+Key released: 'e' in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: 'y' in Trae.exe - keylog.txt - Keylogger - Trae
+Key released: 'y' in Trae.exe - keylog.txt - Keylogger - Trae
+Active window: Trae.exe - keylog.txt - Keylogger - Trae
+Mouse pressed at (1181, 1018) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+Mouse released at (1181, 1018) with Button.left in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: Key.ctrl_l in Trae.exe - keylog.txt - Keylogger - Trae
+Key pressed: '\x03' in Trae.exe - keylog.txt - Keylogger - Trae
+2025-04-24 12:25:34,274: Active window: Trae.exe - keylog.txt - Keylogger - Trae
+ in Trae.exe - keylog.txt - Keylogger - Trae

@@ -3,6 +3,7 @@ import platform
 import psutil
 import logging
 import time
+import os
 import threading
 import json
 from collections import deque, defaultdict
@@ -204,13 +205,21 @@ def monitor_clipboard() -> None:
         except Exception as e:
             logging.error(f"Error monitoring clipboard: {e}")
 
+SCREENSHOT_DIR = "screenshots"
+
 def capture_screenshot() -> None:
-    """Capture a screenshot and save it to a file."""
+    """Capture a screenshot and save it to a file in the screenshots directory."""
     try:
+        # Ensure the screenshot directory exists
+        if not os.path.exists(SCREENSHOT_DIR):
+            os.makedirs(SCREENSHOT_DIR)
+
         screenshot = ImageGrab.grab()
         timestamp = time.strftime("%Y%m%d-%H%M%S")
-        screenshot.save(f"screenshot_{timestamp}.png")
-        log_event(f"Screenshot captured: screenshot_{timestamp}.png")
+        file_name = f"screenshot_{timestamp}.png"
+        file_path = os.path.join(SCREENSHOT_DIR, file_name)
+        screenshot.save(file_path)
+        log_event(f"Screenshot captured: {file_path}")
     except Exception as e:
         logging.error(f"Error capturing screenshot: {e}")
 
