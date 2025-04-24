@@ -722,3 +722,1978 @@ Active window: Trae.exe - keylogger.py - Keylogger - Trae
 Screenshot captured: screenshots\screenshot_20250424-123446.png
 Key pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
 Key pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+Error setting up key combination listener: name 'on_key_combination' is not defined
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:39:17,927: Mouse Pressed: at (901, 827) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:39:18,229: Mouse Released: at (901, 827) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:39:17,927: Mouse Pressed: at (901, 827) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:39:18,229: Mouse Released: at (901, 827) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:40:08,991: Key Pressed: Key.shift_r in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:09,030: Key Released: Key.shift_r in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:10,808: Mouse Pressed: at (1839, 993) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:10,886: Time Spent: 58.61 seconds on Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:10,886: Active Window Changed: Switched to WeChat.exe - Weixin in WeChat.exe - Weixin
+2025-04-24 12:40:10,886: Mouse Released: at (1839, 993) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:40:08,991: Key Pressed: Key.shift_r in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:09,030: Key Released: Key.shift_r in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:10,808: Mouse Pressed: at (1839, 993) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:10,886: Time Spent: 58.61 seconds on Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:10,886: Active Window Changed: Switched to WeChat.exe - Weixin in WeChat.exe - Weixin
+2025-04-24 12:40:10,886: Mouse Released: at (1839, 993) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:40:12,399: Time Spent: 1.51 seconds on WeChat.exe - Weixin in WeChat.exe - Weixin
+2025-04-24 12:40:12,399: Active Window Changed: Switched to Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:40:12,399: Time Spent: 1.51 seconds on WeChat.exe - Weixin in WeChat.exe - Weixin
+2025-04-24 12:40:12,399: Active Window Changed: Switched to Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:40:43,825: Mouse Pressed: at (986, 830) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:43,956: Mouse Scrolled: at (986, 830) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:43,957: Mouse Scrolled: at (986, 830) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:45,595: Mouse Released: at (1039, 700) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:50,745: Mouse Pressed: at (29, 63) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:50,810: Mouse Released: at (29, 63) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:43,825: Mouse Pressed: at (986, 830) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:43,956: Mouse Scrolled: at (986, 830) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:43,957: Mouse Scrolled: at (986, 830) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:45,595: Mouse Released: at (1039, 700) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:50,745: Mouse Pressed: at (29, 63) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:50,810: Mouse Released: at (29, 63) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:40:53,960: Mouse Pressed: at (1023, 981) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:54,021: Mouse Released: at (1023, 981) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:54,580: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:54,718: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:54,855: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:54,856: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:54,892: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:53,960: Mouse Pressed: at (1023, 981) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:54,021: Mouse Released: at (1023, 981) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:54,580: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:54,718: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:54,855: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:54,856: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:40:54,892: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:41:22,424: Mouse Scrolled: at (1689, 648) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:22,448: Mouse Scrolled: at (1689, 648) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:22,462: Mouse Scrolled: at (1689, 648) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:22,483: Mouse Scrolled: at (1689, 648) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:22,501: Mouse Scrolled: at (1689, 648) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:22,529: Mouse Scrolled: at (1689, 648) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:22,568: Mouse Scrolled: at (1689, 648) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:41:25,222: Mouse Pressed: at (1356, 881) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:25,265: Mouse Released: at (1356, 881) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:25,768: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:22,424: Mouse Scrolled: at (1689, 648) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:22,448: Mouse Scrolled: at (1689, 648) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:22,462: Mouse Scrolled: at (1689, 648) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:22,483: Mouse Scrolled: at (1689, 648) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:22,501: Mouse Scrolled: at (1689, 648) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:22,529: Mouse Scrolled: at (1689, 648) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:22,568: Mouse Scrolled: at (1689, 648) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:25,222: Mouse Pressed: at (1356, 881) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:25,265: Mouse Released: at (1356, 881) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:25,768: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:25,956: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:26,106: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:26,106: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:26,193: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:26,697: Mouse Scrolled: at (1303, 878) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:26,782: Mouse Scrolled: at (1303, 878) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:28,130: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:28,368: Key Pressed: '\x04' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:28,530: Key Released: '\x04' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:28,530: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:25,956: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:26,106: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:26,106: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:26,193: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:26,697: Mouse Scrolled: at (1303, 878) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:26,782: Mouse Scrolled: at (1303, 878) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:28,130: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:28,368: Key Pressed: '\x04' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:28,530: Key Released: '\x04' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:28,530: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:28,743: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:29,229: Mouse Scrolled: at (1196, 909) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:29,311: Mouse Scrolled: at (1196, 909) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:30,993: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:31,105: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:31,218: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:31,218: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:28,743: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:29,229: Mouse Scrolled: at (1196, 909) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:29,311: Mouse Scrolled: at (1196, 909) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:30,993: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:31,105: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:31,218: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:31,218: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,431: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,518: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,519: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,693: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,768: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,768: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,893: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,968: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,969: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:41:34,431: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,431: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,518: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,519: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,693: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,768: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,768: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,893: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,968: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:32,969: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:34,431: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:35,506: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:35,694: Key Pressed: '\x04' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:35,856: Key Released: '\x04' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:35,856: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:37,068: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:38,224: Mouse Scrolled: at (1722, 748) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:38,242: Mouse Scrolled: at (1722, 748) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:38,269: Mouse Scrolled: at (1715, 761) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:38,294: Mouse Scrolled: at (1710, 770) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:38,333: Mouse Scrolled: at (1703, 782) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:35,506: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:35,694: Key Pressed: '\x04' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:35,856: Key Released: '\x04' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:35,856: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:37,068: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:38,224: Mouse Scrolled: at (1722, 748) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:38,242: Mouse Scrolled: at (1722, 748) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:38,269: Mouse Scrolled: at (1715, 761) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:38,294: Mouse Scrolled: at (1710, 770) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:38,333: Mouse Scrolled: at (1703, 782) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:39,135: Mouse Scrolled: at (1555, 849) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:39,159: Mouse Scrolled: at (1555, 849) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:39,173: Mouse Scrolled: at (1555, 849) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:39,188: Mouse Scrolled: at (1555, 849) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:39,207: Mouse Scrolled: at (1555, 849) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:39,592: Mouse Pressed: at (1515, 945) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:39,655: Mouse Released: at (1515, 945) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:40,368: Key Pressed: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:40,456: Key Released: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:40,517: Key Pressed: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:39,135: Mouse Scrolled: at (1555, 849) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:39,159: Mouse Scrolled: at (1555, 849) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:39,173: Mouse Scrolled: at (1555, 849) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:39,188: Mouse Scrolled: at (1555, 849) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:39,207: Mouse Scrolled: at (1555, 849) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:39,592: Mouse Pressed: at (1515, 945) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:39,655: Mouse Released: at (1515, 945) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:40,368: Key Pressed: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:40,456: Key Released: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:40,517: Key Pressed: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:40,643: Key Released: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:40,781: Key Pressed: 's' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:40,930: Key Released: 's' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:40,943: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,031: Text Input: its in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,031: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,106: Key Pressed: 'm' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,169: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,193: Key Released: 'm' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,193: Shortcut Used: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:40,643: Key Released: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:40,781: Key Pressed: 's' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:40,930: Key Released: 's' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:40,943: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,031: Text Input: its in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,031: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,106: Key Pressed: 'm' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,169: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,193: Key Released: 'm' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,193: Shortcut Used: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,268: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,293: Key Pressed: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,381: Key Released: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,481: Key Pressed: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,593: Key Pressed: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,631: Key Released: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,631: Shortcut Used: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,681: Key Pressed: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,693: Key Released: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,693: Shortcut Used: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,268: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,293: Key Pressed: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,381: Key Released: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,481: Key Pressed: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,593: Key Pressed: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,631: Key Released: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,631: Shortcut Used: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,681: Key Pressed: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,693: Key Released: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,693: Shortcut Used: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,768: Key Released: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,806: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,868: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,880: Text Input: making in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,881: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,881: Shortcut Used: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,968: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,981: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,068: Text Input: a in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,068: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,768: Key Released: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,806: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,868: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,880: Text Input: making in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,881: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,881: Shortcut Used: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,968: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:41,981: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,068: Text Input: a in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,068: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,143: Key Pressed: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,281: Key Pressed: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,293: Key Released: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,294: Shortcut Used: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,393: Key Released: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,143: Key Pressed: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,281: Key Pressed: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,293: Key Released: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,294: Shortcut Used: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,393: Key Released: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,493: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,593: Key Pressed: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,669: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,669: Shortcut Used: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,693: Key Released: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,780: Key Pressed: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,868: Key Released: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,981: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:43,056: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:43,118: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,493: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,593: Key Pressed: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,669: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,669: Shortcut Used: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,693: Key Released: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,780: Key Pressed: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,868: Key Released: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:42,981: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:43,056: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:43,118: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:43,243: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:43,381: Key Pressed: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:43,455: Key Released: 'p' in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:41:44,231: Key Pressed: ',' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,318: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,370: Key Released: ',' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,370: Shortcut Used: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,370: Key Pressed: ' ' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,371: Key Released: ' ' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,371: Shortcut Used: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:43,243: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:43,381: Key Pressed: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:43,455: Key Released: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,231: Key Pressed: ',' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,318: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,370: Key Released: ',' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,370: Shortcut Used: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,370: Key Pressed: ' ' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,371: Key Released: ' ' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,371: Shortcut Used: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,443: Text Input: deadloop, in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,443: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,693: Key Pressed: 'h' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,768: Key Released: 'h' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,893: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,993: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,043: Key Pressed: 'w' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,168: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,206: Key Released: 'w' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,206: Shortcut Used: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,443: Text Input: deadloop, in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,443: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,693: Key Pressed: 'h' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,768: Key Released: 'h' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,893: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:44,993: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,043: Key Pressed: 'w' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,168: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,206: Key Released: 'w' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,206: Shortcut Used: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,207: Key Pressed: ' ' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,207: Key Released: ' ' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,208: Shortcut Used: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,255: Text Input: how in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,256: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,281: Key Pressed: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,355: Key Released: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,369: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,443: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,530: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,207: Key Pressed: ' ' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,207: Key Released: ' ' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,208: Shortcut Used: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,255: Text Input: how in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,256: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,281: Key Pressed: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,355: Key Released: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,369: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,443: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,530: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,618: Text Input: to in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,618: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,730: Key Pressed: 's' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,818: Key Released: 's' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,506: Key Pressed: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,580: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,605: Key Released: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,605: Shortcut Used: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,705: Key Pressed: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,805: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,618: Text Input: to in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,618: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,730: Key Pressed: 's' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:45,818: Key Released: 's' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,506: Key Pressed: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,580: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,605: Key Released: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,605: Shortcut Used: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,705: Key Pressed: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,805: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,807: Shortcut Used: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,855: Key Released: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,931: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,043: Text Input: stop in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,043: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,417: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,543: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,580: Key Pressed: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,681: Key Released: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,682: Key Pressed: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,807: Shortcut Used: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,855: Key Released: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:46,931: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,043: Text Input: stop in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,043: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,417: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,543: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,580: Key Pressed: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,681: Key Released: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,682: Key Pressed: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,793: Key Released: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,905: Key Pressed: Key.enter in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,993: Text Input: it in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,994: Key Released: Key.enter in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,793: Key Released: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,905: Key Pressed: Key.enter in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,993: Text Input: it in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:41:47,994: Key Released: Key.enter in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:42:12,669: Mouse Pressed: at (265, 236) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:12,746: Mouse Released: at (263, 236) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:42:16,756: Time Spent: 124.36 seconds on Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:16,756: Active Window Changed: Switched to Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:16,756: Mouse Pressed: at (1213, 971) with Button.left in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:16,852: Mouse Released: at (1213, 971) with Button.left in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:17,739: Mouse Scrolled: at (1011, 902) with delta (0, -1) in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:17,762: Mouse Scrolled: at (1008, 900) with delta (0, -1) in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:17,792: Mouse Scrolled: at (1006, 898) with delta (0, -1) in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:17,828: Mouse Scrolled: at (1004, 894) with delta (0, -1) in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:12,669: Mouse Pressed: at (265, 236) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:12,746: Mouse Released: at (263, 236) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:16,756: Time Spent: 124.36 seconds on Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:16,756: Active Window Changed: Switched to Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:16,756: Mouse Pressed: at (1213, 971) with Button.left in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:16,852: Mouse Released: at (1213, 971) with Button.left in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:17,739: Mouse Scrolled: at (1011, 902) with delta (0, -1) in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:17,762: Mouse Scrolled: at (1008, 900) with delta (0, -1) in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:17,792: Mouse Scrolled: at (1006, 898) with delta (0, -1) in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:17,828: Mouse Scrolled: at (1004, 894) with delta (0, -1) in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:17,868: Mouse Scrolled: at (1001, 891) with delta (0, -1) in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:17,921: Mouse Scrolled: at (999, 888) with delta (0, -1) in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:17,868: Mouse Scrolled: at (1001, 891) with delta (0, -1) in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:17,921: Mouse Scrolled: at (999, 888) with delta (0, -1) in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:42:32,613: Time Spent: 15.86 seconds on Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:32,613: Active Window Changed: Switched to Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:42:32,613: Time Spent: 15.86 seconds on Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae in Trae.exe - screenshot_20250424-123912.png - Keylogger - Trae
+2025-04-24 12:42:32,613: Active Window Changed: Switched to Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:42,643: Mouse Scrolled: at (913, 921) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:42,664: Mouse Scrolled: at (913, 921) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:42,689: Mouse Scrolled: at (913, 921) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:42,710: Mouse Scrolled: at (913, 921) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:42,747: Mouse Scrolled: at (913, 921) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:42,836: Mouse Scrolled: at (913, 921) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,012: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,040: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,064: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,086: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:42,643: Mouse Scrolled: at (913, 921) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:42,664: Mouse Scrolled: at (913, 921) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:42,689: Mouse Scrolled: at (913, 921) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:42,710: Mouse Scrolled: at (913, 921) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:42,747: Mouse Scrolled: at (913, 921) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:42,836: Mouse Scrolled: at (913, 921) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,012: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,040: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,064: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,086: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,115: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,153: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,203: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,262: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:42:45,885: Mouse Pressed: at (823, 143) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:45,931: Mouse Released: at (823, 143) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:50,913: Mouse Pressed: at (823, 143) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:50,985: Mouse Released: at (823, 143) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,115: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,153: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,203: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:43,262: Mouse Scrolled: at (913, 921) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:45,885: Mouse Pressed: at (823, 143) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:45,931: Mouse Released: at (823, 143) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:50,913: Mouse Pressed: at (823, 143) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:42:50,985: Mouse Released: at (823, 143) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:44:26,975: Mouse Scrolled: at (229, 454) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:26,998: Mouse Scrolled: at (225, 455) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,018: Mouse Scrolled: at (224, 456) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,048: Mouse Scrolled: at (223, 456) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,551: Mouse Scrolled: at (220, 441) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,567: Mouse Scrolled: at (220, 441) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,585: Mouse Scrolled: at (220, 441) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,598: Mouse Scrolled: at (220, 441) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,618: Mouse Scrolled: at (220, 440) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,636: Mouse Scrolled: at (220, 440) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:26,975: Mouse Scrolled: at (229, 454) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:26,998: Mouse Scrolled: at (225, 455) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,018: Mouse Scrolled: at (224, 456) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,048: Mouse Scrolled: at (223, 456) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,551: Mouse Scrolled: at (220, 441) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,567: Mouse Scrolled: at (220, 441) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,585: Mouse Scrolled: at (220, 441) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,598: Mouse Scrolled: at (220, 441) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,618: Mouse Scrolled: at (220, 440) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,636: Mouse Scrolled: at (220, 440) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,680: Mouse Scrolled: at (220, 440) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,771: Mouse Scrolled: at (220, 440) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:30,818: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,018: Mouse Pressed: at (211, 226) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,103: Mouse Released: at (211, 226) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,330: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,362: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,394: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,425: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,457: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,680: Mouse Scrolled: at (220, 440) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:27,771: Mouse Scrolled: at (220, 440) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:30,818: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,018: Mouse Pressed: at (211, 226) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,103: Mouse Released: at (211, 226) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,330: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,362: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,394: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,425: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,457: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,488: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,519: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,549: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,595: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,628: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,658: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,690: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,697: Mouse Pressed: at (203, 251) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,721: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,751: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,488: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,519: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,549: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,595: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,628: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,658: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,690: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,697: Mouse Pressed: at (203, 251) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,721: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,751: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,777: Mouse Released: at (203, 251) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,782: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,828: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,858: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,891: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,921: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,952: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,983: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,014: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,045: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,777: Mouse Released: at (203, 251) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,782: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,828: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,858: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,891: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,921: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,952: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:31,983: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,014: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,045: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,091: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,122: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,157: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,184: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,215: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,246: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,278: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,308: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,355: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,386: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,091: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,122: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,157: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,184: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,215: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,246: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,278: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,308: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,355: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,386: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,416: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,446: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,477: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,507: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,416: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,446: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,477: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,507: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,552: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,584: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,615: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,645: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,676: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,707: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,740: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,770: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,816: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,848: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,552: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,584: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,615: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,645: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,676: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,707: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,740: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,770: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,816: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,848: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,881: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,911: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,942: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,973: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,003: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,049: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,080: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,111: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,140: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,174: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,881: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,911: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,942: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:32,973: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,003: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,049: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,080: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,111: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,140: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,174: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,204: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,233: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,265: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,312: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,344: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,361: Mouse Pressed: at (192, 288) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,375: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,395: Mouse Released: at (192, 288) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,405: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,437: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,204: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,233: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,265: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,312: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,344: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,361: Mouse Pressed: at (192, 288) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,375: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,395: Mouse Released: at (192, 288) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,405: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,437: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,468: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,499: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,529: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,576: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,607: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,639: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,671: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,702: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,734: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,765: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,468: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,499: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,529: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,576: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,607: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,639: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,671: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,702: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,734: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,765: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,796: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,827: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,872: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,903: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,934: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,965: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,992: Mouse Pressed: at (200, 303) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,996: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,027: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,057: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,796: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,827: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,872: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,903: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,934: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,965: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,992: Mouse Pressed: at (200, 303) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:33,996: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,027: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,057: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,060: Mouse Released: at (200, 303) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,102: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,133: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,164: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,198: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,225: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,257: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,301: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,332: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,362: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,060: Mouse Released: at (200, 303) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,102: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,133: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,164: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,198: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,225: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,257: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,301: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,332: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,362: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,373: Mouse Pressed: at (203, 325) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,394: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,425: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,432: Mouse Released: at (203, 325) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,456: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,500: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,531: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,561: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,593: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,624: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,373: Mouse Pressed: at (203, 325) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,394: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,425: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,432: Mouse Released: at (203, 325) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,456: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,500: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,531: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,561: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,593: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,624: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,655: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,685: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,714: Mouse Pressed: at (207, 349) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,732: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,762: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,776: Mouse Released: at (207, 349) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,793: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,824: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,855: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,885: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,655: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,685: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,714: Mouse Pressed: at (207, 349) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,732: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,762: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,776: Mouse Released: at (207, 349) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,793: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,824: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,855: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,885: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,916: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,962: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,993: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,024: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,056: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,064: Mouse Pressed: at (210, 387) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,087: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,118: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,126: Mouse Released: at (210, 387) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,151: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,916: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,962: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:34,993: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,024: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,056: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,064: Mouse Pressed: at (210, 387) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,087: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,118: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,126: Mouse Released: at (210, 387) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,151: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,180: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,228: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,258: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,289: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,319: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,351: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,379: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,413: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,459: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,490: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,180: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,228: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,258: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,289: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,319: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,351: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,379: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,413: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,459: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,490: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:44:35,521: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,551: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,582: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,612: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,644: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,689: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,694: Mouse Pressed: at (201, 380) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,725: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,753: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,767: Mouse Released: at (201, 380) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,521: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,551: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,582: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,612: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,644: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,689: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,694: Mouse Pressed: at (201, 380) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,725: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,753: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,767: Mouse Released: at (201, 380) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,784: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,814: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,844: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,876: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,906: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,953: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,984: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,015: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,046: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,077: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,784: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,814: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,844: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,876: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,906: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,953: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:35,984: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,015: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,046: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,077: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,097: Mouse Pressed: at (206, 415) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,109: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,139: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,166: Mouse Released: at (206, 415) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,169: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,216: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,246: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,276: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,307: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,338: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,097: Mouse Pressed: at (206, 415) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,109: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,139: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,166: Mouse Released: at (206, 415) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,169: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,216: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,246: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,276: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,307: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,338: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,369: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,400: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,432: Mouse Pressed: at (208, 449) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,446: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,475: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,486: Mouse Released: at (208, 449) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,508: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,537: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,568: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,613: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,369: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,400: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,432: Mouse Pressed: at (208, 449) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,446: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,475: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,486: Mouse Released: at (208, 449) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,508: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,537: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,568: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,613: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,645: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,675: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,705: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,739: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,767: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,800: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,831: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,864: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,910: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,941: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,645: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,675: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,705: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,739: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,767: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,800: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,831: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,864: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,910: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,941: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,973: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,974: Mouse Pressed: at (208, 474) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,003: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,033: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,043: Mouse Released: at (208, 474) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,066: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,095: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,126: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,173: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,205: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,973: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:36,974: Mouse Pressed: at (208, 474) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,003: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,033: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,043: Mouse Released: at (208, 474) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,066: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,095: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,126: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,173: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,205: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,235: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,266: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,297: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,328: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,358: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,405: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,435: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,466: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,497: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,527: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,235: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,266: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,297: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,328: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,358: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,405: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,435: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,466: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,497: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,527: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,559: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,571: Mouse Pressed: at (208, 502) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,591: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,617: Mouse Released: at (208, 502) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,622: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,666: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,697: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,728: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,762: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,789: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,559: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,571: Mouse Pressed: at (208, 502) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,591: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,617: Mouse Released: at (208, 502) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,622: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,666: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,697: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,728: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,762: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,789: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,822: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,852: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,855: Mouse Pressed: at (207, 527) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,899: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,905: Mouse Released: at (207, 527) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,931: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,960: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,992: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,023: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,054: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,822: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,852: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,855: Mouse Pressed: at (207, 527) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,899: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,905: Mouse Released: at (207, 527) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,931: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,960: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:37,992: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,023: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,054: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,085: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,116: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,144: Mouse Pressed: at (201, 553) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,162: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,194: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,214: Mouse Released: at (201, 555) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,224: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,254: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,286: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,317: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,085: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,116: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,144: Mouse Pressed: at (201, 553) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,162: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,194: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,214: Mouse Released: at (201, 555) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,224: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,254: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,286: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,317: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,349: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,394: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,425: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,456: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,488: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,520: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,550: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,582: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,613: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,658: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,349: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,394: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,425: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,456: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,488: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,520: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,550: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,582: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,613: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,658: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,689: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,720: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,751: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,786: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,814: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,845: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,877: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,924: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,953: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,984: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,689: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,720: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,751: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,786: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,814: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,845: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,877: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,924: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,953: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:38,984: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,015: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,044: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,075: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,106: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,153: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,183: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,215: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,247: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,280: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,307: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,015: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,044: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,075: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,106: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,153: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,183: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,215: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,247: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,280: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,307: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,340: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,368: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,340: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:39,368: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:43,154: Mouse Pressed: at (1051, 978) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:43,194: Mouse Released: at (1051, 978) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:43,944: Key Pressed: Key.up in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:44,069: Key Released: Key.up in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:44,343: Key Pressed: Key.up in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:44,456: Key Released: Key.up in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:45,007: Key Pressed: Key.up in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:45,081: Key Released: Key.up in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:44:46,181: Key Pressed: Key.down in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:46,294: Key Released: Key.down in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:43,154: Mouse Pressed: at (1051, 978) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:43,194: Mouse Released: at (1051, 978) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:43,944: Key Pressed: Key.up in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:44,069: Key Released: Key.up in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:44,343: Key Pressed: Key.up in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:44,456: Key Released: Key.up in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:45,007: Key Pressed: Key.up in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:45,081: Key Released: Key.up in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:46,181: Key Pressed: Key.down in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:46,294: Key Released: Key.down in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:46,418: Key Pressed: Key.down in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:46,494: Key Released: Key.down in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:48,436: Mouse Pressed: at (1298, 762) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:48,488: Mouse Released: at (1298, 762) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:49,586: Mouse Pressed: at (772, 946) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:49,646: Mouse Released: at (772, 947) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:51,282: Mouse Pressed: at (1881, 909) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:51,335: Time Spent: 138.72 seconds on Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:51,335: Active Window Changed: Switched to ShellExperienceHost.exe - New notification in ShellExperienceHost.exe - New notification
+2025-04-24 12:44:51,335: Mouse Released: at (1881, 909) with Button.left in ShellExperienceHost.exe - New notification
+2025-04-24 12:44:46,418: Key Pressed: Key.down in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:46,494: Key Released: Key.down in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:48,436: Mouse Pressed: at (1298, 762) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:48,488: Mouse Released: at (1298, 762) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:49,586: Mouse Pressed: at (772, 946) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:49,646: Mouse Released: at (772, 947) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:51,282: Mouse Pressed: at (1881, 909) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:51,335: Time Spent: 138.72 seconds on Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:51,335: Active Window Changed: Switched to ShellExperienceHost.exe - New notification in ShellExperienceHost.exe - New notification
+2025-04-24 12:44:51,335: Mouse Released: at (1881, 909) with Button.left in ShellExperienceHost.exe - New notification
+2025-04-24 12:44:52,383: Mouse Pressed: at (1503, 917) with Button.left in ShellExperienceHost.exe - New notification
+2025-04-24 12:44:52,421: Time Spent: 1.09 seconds on ShellExperienceHost.exe - New notification in ShellExperienceHost.exe - New notification
+2025-04-24 12:44:52,421: Active Window Changed: Switched to Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:52,422: Mouse Released: at (1503, 917) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:52,383: Mouse Pressed: at (1503, 917) with Button.left in ShellExperienceHost.exe - New notification
+2025-04-24 12:44:52,421: Time Spent: 1.09 seconds on ShellExperienceHost.exe - New notification in ShellExperienceHost.exe - New notification
+2025-04-24 12:44:52,421: Active Window Changed: Switched to Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:52,422: Mouse Released: at (1503, 917) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,194: Key Pressed: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,306: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,332: Key Released: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,332: Shortcut Used: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,431: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,481: Key Pressed: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,593: Key Released: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,707: Key Pressed: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,806: Key Released: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,919: Key Pressed: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,194: Key Pressed: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,306: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,332: Key Released: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,332: Shortcut Used: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,431: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,481: Key Pressed: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,593: Key Released: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,707: Key Pressed: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,806: Key Released: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:53,919: Key Pressed: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,019: Key Pressed: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,044: Key Released: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,044: Shortcut Used: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,132: Key Pressed: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,144: Key Released: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,145: Shortcut Used: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,207: Key Released: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,256: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,294: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,344: Text Input: talking in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,019: Key Pressed: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,044: Key Released: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,044: Shortcut Used: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,132: Key Pressed: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,144: Key Released: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,145: Shortcut Used: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,207: Key Released: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,256: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,294: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,344: Text Input: talking in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,345: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,345: Shortcut Used: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,406: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,482: Key Pressed: 'b' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,544: Key Released: 'b' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,681: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,793: Key Pressed: 'u' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,844: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,844: Shortcut Used: 'u' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,931: Key Released: 'u' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,345: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,345: Shortcut Used: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,406: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,482: Key Pressed: 'b' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,544: Key Released: 'b' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,681: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,793: Key Pressed: 'u' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,844: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,844: Shortcut Used: 'u' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,931: Key Released: 'u' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,982: Key Pressed: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,068: Key Released: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,118: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,243: Text Input: about in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,243: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,256: Key Pressed: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,356: Key Released: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,406: Key Pressed: 'h' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,532: Key Released: 'h' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,634: Key Pressed: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:54,982: Key Pressed: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,068: Key Released: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,118: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,243: Text Input: about in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,243: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,256: Key Pressed: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,356: Key Released: 't' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,406: Key Pressed: 'h' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,532: Key Released: 'h' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,634: Key Pressed: 'e' in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:44:55,706: Key Released: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,730: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,807: Text Input: the in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,807: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:57,056: Key Pressed: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:57,144: Key Released: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:57,669: Key Pressed: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:57,781: Key Released: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:57,981: Key Pressed: 'y' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,057: Key Released: 'y' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,706: Key Released: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,730: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,807: Text Input: the in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:55,807: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:57,056: Key Pressed: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:57,144: Key Released: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:57,669: Key Pressed: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:57,781: Key Released: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:57,981: Key Pressed: 'y' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,057: Key Released: 'y' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,194: Key Pressed: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,282: Key Released: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,394: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,468: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,532: Key Pressed: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,606: Key Released: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,706: Key Pressed: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,781: Key Released: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,882: Key Pressed: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,969: Key Pressed: 'r' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,194: Key Pressed: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,282: Key Released: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,394: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,468: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,532: Key Pressed: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,606: Key Released: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,706: Key Pressed: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,781: Key Released: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,882: Key Pressed: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:58,969: Key Pressed: 'r' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,006: Key Released: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,007: Shortcut Used: 'r' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,081: Key Released: 'r' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,107: Key Pressed: '.' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,193: Key Released: '.' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,344: Key Pressed: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,406: Key Released: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,606: Key Pressed: 'y' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,719: Key Released: 'y' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,781: Key Pressed: Key.enter in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,006: Key Released: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,007: Shortcut Used: 'r' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,081: Key Released: 'r' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,107: Key Pressed: '.' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,193: Key Released: '.' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,344: Key Pressed: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,406: Key Released: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,606: Key Pressed: 'y' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,719: Key Released: 'y' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,781: Key Pressed: Key.enter in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,881: Text Input: keylogger.py in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,881: Key Released: Key.enter in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,881: Text Input: keylogger.py in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:44:59,881: Key Released: Key.enter in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:02,694: Mouse Pressed: at (1074, 1061) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:02,747: Time Spent: 10.33 seconds on Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:02,747: Active Window Changed: Switched to explorer.exe -  in explorer.exe - 
+2025-04-24 12:45:02,747: Mouse Released: at (1074, 1061) with Button.left in explorer.exe - 
+2025-04-24 12:45:02,830: Time Spent: 0.08 seconds on explorer.exe -  in explorer.exe - 
+2025-04-24 12:45:02,830: Active Window Changed: Switched to WeChat.exe - Weixin in WeChat.exe - Weixin
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:45:07,426: Mouse Pressed: at (1058, 929) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:45:07,470: Mouse Released: at (1058, 929) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:45:10,846: Mouse Pressed: at (639, 753) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:45:10,908: Mouse Released: at (639, 753) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:45:02,694: Mouse Pressed: at (1074, 1061) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:02,747: Time Spent: 10.33 seconds on Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:02,747: Active Window Changed: Switched to explorer.exe -  in explorer.exe - 
+2025-04-24 12:45:02,747: Mouse Released: at (1074, 1061) with Button.left in explorer.exe - 
+2025-04-24 12:45:02,830: Time Spent: 0.08 seconds on explorer.exe -  in explorer.exe - 
+2025-04-24 12:45:02,830: Active Window Changed: Switched to WeChat.exe - Weixin in WeChat.exe - Weixin
+2025-04-24 12:45:07,426: Mouse Pressed: at (1058, 929) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:45:07,470: Mouse Released: at (1058, 929) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:45:10,846: Mouse Pressed: at (639, 753) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:45:10,908: Mouse Released: at (639, 753) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:45:13,354: Mouse Pressed: at (766, 358) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:45:13,405: Mouse Released: at (766, 358) with Button.left in WeChat.exe - Weixin
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:45:16,446: Mouse Pressed: at (1045, 187) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:45:16,501: Mouse Released: at (1045, 187) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:45:17,860: Time Spent: 15.03 seconds on WeChat.exe - Weixin in WeChat.exe - Weixin
+2025-04-24 12:45:17,860: Active Window Changed: Switched to Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:13,354: Mouse Pressed: at (766, 358) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:45:13,405: Mouse Released: at (766, 358) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:45:16,446: Mouse Pressed: at (1045, 187) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:45:16,501: Mouse Released: at (1045, 187) with Button.left in WeChat.exe - Weixin
+2025-04-24 12:45:17,860: Time Spent: 15.03 seconds on WeChat.exe - Weixin in WeChat.exe - Weixin
+2025-04-24 12:45:17,860: Active Window Changed: Switched to Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:45:31,081: Key Pressed: Key.media_next in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:31,168: Key Released: Key.media_next in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:31,081: Key Pressed: Key.media_next in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:31,168: Key Released: Key.media_next in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:45:36,767: Mouse Scrolled: at (1625, 513) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:36,788: Mouse Scrolled: at (1625, 513) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:36,806: Mouse Scrolled: at (1625, 513) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:36,818: Mouse Scrolled: at (1625, 513) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:36,834: Mouse Scrolled: at (1625, 513) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:36,848: Mouse Scrolled: at (1625, 513) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:36,884: Mouse Scrolled: at (1625, 513) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:37,323: Mouse Scrolled: at (1627, 515) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:37,349: Mouse Scrolled: at (1627, 515) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:37,361: Mouse Scrolled: at (1627, 515) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:36,767: Mouse Scrolled: at (1625, 513) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:36,788: Mouse Scrolled: at (1625, 513) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:36,806: Mouse Scrolled: at (1625, 513) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:36,818: Mouse Scrolled: at (1625, 513) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:36,834: Mouse Scrolled: at (1625, 513) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:36,848: Mouse Scrolled: at (1625, 513) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:36,884: Mouse Scrolled: at (1625, 513) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:37,323: Mouse Scrolled: at (1627, 515) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:37,349: Mouse Scrolled: at (1627, 515) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:37,361: Mouse Scrolled: at (1627, 515) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:37,376: Mouse Scrolled: at (1627, 515) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:37,387: Mouse Scrolled: at (1627, 515) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:37,409: Mouse Scrolled: at (1627, 515) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:37,458: Mouse Scrolled: at (1627, 515) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:37,376: Mouse Scrolled: at (1627, 515) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:37,387: Mouse Scrolled: at (1627, 515) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:37,409: Mouse Scrolled: at (1627, 515) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:37,458: Mouse Scrolled: at (1627, 515) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:43,217: Mouse Pressed: at (1677, 461) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:43,276: Mouse Released: at (1677, 461) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:44,247: Mouse Pressed: at (1835, 593) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:44,306: Mouse Released: at (1835, 593) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,271: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,285: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,297: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,308: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,322: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,334: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:43,217: Mouse Pressed: at (1677, 461) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:43,276: Mouse Released: at (1677, 461) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:44,247: Mouse Pressed: at (1835, 593) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:44,306: Mouse Released: at (1835, 593) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,271: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,285: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,297: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,308: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,322: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,334: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,355: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,393: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,772: Mouse Scrolled: at (1705, 571) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,804: Mouse Scrolled: at (1705, 571) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:46,004: Mouse Scrolled: at (1705, 571) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:46,023: Mouse Scrolled: at (1705, 571) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:46,049: Mouse Scrolled: at (1705, 571) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:45:47,119: Mouse Pressed: at (1640, 540) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:47,177: Mouse Released: at (1640, 540) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:48,334: Mouse Pressed: at (1624, 928) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,355: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,393: Mouse Scrolled: at (1688, 622) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,772: Mouse Scrolled: at (1705, 571) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:45,804: Mouse Scrolled: at (1705, 571) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:46,004: Mouse Scrolled: at (1705, 571) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:46,023: Mouse Scrolled: at (1705, 571) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:46,049: Mouse Scrolled: at (1705, 571) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:47,119: Mouse Pressed: at (1640, 540) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:47,177: Mouse Released: at (1640, 540) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:48,334: Mouse Pressed: at (1624, 928) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:49,331: Mouse Released: at (1538, 920) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:49,445: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:49,719: Key Pressed: '\x18' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:49,869: Key Released: '\x18' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:49,869: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:50,005: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:50,841: Mouse Pressed: at (1820, 678) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:50,890: Mouse Released: at (1820, 678) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:52,356: Clipboard Changed: New content copied (length: 12) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:49,331: Mouse Released: at (1538, 920) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:49,445: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:49,719: Key Pressed: '\x18' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:49,869: Key Released: '\x18' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:49,869: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:50,005: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:50,841: Mouse Pressed: at (1820, 678) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:50,890: Mouse Released: at (1820, 678) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:52,356: Clipboard Changed: New content copied (length: 12) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:53,210: Mouse Pressed: at (1531, 941) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:53,234: Mouse Released: at (1531, 941) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:53,696: Mouse Pressed: at (1559, 929) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:54,359: Mouse Released: at (1559, 929) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:54,990: Mouse Scrolled: at (1595, 698) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:55,043: Mouse Scrolled: at (1595, 698) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:55,616: Mouse Pressed: at (1568, 931) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:55,854: Mouse Released: at (1394, 910) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:55,932: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:56,088: Key Pressed: '\x16' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:53,210: Mouse Pressed: at (1531, 941) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:53,234: Mouse Released: at (1531, 941) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:53,696: Mouse Pressed: at (1559, 929) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:54,359: Mouse Released: at (1559, 929) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:54,990: Mouse Scrolled: at (1595, 698) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:55,043: Mouse Scrolled: at (1595, 698) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:55,616: Mouse Pressed: at (1568, 931) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:55,854: Mouse Released: at (1394, 910) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:55,932: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:56,088: Key Pressed: '\x16' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:56,182: Key Released: '\x16' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:56,182: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:45:56,469: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,006: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,118: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,206: Key Pressed: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,281: Key Released: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,294: Key Pressed: 's' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,394: Key Released: 's' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,418: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:56,182: Key Released: '\x16' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:56,182: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:56,469: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,006: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,118: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,206: Key Pressed: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,281: Key Released: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,294: Key Pressed: 's' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,394: Key Released: 's' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,418: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,481: Text Input: is in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,482: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,582: Key Pressed: 'm' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,669: Key Released: 'm' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,682: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,782: Key Pressed: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,794: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,794: Shortcut Used: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,859: Key Released: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,969: Key Pressed: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,481: Text Input: is in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,482: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,582: Key Pressed: 'm' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,669: Key Released: 'm' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,682: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,782: Key Pressed: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,794: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,794: Shortcut Used: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,859: Key Released: 'k' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:57,969: Key Pressed: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,069: Key Pressed: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,107: Key Released: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,107: Shortcut Used: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,169: Key Pressed: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,182: Key Released: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,182: Shortcut Used: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,270: Key Released: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,306: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,369: Text Input: making in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,369: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,069: Key Pressed: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,107: Key Released: 'i' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,107: Shortcut Used: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,169: Key Pressed: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,182: Key Released: 'n' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,182: Shortcut Used: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,270: Key Released: 'g' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,306: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,369: Text Input: making in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,369: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,382: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,470: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,481: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,557: Text Input: a in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,557: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,681: Key Pressed: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,794: Key Pressed: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,819: Key Released: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,819: Shortcut Used: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,869: Key Released: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,382: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,470: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,481: Key Pressed: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,557: Text Input: a in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,557: Key Released: Key.space in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,681: Key Pressed: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,794: Key Pressed: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,819: Key Released: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,819: Shortcut Used: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,869: Key Released: 'e' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,982: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:59,145: Key Pressed: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:59,169: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:59,170: Shortcut Used: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:59,232: Key Released: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:59,556: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:59,619: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:00,882: Key Pressed: Key.backspace in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:01,019: Key Released: Key.backspace in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:01,119: Key Pressed: Key.backspace in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:58,982: Key Pressed: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:59,145: Key Pressed: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:59,169: Key Released: 'a' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:59,170: Shortcut Used: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:59,232: Key Released: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:59,556: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:45:59,619: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:00,882: Key Pressed: Key.backspace in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:01,019: Key Released: Key.backspace in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:01,119: Key Pressed: Key.backspace in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:01,206: Key Released: Key.backspace in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:01,369: Key Pressed: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:01,456: Key Released: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,145: Key Pressed: Key.backspace in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,232: Key Released: Key.backspace in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,456: Key Pressed: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,556: Key Released: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:01,206: Key Released: Key.backspace in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:01,369: Key Pressed: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:01,456: Key Released: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,145: Key Pressed: Key.backspace in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,232: Key Released: Key.backspace in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,456: Key Pressed: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,556: Key Released: 'd' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,683: Key Pressed: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,756: Key Released: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,894: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,969: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:03,107: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:03,194: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:03,319: Key Pressed: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:03,432: Key Released: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:03,971: Key Pressed: Key.enter in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:04,056: Text Input: deadoldloop in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,683: Key Pressed: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,756: Key Released: 'l' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,894: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:02,969: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:03,107: Key Pressed: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:03,194: Key Released: 'o' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:03,319: Key Pressed: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:03,432: Key Released: 'p' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:03,971: Key Pressed: Key.enter in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:04,056: Text Input: deadoldloop in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:04,057: Key Released: Key.enter in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:46:09,770: Mouse Scrolled: at (119, 497) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,796: Mouse Scrolled: at (130, 512) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,797: Mouse Scrolled: at (130, 512) with delta (0, -2) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,810: Mouse Scrolled: at (135, 519) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,824: Mouse Scrolled: at (138, 522) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,826: Mouse Scrolled: at (138, 522) with delta (0, -4) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,839: Mouse Scrolled: at (139, 523) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,863: Mouse Scrolled: at (139, 523) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,898: Mouse Scrolled: at (139, 523) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:04,057: Key Released: Key.enter in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,770: Mouse Scrolled: at (119, 497) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,796: Mouse Scrolled: at (130, 512) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,797: Mouse Scrolled: at (130, 512) with delta (0, -2) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,810: Mouse Scrolled: at (135, 519) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,824: Mouse Scrolled: at (138, 522) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,826: Mouse Scrolled: at (138, 522) with delta (0, -4) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,839: Mouse Scrolled: at (139, 523) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,863: Mouse Scrolled: at (139, 523) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:09,898: Mouse Scrolled: at (139, 523) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:10,582: Mouse Scrolled: at (182, 498) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:10,596: Mouse Scrolled: at (182, 498) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:10,614: Mouse Scrolled: at (182, 498) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:10,622: Mouse Scrolled: at (182, 498) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:10,638: Mouse Scrolled: at (182, 498) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:10,654: Mouse Scrolled: at (182, 498) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:10,700: Mouse Scrolled: at (182, 498) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:10,582: Mouse Scrolled: at (182, 498) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:10,596: Mouse Scrolled: at (182, 498) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:10,614: Mouse Scrolled: at (182, 498) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:10,622: Mouse Scrolled: at (182, 498) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:10,638: Mouse Scrolled: at (182, 498) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:10,654: Mouse Scrolled: at (182, 498) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:10,700: Mouse Scrolled: at (182, 498) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:46:24,286: Mouse Scrolled: at (1303, 501) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:24,335: Mouse Scrolled: at (1303, 501) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:24,370: Mouse Scrolled: at (1303, 501) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:25,333: Mouse Scrolled: at (1249, 534) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:25,351: Mouse Scrolled: at (1249, 535) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:25,376: Mouse Scrolled: at (1249, 535) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:25,410: Mouse Scrolled: at (1249, 535) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:26,064: Mouse Pressed: at (703, 1003) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:26,101: Mouse Released: at (703, 1003) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:46:26,719: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:24,286: Mouse Scrolled: at (1303, 501) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:24,335: Mouse Scrolled: at (1303, 501) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:24,370: Mouse Scrolled: at (1303, 501) with delta (0, 1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:25,333: Mouse Scrolled: at (1249, 534) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:25,351: Mouse Scrolled: at (1249, 535) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:25,376: Mouse Scrolled: at (1249, 535) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:25,410: Mouse Scrolled: at (1249, 535) with delta (0, -1) in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:26,064: Mouse Pressed: at (703, 1003) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:26,101: Mouse Released: at (703, 1003) with Button.left in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:26,719: Key Pressed: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:26,819: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:27,006: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:27,007: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:27,857: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:27,982: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:27,982: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:28,932: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:26,819: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:27,006: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:27,007: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:27,857: Key Pressed: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:27,982: Key Released: '\x03' in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:27,982: Shortcut Used: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:28,932: Key Released: Key.ctrl_l in Trae.exe - ts.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:46:37,998: Time Spent: 80.14 seconds on Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:37,998: Active Window Changed: Switched to Trae.exe - keylogger.py - Keylogger - Trae in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:41,386: Mouse Pressed: at (1293, 144) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:41,491: Mouse Released: at (1293, 144) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:37,998: Time Spent: 80.14 seconds on Trae.exe - ts.py - Keylogger - Trae in Trae.exe - ts.py - Keylogger - Trae
+2025-04-24 12:46:37,998: Active Window Changed: Switched to Trae.exe - keylogger.py - Keylogger - Trae in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:41,386: Mouse Pressed: at (1293, 144) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:41,491: Mouse Released: at (1293, 144) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:46:48,886: Mouse Pressed: at (872, 1000) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:48,939: Mouse Released: at (872, 1000) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:49,482: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:49,619: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:49,744: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:49,745: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:49,919: Key Released: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:51,532: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:51,631: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:51,770: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:48,886: Mouse Pressed: at (872, 1000) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:48,939: Mouse Released: at (872, 1000) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:49,482: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:49,619: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:49,744: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:49,745: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:49,919: Key Released: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:51,532: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:51,631: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:51,770: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:51,770: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,119: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,206: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,207: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,333: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,407: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,407: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,520: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,569: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,569: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:51,770: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,119: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,206: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,207: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,333: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,407: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,407: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,520: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,569: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,569: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,694: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,770: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,770: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,869: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,944: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,945: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,056: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,119: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,119: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,232: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,694: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,770: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,770: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,869: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,944: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:52,945: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,056: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,119: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,119: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,232: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,319: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,320: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,444: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,520: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,520: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,620: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,694: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,695: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,807: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,857: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,319: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,320: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,444: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,520: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,520: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,620: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,694: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,695: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,807: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,857: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,858: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,982: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:54,044: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:54,044: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:54,170: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:54,232: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:54,232: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:56,044: Key Released: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:46:58,494: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:58,569: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,858: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:53,982: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:54,044: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:54,044: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:54,170: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:54,232: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:54,232: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:56,044: Key Released: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:58,494: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:58,569: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:58,670: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:58,670: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,046: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,131: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,132: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,244: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,306: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,307: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,445: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,532: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:58,670: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:58,670: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,046: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,131: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,132: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,244: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,306: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,307: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,445: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,532: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,532: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,631: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,719: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,719: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,844: Key Released: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:01,943: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,006: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,126: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,220: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,334: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,532: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,631: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,719: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,719: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:46:59,844: Key Released: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:01,943: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,006: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,126: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,220: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,334: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,434: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,614: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,643: Mouse Scrolled: at (1143, 519) with delta (0, -2) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,434: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,614: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,643: Mouse Scrolled: at (1143, 519) with delta (0, -2) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,724: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:03,171: Mouse Scrolled: at (1143, 519) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:03,192: Mouse Scrolled: at (1143, 519) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:03,217: Mouse Scrolled: at (1143, 519) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:03,262: Mouse Scrolled: at (1143, 519) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:47:07,102: Mouse Pressed: at (613, 934) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:07,162: Mouse Released: at (613, 934) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:07,669: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:07,806: Key Pressed: '\x04' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:07,994: Key Released: '\x04' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:02,724: Mouse Scrolled: at (1143, 519) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:03,171: Mouse Scrolled: at (1143, 519) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:03,192: Mouse Scrolled: at (1143, 519) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:03,217: Mouse Scrolled: at (1143, 519) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:03,262: Mouse Scrolled: at (1143, 519) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:07,102: Mouse Pressed: at (613, 934) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:07,162: Mouse Released: at (613, 934) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:07,669: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:07,806: Key Pressed: '\x04' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:07,994: Key Released: '\x04' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:07,995: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:08,057: Key Released: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:09,319: Mouse Pressed: at (1381, 760) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:09,372: Mouse Released: at (1381, 760) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:47:37,878: Mouse Pressed: at (541, 816) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:37,950: Mouse Released: at (541, 816) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:40,430: Mouse Pressed: at (1092, 958) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:40,481: Mouse Released: at (1092, 958) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:41,245: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:41,369: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:41,483: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:41,483: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:41,557: Key Released: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:42,292: Mouse Scrolled: at (1017, 923) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:37,878: Mouse Pressed: at (541, 816) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:37,950: Mouse Released: at (541, 816) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:40,430: Mouse Pressed: at (1092, 958) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:40,481: Mouse Released: at (1092, 958) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:41,245: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:41,369: Key Pressed: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:41,483: Key Released: '\x03' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:41,483: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:41,557: Key Released: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:42,292: Mouse Scrolled: at (1017, 923) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:42,344: Mouse Scrolled: at (1017, 923) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,157: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,659: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,690: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,738: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,769: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,799: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,829: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,860: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,891: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:42,344: Mouse Scrolled: at (1017, 923) with delta (0, -1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,157: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,659: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,690: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,738: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,769: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,799: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,829: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,860: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,891: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,923: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,953: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:44,000: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:44,030: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:44,062: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:44,094: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:44,124: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:44,132: Key Pressed: '\x13' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:44,306: Key Released: '\x13' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:45,617: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,923: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:43,953: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:44,000: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:44,030: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:44,062: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:44,094: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:44,124: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:44,132: Key Pressed: '\x13' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:44,306: Key Released: '\x13' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:45,617: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:45,618: Key Released: '\x18' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:45,618: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:45,756: Key Released: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:45,618: Key Released: '\x18' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:45,618: Shortcut Used: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:45,756: Key Released: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:46,084: Mouse Pressed: at (1596, 944) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:47:46,135: Mouse Released: at (1596, 944) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:48,477: Mouse Pressed: at (1374, 781) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:47:48,521: Mouse Released: at (1374, 781) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:48:52,789: Mouse Pressed: at (1023, 1037) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:52,871: Mouse Released: at (1023, 1037) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:55,444: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:55,545: Key Pressed: Key.shift in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:55,994: Key Pressed: '\x11' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:56,282: Key Released: Key.shift in Trae.exe - keylogger.py - Keylogger - Trae
+Error in on_release: 'KeyCode' object has no attribute 'lower'
+2025-04-24 12:48:56,295: Key Released: '\x11' in Trae.exe - keylogger.py - Keylogger - Trae
+Error in on_release: 'Key' object has no attribute 'lower'
+2025-04-24 12:48:56,345: Key Released: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:57,647: Mouse Pressed: at (836, 875) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:57,717: Mouse Released: at (836, 875) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:52,789: Mouse Pressed: at (1023, 1037) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:52,871: Mouse Released: at (1023, 1037) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:55,444: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:55,545: Key Pressed: Key.shift in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:55,994: Key Pressed: '\x11' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:56,282: Key Released: Key.shift in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:56,295: Key Released: '\x11' in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:56,345: Key Released: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:57,647: Mouse Pressed: at (836, 875) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:57,717: Mouse Released: at (836, 875) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:58,219: Key Pressed: Key.shift in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:58,232: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:58,707: Key Released: Key.shift in Trae.exe - keylogger.py - Keylogger - Trae
+Error in on_release: 'Key' object has no attribute 'lower'
+2025-04-24 12:48:58,807: Key Released: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:58,219: Key Pressed: Key.shift in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:58,232: Key Pressed: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:58,707: Key Released: Key.shift in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:48:58,807: Key Released: Key.ctrl_l in Trae.exe - keylogger.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:49:00,544: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:00,745: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:01,147: Mouse Pressed: at (542, 1023) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:01,209: Mouse Released: at (542, 1023) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:01,669: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:01,782: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:02,269: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:02,370: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:02,532: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:02,631: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:00,544: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:00,745: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:01,147: Mouse Pressed: at (542, 1023) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:01,209: Mouse Released: at (542, 1023) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:01,669: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:01,782: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:02,269: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:02,370: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:02,532: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:02,631: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:02,769: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:02,869: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,019: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,094: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,195: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,269: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,370: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,432: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,519: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,582: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:02,769: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:02,869: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,019: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,094: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,195: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,269: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,370: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,432: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,519: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:03,582: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:05,864: Mouse Scrolled: at (1614, 216) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:07,136: Mouse Pressed: at (1581, 253) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:07,187: Mouse Released: at (1581, 253) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:08,302: Mouse Pressed: at (1829, 435) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:08,375: Mouse Released: at (1829, 435) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:09,334: Mouse Pressed: at (874, 1064) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:09,378: Mouse Released: at (874, 1064) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:05,864: Mouse Scrolled: at (1614, 216) with delta (0, 1) in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:07,136: Mouse Pressed: at (1581, 253) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:07,187: Mouse Released: at (1581, 253) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:08,302: Mouse Pressed: at (1829, 435) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:08,375: Mouse Released: at (1829, 435) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:09,334: Mouse Pressed: at (874, 1064) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:09,378: Mouse Released: at (874, 1064) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:09,691: Mouse Pressed: at (844, 1018) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:09,766: Mouse Released: at (844, 1018) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:49:10,907: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:11,095: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:11,619: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:11,770: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:11,995: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,082: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,169: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,257: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:09,691: Mouse Pressed: at (844, 1018) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:09,766: Mouse Released: at (844, 1018) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:10,907: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:11,095: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:11,619: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:11,770: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:11,995: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,082: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,169: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,257: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,345: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,432: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,533: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,645: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,732: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,832: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,920: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:13,020: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:18,228: Mouse Pressed: at (1204, 722) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:18,273: Mouse Released: at (1204, 722) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,345: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,432: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,533: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,645: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,732: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,832: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:12,920: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:13,020: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:18,228: Mouse Pressed: at (1204, 722) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:18,273: Mouse Released: at (1204, 722) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:49:21,363: Mouse Pressed: at (1380, 758) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:21,418: Mouse Released: at (1380, 758) with Button.left in Trae.exe - keylogger.py - Keylogger - Trae
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-04-24 12:49:31,857: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:32,032: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+Listeners stopping...
+2025-04-24 12:49:31,857: Key Pressed: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:32,032: Key Released: Key.esc in Trae.exe - keylogger.py - Keylogger - Trae
+Keylogger started.
+Initiating shutdown...
+2025-04-24 12:49:32,057: Time Spent: 1.69 seconds on Trae.exe - keylogger.py - Keylogger - Trae in Trae.exe - keylogger.py - Keylogger - Trae
+2025-04-24 12:49:32,057: Time Spent: 1.69 seconds on Trae.exe - keylogger.py - Keylogger - Trae in Trae.exe - keylogger.py - Keylogger - Trae
+Readable report generated at readable_log_report.txt
+Keylogger stopped.
+--- Usage Statistics ---
+Trae.exe - keylogger.py - Keylogger - Trae: 1.69 seconds
+------------------------
