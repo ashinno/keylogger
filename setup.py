@@ -206,20 +206,22 @@ class KeyloggerSetup:
                 if response.lower() != 'y':
                     print("✅ Keeping existing encryption key")
                     return True
+                else:
+                    # Remove existing key so new one will be generated
+                    key_file.unlink()
             
             # Import here to avoid dependency issues during setup
             from core.encryption_manager import EncryptionManager
-            from core.config_manager import ConfigManager
             
-            config_manager = ConfigManager(str(self.config_file))
-            encryption_manager = EncryptionManager(config_manager)
+            # Create EncryptionManager with key file path - it will auto-generate key
+            encryption_manager = EncryptionManager(str(key_file))
             
-            # Generate and save key
-            key = encryption_manager.generate_random_key()
-            encryption_manager.save_key(key)
-            
-            print(f"✅ Generated encryption key: {key_file}")
-            return True
+            if encryption_manager.is_initialized():
+                print(f"✅ Generated encryption key: {key_file}")
+                return True
+            else:
+                print("❌ Failed to initialize encryption")
+                return False
             
         except ImportError:
             print("⚠️  Cannot generate encryption key - dependencies not installed yet")
@@ -256,10 +258,13 @@ class KeyloggerSetup:
             try:
                 from core.config_manager import ConfigManager
                 config = ConfigManager(str(self.config_file))
-                if config.validate_config():
+                validation_errors = config.validate_config()
+                if not validation_errors:
                     print("✅ Configuration validation passed")
                 else:
-                    print("❌ Configuration validation failed")
+                    print("❌ Configuration validation failed:")
+                    for error in validation_errors:
+                        print(f"   - {error}")
                     return False
             except Exception as e:
                 print(f"❌ Configuration test failed: {e}")

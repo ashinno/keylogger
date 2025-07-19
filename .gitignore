@@ -1,0 +1,413 @@
+# Enhanced Keylogger .gitignore
+
+# Sensitive Data - NEVER commit these!
+*.key
+*.enc
+keys/
+logs/
+screenshots/
+config.json
+
+# Log files
+*.log
+*.txt
+keylog*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+PYTHONPATH
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Operating System Files
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Application-specific
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+*.tmp
+
+# Compressed files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Configuration files with sensitive data
+config_local.json
+config_production.json
+secrets.json
+.secrets
+
+# SSL certificates
+*.pem
+*.crt
+*.cer
+*.p12
+*.pfx
+
+# SSH keys
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+*.ppk
+
+# GPG keys
+*.gpg
+*.asc
+
+# API keys and tokens
+.env.local
+.env.production
+api_keys.txt
+tokens.txt
+
+# Temporary directories
+temp/
+tmp/
+.temp/
+.tmp/
+
+# Runtime files
+*.pid
+*.lock
+
+# Cache directories
+cache/
+.cache/
+
+# Build artifacts
+build/
+dist/
+out/
+
+# Documentation build
+docs/build/
+docs/_build/
+
+# Test artifacts
+test-results/
+test-reports/
+
+# Profiling data
+*.prof
+*.profile
+
+# Memory dumps
+*.dmp
+*.mdmp
+
+# Core dumps
+core
+core.*
+
+# Application logs
+app.log
+application.log
+error.log
+debug.log
+
+# Web server logs
+access.log
+error.log
+
+# Keylogger-specific
+
+# Captured data
+captured_data/
+raw_logs/
+processed_logs/
+
+# Analysis results
+analysis/
+reports/
+statistics/
+
+# Exported data
+exports/
+backups/
+
+# Performance data
+performance/
+metrics/
+
+# Network captures
+*.pcap
+*.pcapng
+
+# USB device data
+usb_logs/
+device_info/
+
+# Window tracking data
+window_logs/
+app_usage/
+
+# Mouse tracking data
+mouse_logs/
+click_maps/
+
+# Keyboard data
+keyboard_logs/
+typing_patterns/
+
+# Clipboard data
+clipboard_logs/
+clipboard_history/
+
+# Screenshot data
+screenshot_logs/
+image_analysis/
+
+# Encryption test files
+test_encrypted.*
+test_decrypted.*
+
+# Development files
+.development
+.debug
+dev_config.json
+test_config.json
+
+# Deployment files
+.deployment
+deploy_config.json
+production_config.json
+
+# Monitoring data
+monitoring/
+alerts/
+notifications/
+
+# Remote logging
+remote_logs/
+uploaded_logs/
+
+# Email data
+email_logs/
+notification_logs/
+
+# Web interface sessions
+sessions/
+.sessions
+
+# User data
+user_data/
+profiles/
+
+# Custom exclusions
+# Add your custom files/directories here
+
+# Example custom exclusions:
+# my_custom_config.json
+# custom_logs/
+# personal_data/
+
+# End of .gitignore

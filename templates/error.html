@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Error - Enhanced Keylogger{% endblock %}
+
+{% block page_title %}Error{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Error {{ error_code or '500' }}
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <i class="fas fa-bug fa-5x text-danger mb-3"></i>
+                    <h3 class="text-danger">{{ error_title or 'Internal Server Error' }}</h3>
+                    <p class="text-muted lead">{{ error_message or 'The server encountered an internal error and was unable to complete your request.' }}</p>
+                </div>
+                
+                {% if error_details %}
+                <div class="alert alert-warning" role="alert">
+                    <h6 class="alert-heading">Error Details:</h6>
+                    <pre class="mb-0">{{ error_details }}</pre>
+                </div>
+                {% endif %}
+                
+                <div class="text-center">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-primary me-2">
+                        <i class="fas fa-home me-1"></i>
+                        Go to Dashboard
+                    </a>
+                    <button onclick="history.back()" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-1"></i>
+                        Go Back
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Auto-redirect to dashboard after 10 seconds if no user interaction
+let redirectTimer = setTimeout(function() {
+    window.location.href = "{{ url_for('dashboard') }}";
+}, 10000);
+
+// Clear timer if user interacts with the page
+document.addEventListener('click', function() {
+    clearTimeout(redirectTimer);
+});
+
+document.addEventListener('keydown', function() {
+    clearTimeout(redirectTimer);
+});
+</script>
+{% endblock %}

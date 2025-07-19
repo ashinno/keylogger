@@ -64,7 +64,7 @@ class KeyloggerApplication:
             self.config_manager = ConfigManager(self.config_file)
             
             # Initialize core keylogger
-            self.keylogger_core = KeyloggerCore(self.config_manager)
+            self.keylogger_core = KeyloggerCore(self.config_file)
             
             # Initialize web interface if enabled
             if self.config_manager.get('web.enabled', False):
