@@ -85,3 +85,89 @@ Error in on_press: 'charmap' codec can't encode characters in position 66-67: ch
 Error in on_release: 'charmap' codec can't encode characters in position 66-67: character maps to <undefined>
 Error in on_click: 'charmap' codec can't encode characters in position 66-67: character maps to <undefined>
 Error in on_click: 'charmap' codec can't encode characters in position 66-67: character maps to <undefined>
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-06-29 08:18:11,554: Key Pressed: Key.cmd in Trae.exe - log_parser.py - Keylogger - Trae
+2025-06-29 08:18:11,558: Key Released: Key.cmd in Trae.exe - log_parser.py - Keylogger - Trae
+2025-06-29 08:18:11,554: Key Pressed: Key.cmd in Trae.exe - log_parser.py - Keylogger - Trae
+2025-06-29 08:18:11,558: Key Released: Key.cmd in Trae.exe - log_parser.py - Keylogger - Trae
+2025-06-29 08:18:14,747: Time Spent: 100.15 seconds on Trae.exe - log_parser.py - Keylogger - Trae in Trae.exe - log_parser.py - Keylogger - Trae
+2025-06-29 08:18:14,747: Active Window Changed: Switched to SearchHost.exe - Search in SearchHost.exe - Search
+2025-06-29 08:18:14,866: Mouse Pressed: at (974, 1045) with Button.left in SearchHost.exe - Search
+2025-06-29 08:18:15,091: Mouse Released: at (974, 1045) with Button.left in SearchHost.exe - Search
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-06-29 08:18:17,955: Time Spent: 3.21 seconds on SearchHost.exe - Search in SearchHost.exe - Search
+2025-06-29 08:18:17,957: Active Window Changed: Switched to opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:18:17,957: Mouse Pressed: at (127, 23) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:18:18,177: Mouse Released: at (127, 23) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:18:14,747: Time Spent: 100.15 seconds on Trae.exe - log_parser.py - Keylogger - Trae in Trae.exe - log_parser.py - Keylogger - Trae
+2025-06-29 08:18:14,747: Active Window Changed: Switched to SearchHost.exe - Search in SearchHost.exe - Search
+2025-06-29 08:18:14,866: Mouse Pressed: at (974, 1045) with Button.left in SearchHost.exe - Search
+2025-06-29 08:18:15,091: Mouse Released: at (974, 1045) with Button.left in SearchHost.exe - Search
+2025-06-29 08:18:17,955: Time Spent: 3.21 seconds on SearchHost.exe - Search in SearchHost.exe - Search
+2025-06-29 08:18:17,957: Active Window Changed: Switched to opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:18:17,957: Mouse Pressed: at (127, 23) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:18:18,177: Mouse Released: at (127, 23) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-06-29 08:18:37,283: Mouse Pressed: at (711, 74) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:18:37,512: Mouse Released: at (711, 74) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:18:37,283: Mouse Pressed: at (711, 74) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:18:37,512: Mouse Released: at (711, 74) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-06-29 08:19:16,579: Mouse Pressed: at (351, 391) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:19:16,798: Mouse Released: at (351, 391) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:19:16,579: Mouse Pressed: at (351, 391) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:19:16,798: Mouse Released: at (351, 391) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-06-29 08:20:43,390: Mouse Pressed: at (331, 409) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:20:43,617: Mouse Released: at (331, 409) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:20:43,390: Mouse Pressed: at (331, 409) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:20:43,617: Mouse Released: at (331, 409) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+Error capturing screenshot: log_event() missing 1 required positional argument: 'details'
+2025-06-29 08:20:47,793: Mouse Pressed: at (1815, 15) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:20:48,011: Mouse Released: at (1815, 15) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:20:50,014: Time Spent: 152.06 seconds on opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:20:50,014: Active Window Changed: Switched to Trae.exe - log_parser.py - Keylogger - Trae in Trae.exe - log_parser.py - Keylogger - Trae
+2025-06-29 08:20:50,147: Mouse Pressed: at (939, 938) with Button.left in Trae.exe - log_parser.py - Keylogger - Trae
+2025-06-29 08:20:50,370: Mouse Released: at (939, 938) with Button.left in Trae.exe - log_parser.py - Keylogger - Trae
+2025-06-29 08:20:51,059: Key Pressed: Key.esc in Trae.exe - log_parser.py - Keylogger - Trae
+2025-06-29 08:20:51,061: Key Released: Key.esc in Trae.exe - log_parser.py - Keylogger - Trae
+Listeners stopping...
+2025-06-29 08:20:47,793: Mouse Pressed: at (1815, 15) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:20:48,011: Mouse Released: at (1815, 15) with Button.left in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:20:50,014: Time Spent: 152.06 seconds on opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera in opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera
+2025-06-29 08:20:50,014: Active Window Changed: Switched to Trae.exe - log_parser.py - Keylogger - Trae in Trae.exe - log_parser.py - Keylogger - Trae
+2025-06-29 08:20:50,147: Mouse Pressed: at (939, 938) with Button.left in Trae.exe - log_parser.py - Keylogger - Trae
+2025-06-29 08:20:50,370: Mouse Released: at (939, 938) with Button.left in Trae.exe - log_parser.py - Keylogger - Trae
+2025-06-29 08:20:51,059: Key Pressed: Key.esc in Trae.exe - log_parser.py - Keylogger - Trae
+2025-06-29 08:20:51,061: Key Released: Key.esc in Trae.exe - log_parser.py - Keylogger - Trae
+Keylogger started.
+Initiating shutdown...
+2025-06-29 08:20:51,090: Time Spent: 1.08 seconds on Trae.exe - log_parser.py - Keylogger - Trae in Trae.exe - log_parser.py - Keylogger - Trae
+2025-06-29 08:20:51,090: Time Spent: 1.08 seconds on Trae.exe - log_parser.py - Keylogger - Trae in Trae.exe - log_parser.py - Keylogger - Trae
+Readable report generated at readable_log_report.txt
+Keylogger stopped.
+--- Usage Statistics ---
+Trae.exe - log_parser.py - Keylogger - Trae: 101.23 seconds
+SearchHost.exe - Search: 3.21 seconds
+opera.exe - China Train Tickets Booking | Train Times, Fares & Delivery | Trip.com - Opera: 152.06 seconds
+------------------------

