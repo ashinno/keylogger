@@ -212,7 +212,7 @@ class WindowMonitor:
             window_name = self._format_window_name(window_info)
             
             # Skip if application is excluded
-            if self.config.is_excluded_application(window_name):
+            if self.config.is_application_excluded(window_name):
                 return
             
             self.keylogger.log_event(
@@ -235,7 +235,7 @@ class WindowMonitor:
             window_name = self._format_window_name(window_info)
             
             # Skip if application is excluded
-            if self.config.is_excluded_application(window_name):
+            if self.config.is_application_excluded(window_name):
                 return
             
             details = f"Switched to {window_name}"

