@@ -1,0 +1,327 @@
+{% extends "base.html" %}
+
+{% block title %}Performance - Keylogger{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- System Performance -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">System Performance</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-info"><i class="fas fa-microchip"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">CPU Usage</span>
+                                    <span class="info-box-number" id="cpuUsage">{{ performance.system.cpu_percent|default('0') }}%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-success"><i class="fas fa-memory"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Memory Usage</span>
+                                    <span class="info-box-number" id="memoryUsage">{{ performance.system.memory_percent|default('0') }}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-warning"><i class="fas fa-hdd"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Disk Usage</span>
+                                    <span class="info-box-number" id="diskUsage">{{ performance.system.disk_percent|default('0') }}%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-danger"><i class="fas fa-thermometer-half"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Load Average</span>
+                                    <span class="info-box-number" id="loadAverage">{{ performance.system.load_average|default('0.0') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Keylogger Performance -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Keylogger Performance</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-primary"><i class="fas fa-clock"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Uptime</span>
+                                    <span class="info-box-number" id="uptime">{{ performance.keylogger.uptime|default('0h 0m') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-success"><i class="fas fa-list"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Events/Hour</span>
+                                    <span class="info-box-number" id="eventsPerHour">{{ performance.keylogger.events_per_hour|default('0') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-info"><i class="fas fa-database"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Buffer Size</span>
+                                    <span class="info-box-number" id="bufferSize">{{ performance.keylogger.buffer_size|default('0') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-warning"><i class="fas fa-file"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Log Size (MB)</span>
+                                    <span class="info-box-number" id="logSize">{{ performance.keylogger.log_file_size_mb|default('0') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Performance Chart -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Performance History</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="performanceChart" width="400" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Component Status -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Component Status</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Status</th>
+                                    <th>Events</th>
+                                    <th>Last Activity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Keyboard Listener</td>
+                                    <td><span class="badge badge-success">Active</span></td>
+                                    <td>{{ performance.components.keyboard.events|default('0') }}</td>
+                                    <td>{{ performance.components.keyboard.last_activity|default('N/A') }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Mouse Listener</td>
+                                    <td><span class="badge badge-success">Active</span></td>
+                                    <td>{{ performance.components.mouse.events|default('0') }}</td>
+                                    <td>{{ performance.components.mouse.last_activity|default('N/A') }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Clipboard Monitor</td>
+                                    <td><span class="badge badge-success">Active</span></td>
+                                    <td>{{ performance.components.clipboard.events|default('0') }}</td>
+                                    <td>{{ performance.components.clipboard.last_activity|default('N/A') }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Window Monitor</td>
+                                    <td><span class="badge badge-success">Active</span></td>
+                                    <td>{{ performance.components.window.events|default('0') }}</td>
+                                    <td>{{ performance.components.window.last_activity|default('N/A') }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Performance Settings -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Performance Settings</h3>
+                </div>
+                <div class="card-body">
+                    <form id="performanceSettings">
+                        <div class="form-group">
+                            <label for="refreshInterval">Refresh Interval (seconds):</label>
+                            <input type="number" class="form-control" id="refreshInterval" value="5" min="1" max="60">
+                        </div>
+                        <div class="form-group">
+                            <label for="chartHistory">Chart History (minutes):</label>
+                            <input type="number" class="form-control" id="chartHistory" value="30" min="5" max="120">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="autoRefresh" checked>
+                            <label class="form-check-label" for="autoRefresh">
+                                Auto Refresh
+                            </label>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="updateSettings()">Update Settings</button>
+                        <button type="button" class="btn btn-secondary" onclick="refreshData()">Refresh Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let performanceChart;
+let refreshInterval;
+
+// Initialize chart
+function initChart() {
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+    performanceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'CPU Usage (%)',
+                data: [],
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }, {
+                label: 'Memory Usage (%)',
+                data: [],
+                borderColor: 'rgb(255, 99, 132)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+}
+
+// Refresh performance data
+function refreshData() {
+    fetch('/api/performance')
+        .then(response => response.json())
+        .then(data => {
+            // Update system metrics
+            document.getElementById('cpuUsage').textContent = data.system.cpu_percent + '%';
+            document.getElementById('memoryUsage').textContent = data.system.memory_percent + '%';
+            document.getElementById('diskUsage').textContent = data.system.disk_percent + '%';
+            document.getElementById('loadAverage').textContent = data.system.load_average;
+            
+            // Update keylogger metrics
+            document.getElementById('uptime').textContent = data.keylogger.uptime;
+            document.getElementById('eventsPerHour').textContent = data.keylogger.events_per_hour;
+            document.getElementById('bufferSize').textContent = data.keylogger.buffer_size;
+            document.getElementById('logSize').textContent = data.keylogger.log_file_size_mb;
+            
+            // Update chart
+            updateChart(data.system.cpu_percent, data.system.memory_percent);
+        })
+        .catch(error => {
+            console.error('Error refreshing data:', error);
+        });
+}
+
+// Update chart with new data
+function updateChart(cpu, memory) {
+    const now = new Date().toLocaleTimeString();
+    
+    performanceChart.data.labels.push(now);
+    performanceChart.data.datasets[0].data.push(cpu);
+    performanceChart.data.datasets[1].data.push(memory);
+    
+    // Keep only last 20 data points
+    if (performanceChart.data.labels.length > 20) {
+        performanceChart.data.labels.shift();
+        performanceChart.data.datasets[0].data.shift();
+        performanceChart.data.datasets[1].data.shift();
+    }
+    
+    performanceChart.update();
+}
+
+// Update settings
+function updateSettings() {
+    const interval = document.getElementById('refreshInterval').value * 1000;
+    const autoRefresh = document.getElementById('autoRefresh').checked;
+    
+    if (refreshInterval) {
+        clearInterval(refreshInterval);
+    }
+    
+    if (autoRefresh) {
+        refreshInterval = setInterval(refreshData, interval);
+    }
+    
+    alert('Settings updated successfully!');
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    initChart();
+    refreshData();
+    
+    // Start auto refresh
+    refreshInterval = setInterval(refreshData, 5000);
+});
+</script>
+{% endblock %}

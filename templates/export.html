@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}Export Data - Keylogger{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Export Keylogger Data</h3>
+                </div>
+                <div class="card-body">
+                    <form id="exportForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Export Format</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="format" id="formatJson" value="json" checked>
+                                            <label class="form-check-label" for="formatJson">
+                                                <strong>JSON</strong> - Structured data format
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="format" id="formatCsv" value="csv">
+                                            <label class="form-check-label" for="formatCsv">
+                                                <strong>CSV</strong> - Comma-separated values
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="format" id="formatTxt" value="txt">
+                                            <label class="form-check-label" for="formatTxt">
+                                                <strong>TXT</strong> - Plain text format
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Date Range</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="startDate">Start Date:</label>
+                                            <input type="date" class="form-control" id="startDate" name="start_date">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="endDate">End Date:</label>
+                                            <input type="date" class="form-control" id="endDate" name="end_date">
+                                        </div>
+                                        <small class="form-text text-muted">
+                                            Leave empty to export all data
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Event Types to Export</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="exportKeyboard" name="event_types" value="keyboard" checked>
+                                                    <label class="form-check-label" for="exportKeyboard">
+                                                        Keyboard Events
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="exportMouse" name="event_types" value="mouse" checked>
+                                                    <label class="form-check-label" for="exportMouse">
+                                                        Mouse Events
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="exportWindow" name="event_types" value="window" checked>
+                                                    <label class="form-check-label" for="exportWindow">
+                                                        Window Events
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="exportClipboard" name="event_types" value="clipboard" checked>
+                                                    <label class="form-check-label" for="exportClipboard">
+                                                        Clipboard Events
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <button type="button" class="btn btn-primary btn-lg" onclick="exportData()">
+                                    <i class="fas fa-download"></i> Export Data
+                                </button>
+                                <button type="button" class="btn btn-secondary btn-lg ml-2" onclick="previewData()">
+                                    <i class="fas fa-eye"></i> Preview Data
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Preview Modal -->
+    <div class="modal fade" id="previewModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Data Preview</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <pre id="previewContent">Loading preview...</pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="exportData()">Export This Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function exportData() {
+    const form = document.getElementById('exportForm');
+    const formData = new FormData(form);
+    
+    const format = formData.get('format');
+    const startDate = formData.get('start_date');
+    const endDate = formData.get('end_date');
+    const eventTypes = formData.getAll('event_types');
+    
+    let url = `/api/export/${format}?`;
+    if (startDate) url += `start_date=${startDate}&`;
+    if (endDate) url += `end_date=${endDate}&`;
+    eventTypes.forEach(type => url += `event_types=${type}&`);
+    
+    // Create a temporary link to download the file
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `keylogger_export_${new Date().toISOString().split('T')[0]}.${format}`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function previewData() {
+    const form = document.getElementById('exportForm');
+    const formData = new FormData(form);
+    
+    const format = 'json'; // Always preview as JSON
+    const startDate = formData.get('start_date');
+    const endDate = formData.get('end_date');
+    const eventTypes = formData.getAll('event_types');
+    
+    let url = `/api/export/${format}?preview=true&`;
+    if (startDate) url += `start_date=${startDate}&`;
+    if (endDate) url += `end_date=${endDate}&`;
+    eventTypes.forEach(type => url += `event_types=${type}&`);
+    
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('previewContent').textContent = JSON.stringify(data, null, 2);
+            $('#previewModal').modal('show');
+        })
+        .catch(error => {
+            document.getElementById('previewContent').textContent = 'Error loading preview: ' + error;
+            $('#previewModal').modal('show');
+        });
+}
+
+// Set default dates
+document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date();
+    const lastWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+    
+    document.getElementById('startDate').value = lastWeek.toISOString().split('T')[0];
+    document.getElementById('endDate').value = today.toISOString().split('T')[0];
+});
+</script>
+{% endblock %}

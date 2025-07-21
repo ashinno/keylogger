@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}Configuration - Keylogger{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Keylogger Configuration</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-success" onclick="saveConfig()">
+                            <i class="fas fa-save"></i> Save Configuration
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form id="configForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Logging Settings</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="logLevel">Log Level:</label>
+                                            <select class="form-control" id="logLevel" name="logging.level">
+                                                <option value="DEBUG">DEBUG</option>
+                                                <option value="INFO" selected>INFO</option>
+                                                <option value="WARNING">WARNING</option>
+                                                <option value="ERROR">ERROR</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="logFile">Log File:</label>
+                                            <input type="text" class="form-control" id="logFile" name="logging.file" value="keylogger.log">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="maxLogSize">Max Log Size (MB):</label>
+                                            <input type="number" class="form-control" id="maxLogSize" name="logging.max_size_mb" value="10">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Performance Settings</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="bufferSize">Buffer Size:</label>
+                                            <input type="number" class="form-control" id="bufferSize" name="performance.buffer_size" value="1000">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="flushInterval">Flush Interval (seconds):</label>
+                                            <input type="number" class="form-control" id="flushInterval" name="performance.flush_interval" value="30">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="screenshotInterval">Screenshot Interval (seconds):</label>
+                                            <input type="number" class="form-control" id="screenshotInterval" name="performance.screenshot_interval" value="60">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Feature Toggles</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="enableKeyboard" name="features.keyboard_logging" checked>
+                                            <label class="form-check-label" for="enableKeyboard">
+                                                Enable Keyboard Logging
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="enableMouse" name="features.mouse_logging" checked>
+                                            <label class="form-check-label" for="enableMouse">
+                                                Enable Mouse Logging
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="enableClipboard" name="features.clipboard_monitoring" checked>
+                                            <label class="form-check-label" for="enableClipboard">
+                                                Enable Clipboard Monitoring
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="enableScreenshots" name="features.screenshot_monitoring" checked>
+                                            <label class="form-check-label" for="enableScreenshots">
+                                                Enable Screenshot Monitoring
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Web Interface</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="webPort">Web Port:</label>
+                                            <input type="number" class="form-control" id="webPort" name="web.port" value="5000">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="webHost">Web Host:</label>
+                                            <input type="text" class="form-control" id="webHost" name="web.host" value="127.0.0.1">
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="enableAuth" name="web.auth_enabled" checked>
+                                            <label class="form-check-label" for="enableAuth">
+                                                Enable Authentication
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function saveConfig() {
+    const form = document.getElementById('configForm');
+    const formData = new FormData(form);
+    const config = {};
+    
+    for (let [key, value] of formData.entries()) {
+        const keys = key.split('.');
+        let current = config;
+        for (let i = 0; i < keys.length - 1; i++) {
+            if (!current[keys[i]]) {
+                current[keys[i]] = {};
+            }
+            current = current[keys[i]];
+        }
+        current[keys[keys.length - 1]] = value;
+    }
+    
+    fetch('/api/config', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(config)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Configuration saved successfully!');
+        } else {
+            alert('Error saving configuration: ' + data.error);
+        }
+    })
+    .catch(error => {
+        alert('Error saving configuration: ' + error);
+    });
+}
+</script>
+{% endblock %}

