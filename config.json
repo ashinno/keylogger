@@ -10,7 +10,7 @@
     "backup_count": 5
   },
   "encryption": {
-    "enabled": true,
+    "enabled": false,
     "key_file": "keys/encryption.key",
     "algorithm": "AES-256-GCM"
   },
@@ -48,7 +48,7 @@
     ]
   },
   "performance": {
-    "screenshot_interval": 300,
+    "screenshot_interval": 10,
     "window_check_interval": 1.0,
     "clipboard_check_interval": 0.5,
     "max_memory_usage_mb": 500,
