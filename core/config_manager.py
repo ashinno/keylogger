@@ -165,6 +165,14 @@ class ConfigManager:
         
         return errors
     
+    def get_all_config(self) -> Dict[str, Any]:
+        """Get all configuration data."""
+        return self._config.copy()
+    
+    def update_config(self, updates: Dict[str, Any]) -> None:
+        """Update configuration with new values."""
+        self._config = self._merge_configs(self._config, updates)
+    
     @property
     def config(self) -> Dict[str, Any]:
         """Get read-only copy of configuration."""
