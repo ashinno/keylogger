@@ -170,6 +170,11 @@ class LoggingManager:
             # Write entries to file
             log_file = self.config.get('logging.file_path', 'keylog.txt')
             
+            # Ensure directory exists
+            log_dir = os.path.dirname(log_file)
+            if log_dir and not os.path.exists(log_dir):
+                os.makedirs(log_dir, exist_ok=True)
+            
             with open(log_file, 'a', encoding='utf-8') as f:
                 for entry in entries_to_flush:
                     f.write(entry.to_log_string() + '\n')

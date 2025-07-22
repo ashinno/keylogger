@@ -28,7 +28,7 @@ class ScreenshotMonitor:
         self.is_running = False
         
         # Screenshot settings - use current working directory
-        self.capture_interval = self.config.get('performance.screenshot_interval', 60.0)
+        self.capture_interval = float(self.config.get('performance.screenshot_interval', 60.0))
         self.screenshot_quality = self.config.get('performance.screenshot_quality', 85)
         self.screenshot_format = self.config.get('performance.screenshot_format', 'JPEG')
         
