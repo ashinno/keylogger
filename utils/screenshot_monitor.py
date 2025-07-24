@@ -66,13 +66,16 @@ class ScreenshotMonitor:
     def _setup_screenshot_directory(self) -> None:
         """Setup screenshot directory with proper permissions."""
         try:
-            # Always use current working directory to avoid permission issues
-            self.screenshot_dir = Path.cwd()
+            # Create screenshots directory in the project root
+            self.screenshot_dir = Path.cwd() / "screenshots"
+            self.screenshot_dir.mkdir(exist_ok=True)
             logger.info(f"Screenshot directory setup: {self.screenshot_dir}")
             
         except Exception as e:
             logger.error(f"Failed to setup screenshot directory: {e}")
+            # Fallback to current working directory
             self.screenshot_dir = Path.cwd()
+            logger.warning(f"Using fallback directory: {self.screenshot_dir}")
     
     def run(self) -> None:
         """Main screenshot monitoring loop."""
