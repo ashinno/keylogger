@@ -577,3 +577,38 @@ class LoggingManager:
         except Exception as e:
             logger.error(f"Error reloading logging config: {e}")
             return False
+
+    def get_buffer_entries(self, limit: int = 200, as_dict: bool = False) -> List[Union[str, Dict[str, Any]]]:
+        """Return up to `limit` recent in-memory log entries.
+        
+        If as_dict is False (default), returns a list of strings in the format:
+        "YYYY-MM-DD HH:MM:SS: EVENT_TYPE: CONTENT"
+        
+        If as_dict is True, returns dicts with keys: timestamp, type, message, window, session_id.
+        """
+        try:
+            with self.buffer_lock:
+                snapshot = list(self.event_buffer)[-limit:]
+            results: List[Union[str, Dict[str, Any]]] = []
+            for ev in snapshot:
+                try:
+                    ts = datetime.fromtimestamp(ev.timestamp).strftime('%Y-%m-%d %H:%M:%S') if isinstance(ev.timestamp, (int, float)) else str(ev.datetime)
+                    if as_dict:
+                        results.append({
+                            'timestamp': ts,
+                            'type': ev.event_type,
+                            'message': str(ev.content),
+                            'window': getattr(ev, 'window_name', 'Unknown') or 'Unknown',
+                            'session_id': getattr(ev, 'session_id', None),
+                        })
+                    else:
+                        results.append(f"{ts}: {ev.event_type}: {ev.content}")
+                except Exception:
+                    # Fall back to JSON if any field access fails
+                    try:
+                        results.append(ev.to_json() if not as_dict else ev.to_dict())
+                    except Exception:
+                        continue
+            return results
+        except Exception:
+            return []

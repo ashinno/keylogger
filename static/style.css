@@ -63,8 +63,9 @@ a:hover {
   padding-top: 24px;
 }
 
+/* Update sidebar nav link base color */
 .sidebar .nav-link {
-  color: #3a3a3c;
+  color: var(--muted);
   border-radius: 10px;
   padding: 10px 12px;
   margin: 4px 12px;
@@ -79,14 +80,21 @@ a:hover {
   text-align: center;
 }
 
+/* Sidebar active/hover use semantic muted background */
 .sidebar .nav-link.active {
-  background: #f5f5f7;
+  background: var(--muted-bg);
   color: var(--text);
   font-weight: 600;
 }
-
 .sidebar .nav-link:hover {
-  background: #f5f5f7;
+  background: var(--muted-bg);
+  color: var(--text);
+}
+
+/* Outline primary hover uses semantic muted background */
+.btn-outline-primary:hover {
+  background: var(--muted-bg);
+  border-color: var(--border);
   color: var(--text);
 }
 
@@ -280,4 +288,72 @@ small {
 }
 .stat-tile .h5 {
   font-weight: 600;
+}
+
+/* Semantic palette additions */
+:root {
+  --success: #34c759;
+  --warning: #ff9f0a;
+  --danger: #ff3b30;
+  --info: #0a84ff;
+  --muted-bg: #f5f5f7;
+}
+
+/* Semantic text colors */
+.text-success { color: var(--success) !important; }
+.text-warning { color: var(--warning) !important; }
+.text-danger  { color: var(--danger)  !important; }
+.text-info    { color: var(--info)    !important; }
+
+/* Solid backgrounds (for Bootstrap utility classes) */
+.bg-success { background-color: var(--success) !important; color: #fff !important; }
+.bg-warning { background-color: var(--warning) !important; color: #1d1d1f !important; }
+.bg-danger  { background-color: var(--danger)  !important; color: #fff !important; }
+.bg-info    { background-color: var(--info)    !important; color: #fff !important; }
+
+/* Soft badges for minimalist look */
+.badge-soft-success { background: rgba(52, 199, 89, 0.15); color: var(--success); }
+.badge-soft-warning { background: rgba(255, 159, 10, 0.15); color: var(--warning); }
+.badge-soft-danger  { background: rgba(255, 59, 48, 0.15);  color: var(--danger); }
+.badge-soft-info    { background: rgba(10, 132, 255, 0.15); color: var(--info); }
+
+/* Feature tiles (Quick Access) */
+.feature-card { transition: transform 0.12s ease, box-shadow 0.2s ease; }
+.feature-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.06); }
+.feature-card .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--muted-bg);
+  color: var(--accent);
+  font-size: 18px;
+}
+
+/* Accessible focus ring for buttons */
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 0.24rem rgba(0, 113, 227, 0.25);
+}
+
+/* Make outline buttons use semantic colors instead of neutral */
+.btn-outline-success {
+  color: var(--success);
+  border-color: var(--success);
+}
+.btn-outline-success:hover {
+  background: rgba(52, 199, 89, 0.1);
+  color: var(--success);
+  border-color: var(--success);
+}
+
+.btn-outline-danger {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+.btn-outline-danger:hover {
+  background: rgba(255, 59, 48, 0.1);
+  color: var(--danger);
+  border-color: var(--danger);
 }

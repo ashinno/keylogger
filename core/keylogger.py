@@ -413,7 +413,34 @@ class KeyloggerCore:
         except Exception as e:
             logger.error(f"Error getting stats: {e}")
             return {'error': str(e)}
-    
+
+    def get_session_stats(self) -> Dict[str, Any]:
+        """Get structured session statistics for the web UI and APIs."""
+        try:
+            current_time = time.time()
+            uptime = (current_time - self.start_time) if self.start_time else 0
+
+            return {
+                'session_id': self.session_id,
+                'running': bool(self._is_running),
+                'start_time': self.start_time,
+                'uptime': int(uptime),
+                'total_events': int(self.stats.get('total_events', 0)),
+                'keyboard_events': int(self.stats.get('keyboard_events', 0)),
+                'mouse_events': int(self.stats.get('mouse_events', 0)),
+                'clipboard_events': int(self.stats.get('clipboard_events', 0)),
+                'errors': int(self.stats.get('errors', 0))
+            }
+        except Exception as e:
+            logger.error(f"Error getting session stats: {e}")
+            return {
+                'session_id': self.session_id,
+                'running': bool(self._is_running),
+                'uptime': 0,
+                'total_events': 0,
+                'errors': 0,
+                'error': str(e)
+            }
     def reload_config(self) -> bool:
         """Reload configuration and restart components if needed."""
         try:

@@ -70,16 +70,82 @@ def create_web_app(keylogger_core, config_manager):
     def dashboard():
         """Main dashboard."""
         try:
-            # Get basic stats
-            stats = keylogger_core.get_session_stats()
-            recent_activity = _get_recent_activity()
-            
-            return render_template('dashboard.html', 
-                                 stats=stats,
-                                 recent_activity=recent_activity)
+            # Session stats from core
+            session_stats = keylogger_core.get_session_stats()
+
+            # Build dashboard-friendly stats
+            from datetime import timedelta
+            import platform
+            import sys as _sys
+            try:
+                import psutil  # type: ignore
+                _has_psutil = True
+            except Exception:
+                psutil = None  # type: ignore
+                _has_psutil = False
+
+            uptime_seconds = int(session_stats.get('uptime', 0) or 0)
+            if _has_psutil:
+                process = psutil.Process(os.getpid())
+                mem_mb = process.memory_info().rss / (1024 * 1024)
+            else:
+                mem_mb = 0.0
+
+            stats = {
+                'events_logged': session_stats.get('total_events', 0) or 0,
+                'uptime': str(timedelta(seconds=uptime_seconds)),
+                'memory_usage': f"{mem_mb:.1f} MB",
+            }
+
+            # Running status
+            status = {
+                'running': bool(session_stats.get('running', False))
+            }
+
+            # Features from config
+            features = {
+                'keyboard': config_manager.get('features.keyboard', config_manager.get('features.keyboard_logging', True)),
+                'mouse': config_manager.get('features.mouse', config_manager.get('features.mouse_logging', True)),
+                'clipboard': config_manager.get('features.clipboard', config_manager.get('features.clipboard_logging', False)),
+                'window_tracking': config_manager.get('features.window_tracking', True),
+            }
+
+            # System info
+            if os.name == 'nt':
+                disk_root = 'C:\\'
+            else:
+                disk_root = '/'
+            system_info = {
+                'platform': platform.platform(),
+                'python_version': _sys.version.split(' ')[0],
+                'cpu_usage': f"{psutil.cpu_percent()}%" if _has_psutil else 'N/A',
+                'available_memory': f"{psutil.virtual_memory().available / (1024 * 1024):.0f} MB" if _has_psutil else 'N/A',
+                'disk_space': f"{psutil.disk_usage(disk_root).free / (1024 * 1024 * 1024):.1f} GB" if _has_psutil else 'N/A',
+            }
+
+            # Recent events (map logs to expected fields)
+            logs_data = _get_recent_logs(page=1, per_page=10, event_type='')
+            recent_events = [
+                {
+                    'timestamp': item.get('timestamp'),
+                    'type': item.get('type'),
+                    'data': item.get('message', ''),
+                    'window': item.get('window', ''),
+                }
+                for item in logs_data.get('logs', [])
+            ]
+
+            return render_template(
+                'dashboard.html',
+                status=status,
+                stats=stats,
+                features=features,
+                system_info=system_info,
+                recent_events=recent_events,
+            )
         except Exception as e:
-            logger.error(f"Error loading dashboard: {e}")
-            return render_template('error.html', error=str(e))
+            logger.exception("Error loading dashboard")
+            return render_template('error.html', error_title='Dashboard Error', error_message=str(e))
     
     @app.route('/logs')
     @login_required
@@ -96,8 +162,8 @@ def create_web_app(keylogger_core, config_manager):
                                  logs=logs_data['logs'],
                                  pagination=logs_data['pagination'])
         except Exception as e:
-            logger.error(f"Error loading logs: {e}")
-            return render_template('error.html', error=str(e))
+            logger.exception("Error loading logs")
+            return render_template('error.html', error_title='Logs Error', error_message=str(e))
     
     @app.route('/api/logs')
     @login_required
@@ -110,7 +176,7 @@ def create_web_app(keylogger_core, config_manager):
             
             return jsonify(_get_recent_logs(page, per_page, event_type))
         except Exception as e:
-            logger.error(f"Error in logs API: {e}")
+            logger.exception("Error in logs API")
             return jsonify({'error': str(e)}), 500
     
     @app.route('/config')
@@ -121,8 +187,8 @@ def create_web_app(keylogger_core, config_manager):
             current_config = config_manager.get_all_config()
             return render_template('config.html', config=current_config)
         except Exception as e:
-            logger.error(f"Error loading config: {e}")
-            return render_template('error.html', error=str(e))
+            logger.exception("Error loading config")
+            return render_template('error.html', error_title='Config Error', error_message=str(e))
     
     @app.route('/api/config', methods=['GET', 'POST'])
     @login_required
@@ -136,7 +202,7 @@ def create_web_app(keylogger_core, config_manager):
             else:
                 return jsonify(config_manager.get_all_config())
         except Exception as e:
-            logger.error(f"Error in config API: {e}")
+            logger.exception("Error in config API")
             return jsonify({'error': str(e)}), 500
     
     @app.route('/export')
@@ -161,7 +227,7 @@ def create_web_app(keylogger_core, config_manager):
                 'data': []
             })
         except Exception as e:
-            logger.error(f"Error in export API: {e}")
+            logger.exception("Error in export API")
             return jsonify({'error': str(e)}), 500
     
     @app.route('/performance')
@@ -170,10 +236,10 @@ def create_web_app(keylogger_core, config_manager):
         """Performance monitoring page."""
         try:
             perf_stats = _get_performance_stats()
-            return render_template('performance.html', stats=perf_stats)
+            return render_template('performance.html', performance=perf_stats)
         except Exception as e:
-            logger.error(f"Error loading performance: {e}")
-            return render_template('error.html', error=str(e))
+            logger.exception("Error loading performance")
+            return render_template('error.html', error_title='Performance Error', error_message=str(e))
     
     @app.route('/api/performance')
     @login_required
@@ -182,7 +248,7 @@ def create_web_app(keylogger_core, config_manager):
         try:
             return jsonify(_get_performance_stats())
         except Exception as e:
-            logger.error(f"Error in performance API: {e}")
+            logger.exception("Error in performance API")
             return jsonify({'error': str(e)}), 500
     
     @app.route('/test')
@@ -234,7 +300,7 @@ def create_web_app(keylogger_core, config_manager):
                 }
             ]
         except Exception as e:
-            logger.error(f"Error getting recent activity: {e}")
+            logger.exception("Error getting recent activity")
             return []
     
     def _get_recent_logs(page: int = 1, per_page: int = 50, event_type: str = '') -> Dict[str, Any]:
@@ -343,7 +409,7 @@ def create_web_app(keylogger_core, config_manager):
                         }
                     }
             except Exception as e:
-                logger.error(f"Error reading log file: {e}")
+                logger.exception("Error reading log file")
             
             # Fallback to empty data
             return {
@@ -356,7 +422,7 @@ def create_web_app(keylogger_core, config_manager):
                 }
             }
         except Exception as e:
-            logger.error(f"Error getting recent logs: {e}")
+            logger.exception("Error getting recent logs")
             return {
                 'logs': [],
                 'pagination': {
@@ -371,30 +437,132 @@ def create_web_app(keylogger_core, config_manager):
         """Get performance statistics."""
         try:
             stats = keylogger_core.get_session_stats()
-            
+
             # Add system performance data
             import psutil
-            
+
+            # Determine disk root path cross-platform
+            if os.name == 'nt':
+                disk_root = os.environ.get('SystemDrive', 'C:') + '\\'
+            else:
+                disk_root = '/'
+
+            # Load average (not available on Windows)
+            try:
+                if hasattr(os, 'getloadavg') and os.name != 'nt':
+                    load1, load5, load15 = os.getloadavg()
+                    load_avg = round(load1, 2)
+                else:
+                    load_avg = 0.0
+            except Exception:
+                load_avg = 0.0
+
+            # Prepare keylogger metrics from logging manager if available
+            buffer_size = 0
+            log_file_size_mb = 0.0
+            events_per_hour = 0.0
+            try:
+                if hasattr(keylogger_core, 'logging_manager') and keylogger_core.logging_manager:
+                    lm_stats = keylogger_core.logging_manager.get_stats()
+                    buffer_size = int(lm_stats.get('buffer_size', 0) or 0)
+                    log_file_size_mb = float(lm_stats.get('log_file_size_mb', 0.0) or 0.0)
+                    events_per_hour = float(lm_stats.get('events_per_hour', 0.0) or 0.0)
+            except Exception:
+                pass
+
+            # Fallback events/hour from session uptime
+            try:
+                if not events_per_hour:
+                    up_seconds = int(stats.get('uptime', 0) or 0)
+                    up_hours = max(up_seconds / 3600.0, 0.0001)
+                    total_events = int(stats.get('total_events', 0) or 0)
+                    events_per_hour = total_events / up_hours if up_hours else 0.0
+            except Exception:
+                events_per_hour = 0.0
+
+            # Format uptime as "Xh Ym"
+            try:
+                up_seconds = int(stats.get('uptime', 0) or 0)
+                hours = up_seconds // 3600
+                minutes = (up_seconds % 3600) // 60
+                uptime_str = f"{hours}h {minutes}m"
+            except Exception:
+                uptime_str = "0h 0m"
+
+            # Component event counts
+            components = {
+                'keyboard': {
+                    'events': int(stats.get('keyboard_events', 0) or 0),
+                    'last_activity': 'N/A'
+                },
+                'mouse': {
+                    'events': int(stats.get('mouse_events', 0) or 0),
+                    'last_activity': 'N/A'
+                },
+                'clipboard': {
+                    'events': int(stats.get('clipboard_events', 0) or 0),
+                    'last_activity': 'N/A'
+                },
+                'window': {
+                    'events': int(stats.get('window_events', stats.get('window_changes', 0)) or 0),
+                    'last_activity': 'N/A'
+                }
+            }
+
             return {
-                'session_stats': stats,
                 'system': {
                     'cpu_percent': psutil.cpu_percent(),
                     'memory_percent': psutil.virtual_memory().percent,
-                    'disk_usage': psutil.disk_usage('/').percent if os.name != 'nt' else psutil.disk_usage('C:').percent
+                    'disk_percent': psutil.disk_usage(disk_root).percent,
+                    'load_average': load_avg,
                 },
                 'keylogger': {
-                    'uptime': stats.get('uptime', 0),
+                    'uptime': uptime_str,
+                    'events_per_hour': round(float(events_per_hour), 2),
+                    'buffer_size': buffer_size,
+                    'log_file_size_mb': round(float(log_file_size_mb), 3),
                     'events_logged': stats.get('total_events', 0),
                     'errors': stats.get('errors', 0)
-                }
+                },
+                'components': components
             }
         except Exception as e:
-            logger.error(f"Error getting performance stats: {e}")
+            logger.exception("Error getting performance stats")
             return {
-                'session_stats': {},
                 'system': {},
-                'keylogger': {}
+                'keylogger': {},
+                'components': {}
             }
+    
+    @app.route('/api/start', methods=['POST'])
+    @login_required
+    def api_start():
+        """API endpoint to start the keylogger."""
+        try:
+            if hasattr(keylogger_core, 'is_running') and keylogger_core.is_running():
+                return jsonify({'success': True, 'message': 'Keylogger already running', 'running': True, 'stats': keylogger_core.get_session_stats()})
+            started = keylogger_core.start()
+            if started:
+                return jsonify({'success': True, 'message': 'Keylogger started', 'running': True, 'stats': keylogger_core.get_session_stats()})
+            return jsonify({'success': False, 'message': 'Failed to start keylogger'}), 500
+        except Exception as e:
+            logger.exception("Error starting keylogger via API")
+            return jsonify({'success': False, 'error': str(e)}), 500
+
+    @app.route('/api/stop', methods=['POST'])
+    @login_required
+    def api_stop():
+        """API endpoint to stop the keylogger."""
+        try:
+            if hasattr(keylogger_core, 'is_running') and not keylogger_core.is_running():
+                return jsonify({'success': True, 'message': 'Keylogger already stopped', 'running': False, 'stats': keylogger_core.get_session_stats()})
+            stopped = keylogger_core.stop()
+            if stopped:
+                return jsonify({'success': True, 'message': 'Keylogger stopped', 'running': False, 'stats': keylogger_core.get_session_stats()})
+            return jsonify({'success': False, 'message': 'Failed to stop keylogger'}), 500
+        except Exception as e:
+            logger.exception("Error stopping keylogger via API")
+            return jsonify({'success': False, 'error': str(e)}), 500
     
     logger.info(f"Registered login route: {app.url_map}")
     logger.info(f"Web interface initialized on {config_manager.get('web.host', '127.0.0.1')}:{config_manager.get('web.port', 5000)}")

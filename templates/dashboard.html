@@ -5,93 +5,127 @@
 {% block page_title %}Dashboard{% endblock %}
 
 {% block toolbar %}
+<!-- Toolbar buttons: add aria-labels and use solid colors for clearer affordance -->
 <div class="btn-group" role="group">
-    <button type="button" class="btn btn-outline-primary btn-sm"
+    <button type="button" class="btn btn-outline-primary btn-sm" aria-label="Refresh dashboard"
         onclick="refreshData()">
         <i class="fas fa-sync-alt"></i> Refresh
     </button>
-    <button type="button" class="btn btn-outline-success btn-sm"
+    <button type="button" class="btn btn-success btn-sm" aria-label="Start keylogger"
         onclick="startKeylogger()" id="startBtn">
         <i class="fas fa-play"></i> Start
     </button>
-    <button type="button" class="btn btn-outline-danger btn-sm"
+    <button type="button" class="btn btn-danger btn-sm" aria-label="Stop keylogger"
         onclick="stopKeylogger()" id="stopBtn">
         <i class="fas fa-stop"></i> Stop
     </button>
 </div>
+
 {% endblock %}
 
 {% block content %}
 <!-- Status Cards -->
 <div class="row mb-4">
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card h-100 p-3">
-            <div class="card-body p-0">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="text-muted small mb-1">Status</div>
-                        <div class="h5 mb-0">
-                            <span
-                                class="badge {{ 'bg-success' if status.running else 'bg-danger' }}">
-                                {{ 'Running' if status.running else 'Stopped' }}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-power-off fa-2x text-muted"></i>
-                    </div>
+        <div class="stat-tile">
+            <div>
+                <div class="text-muted small mb-1">Status</div>
+                <div class="h5 mb-0">
+                    <span class="badge {{ 'badge-soft-success' if status.running else 'badge-soft-danger' }}">
+                        {{ 'Running' if status.running else 'Stopped' }}
+                    </span>
                 </div>
             </div>
+            <div class="icon"><i class="fas fa-power-off"></i></div>
         </div>
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card h-100 p-3">
-            <div class="card-body p-0">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="text-muted small mb-1">Events Logged</div>
-                        <div class="h5 mb-0">{{ stats.events_logged or 0
-                            }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-keyboard fa-2x text-muted"></i>
-                    </div>
-                </div>
+        <div class="stat-tile">
+            <div>
+                <div class="text-muted small mb-1">Events Logged</div>
+                <div class="h5 mb-0">{{ stats.events_logged or 0 }}</div>
             </div>
+            <div class="icon"><i class="fas fa-keyboard"></i></div>
         </div>
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card h-100 p-3">
-            <div class="card-body p-0">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="text-muted small mb-1">Uptime</div>
-                        <div class="h5 mb-0">{{ stats.uptime or '0:00:00'
-                            }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-clock fa-2x text-muted"></i>
-                    </div>
-                </div>
+        <div class="stat-tile">
+            <div>
+                <div class="text-muted small mb-1">Uptime</div>
+                <div class="h5 mb-0">{{ stats.uptime or '0:00:00' }}</div>
             </div>
+            <div class="icon"><i class="fas fa-clock"></i></div>
         </div>
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card h-100 p-3">
-            <div class="card-body p-0">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="text-muted small mb-1">Memory Usage</div>
-                        <div class="h5 mb-0">{{ stats.memory_usage or '0 MB'
-                            }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-memory fa-2x text-muted"></i>
-                    </div>
+        <div class="stat-tile">
+            <div>
+                <div class="text-muted small mb-1">Memory Usage</div>
+                <div class="h5 mb-0">{{ stats.memory_usage or '0 MB' }}</div>
+            </div>
+            <div class="icon"><i class="fas fa-memory"></i></div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Access -->
+<div class="row mb-4">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card h-100 p-3 feature-card">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="text-muted small mb-1">Logs</div>
+                    <div class="h5 mb-2">Browse Events</div>
+                    <a href="{{ url_for('logs') }}" class="btn btn-primary btn-sm" aria-label="Open Logs">
+                        <i class="fas fa-file-alt me-1"></i> Open Logs
+                    </a>
                 </div>
+                <div class="icon"><i class="fas fa-file-alt"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card h-100 p-3 feature-card">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="text-muted small mb-1">Performance</div>
+                    <div class="h5 mb-2">System Metrics</div>
+                    <a href="{{ url_for('performance') }}" class="btn btn-primary btn-sm" aria-label="Open Performance">
+                        <i class="fas fa-chart-line me-1"></i> View Metrics
+                    </a>
+                </div>
+                <div class="icon"><i class="fas fa-chart-line"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card h-100 p-3 feature-card">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="text-muted small mb-1">Export</div>
+                    <div class="h5 mb-2">Download Data</div>
+                    <a href="{{ url_for('export') }}" class="btn btn-primary btn-sm" aria-label="Open Export">
+                        <i class="fas fa-download me-1"></i> Export Data
+                    </a>
+                </div>
+                <div class="icon"><i class="fas fa-download"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card h-100 p-3 feature-card">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="text-muted small mb-1">Settings</div>
+                    <div class="h5 mb-2">Configuration</div>
+                    <a href="{{ url_for('config') }}" class="btn btn-primary btn-sm" aria-label="Open Configuration">
+                        <i class="fas fa-cog me-1"></i> Open Settings
+                    </a>
+                </div>
+                <div class="icon"><i class="fas fa-cog"></i></div>
             </div>
         </div>
     </div>
@@ -176,7 +210,7 @@
                             {% for event in recent_events %}
                             <tr>
                                 <td>{{ event.timestamp }}</td>
-                                <td><span class="badge bg-info">{{ event.type
+                                <td><span class="badge badge-soft-info">{{ event.type
                                         }}</span></td>
                                 <td>{{ event.data[:50] }}{% if event.data|length
                                     > 50 %}...{% endif %}</td>
