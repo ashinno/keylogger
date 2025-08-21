@@ -1,274 +1,140 @@
-{% extends "base.html" %}
-
-{% block title %}Performance - Keylogger{% endblock %}
-
+{% extends 'base.html' %}
+{% block title %}Performance - Enhanced Keylogger{% endblock %}
+{% block page_title %}Performance Monitoring{% endblock %}
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <!-- System Performance -->
-        <div class="col-md-6">
-            <div class="card">
-                <div
-                    class="card-header d-flex justify-content-between align-items-center">
-                    <h3 class="card-title m-0">System Performance</h3>
-                </div>
-                <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-6">
-                            <div class="stat-tile">
-                                <div class="icon"><i
-                                        class="fas fa-microchip"></i></div>
-                                <div>
-                                    <div class="text-muted small">CPU
-                                        Usage</div>
-                                    <div class="h5 mb-0" id="cpuUsage">{{
-                                        performance.system.cpu_percent|default('0')
-                                        }}%</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="stat-tile">
-                                <div class="icon"><i
-                                        class="fas fa-memory"></i></div>
-                                <div>
-                                    <div class="text-muted small">Memory
-                                        Usage</div>
-                                    <div class="h5 mb-0" id="memoryUsage">{{
-                                        performance.system.memory_percent|default('0')
-                                        }}%</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row g-3 mt-1">
-                        <div class="col-6">
-                            <div class="stat-tile">
-                                <div class="icon"><i
-                                        class="fas fa-hdd"></i></div>
-                                <div>
-                                    <div class="text-muted small">Disk
-                                        Usage</div>
-                                    <div class="h5 mb-0" id="diskUsage">{{
-                                        performance.system.disk_percent|default('0')
-                                        }}%</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="stat-tile">
-                                <div class="icon"><i
-                                        class="fas fa-thermometer-half"></i></div>
-                                <div>
-                                    <div class="text-muted small">Load
-                                        Average</div>
-                                    <div class="h5 mb-0" id="loadAverage">{{
-                                        performance.system.load_average|default('0.0')
-                                        }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title m-0">System Overview</h3>
             </div>
-        </div>
-
-        <!-- Keylogger Performance -->
-        <div class="col-md-6">
-            <div class="card">
-                <div
-                    class="card-header d-flex justify-content-between align-items-center">
-                    <h3 class="card-title m-0">Keylogger Performance</h3>
-                </div>
-                <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-6">
-                            <div class="stat-tile">
-                                <div class="icon"><i
-                                        class="fas fa-clock"></i></div>
-                                <div>
-                                    <div class="text-muted small">Uptime</div>
-                                    <div class="h5 mb-0" id="uptime">{{
-                                        performance.keylogger.uptime|default('0h 0m')
-                                        }}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="stat-tile">
-                                <div class="icon"><i
-                                        class="fas fa-list"></i></div>
-                                <div>
-                                    <div
-                                        class="text-muted small">Events/Hour</div>
-                                    <div class="h5 mb-0" id="eventsPerHour">{{
-                                        performance.keylogger.events_per_hour|default('0')
-                                        }}</div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>CPU Usage</h5>
+                        <p id="cpuUsage">0%</p>
+                        <h5>Memory Usage</h5>
+                        <p id="memoryUsage">0%</p>
                     </div>
-
-                    <div class="row g-3 mt-1">
-                        <div class="col-6">
-                            <div class="stat-tile">
-                                <div class="icon"><i
-                                        class="fas fa-database"></i></div>
-                                <div>
-                                    <div class="text-muted small">Buffer
-                                        Size</div>
-                                    <div class="h5 mb-0" id="bufferSize">{{
-                                        performance.keylogger.buffer_size|default('0')
-                                        }}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="stat-tile">
-                                <div class="icon"><i
-                                        class="fas fa-file"></i></div>
-                                <div>
-                                    <div class="text-muted small">Log Size
-                                        (MB)</div>
-                                    <div class="h5 mb-0" id="logSize">{{
-                                        performance.keylogger.log_file_size_mb|default('0')
-                                        }}</div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-md-6">
+                        <h5>Disk Usage</h5>
+                        <p id="diskUsage">0%</p>
+                        <h5>Load Average</h5>
+                        <p id="loadAverage">N/A</p>
                     </div>
                 </div>
+                <canvas id="performanceChart" height="200"></canvas>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <!-- Performance Chart -->
-        <div class="col-12">
-            <div class="card">
-                <div
-                    class="card-header d-flex justify-content-between align-items-center">
-                    <h3 class="card-title m-0">Performance History</h3>
-                </div>
-                <div class="card-body">
-                    <canvas id="performanceChart" width="400"
-                        height="100"></canvas>
-                </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title m-0">Keylogger Status</h3>
             </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <!-- Component Status -->
-        <div class="col-md-6">
-            <div class="card">
-                <div
-                    class="card-header d-flex justify-content-between align-items-center">
-                    <h3 class="card-title m-0">Component Status</h3>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Component</th>
-                                    <th>Status</th>
-                                    <th>Events</th>
-                                    <th>Last Activity</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Keyboard Listener</td>
-                                    <td><span
-                                            class="badge bg-success">Active</span></td>
-                                    <td>{{
-                                        performance.components.keyboard.events|default('0')
-                                        }}</td>
-                                    <td>{{
-                                        performance.components.keyboard.last_activity|default('N/A')
-                                        }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Mouse Listener</td>
-                                    <td><span
-                                            class="badge bg-success">Active</span></td>
-                                    <td>{{
-                                        performance.components.mouse.events|default('0')
-                                        }}</td>
-                                    <td>{{
-                                        performance.components.mouse.last_activity|default('N/A')
-                                        }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Clipboard Monitor</td>
-                                    <td><span
-                                            class="badge bg-success">Active</span></td>
-                                    <td>{{
-                                        performance.components.clipboard.events|default('0')
-                                        }}</td>
-                                    <td>{{
-                                        performance.components.clipboard.last_activity|default('N/A')
-                                        }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Window Monitor</td>
-                                    <td><span
-                                            class="badge bg-success">Active</span></td>
-                                    <td>{{
-                                        performance.components.window.events|default('0')
-                                        }}</td>
-                                    <td>{{
-                                        performance.components.window.last_activity|default('N/A')
-                                        }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Uptime</h5>
+                        <p id="uptime">0h 0m</p>
+                        <h5>Events/hour</h5>
+                        <p id="eventsPerHour">0</p>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Performance Settings -->
-        <div class="col-md-6">
-            <div class="card">
-                <div
-                    class="card-header d-flex justify-content-between align-items-center">
-                    <h3 class="card-title m-0">Performance Settings</h3>
-                </div>
-                <div class="card-body">
-                    <form id="performanceSettings">
-                        <div class="form-group">
-                            <label for="refreshInterval">Refresh Interval
-                                (seconds):</label>
-                            <input type="number" class="form-control"
-                                id="refreshInterval" value="5" min="1" max="60">
-                        </div>
-                        <div class="form-group">
-                            <label for="chartHistory">Chart History
-                                (minutes):</label>
-                            <input type="number" class="form-control"
-                                id="chartHistory" value="30" min="5" max="120">
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox"
-                                id="autoRefresh" checked>
-                            <label class="form-check-label" for="autoRefresh">
-                                Auto Refresh
-                            </label>
-                        </div>
-                        <button type="button" class="btn btn-primary"
-                            onclick="updateSettings()">Update Settings</button>
-                        <button type="button" class="btn btn-secondary"
-                            onclick="refreshData()">Refresh Now</button>
-                    </form>
+                    <div class="col-md-6">
+                        <h5>Buffer Size</h5>
+                        <p id="bufferSize">0</p>
+                        <h5>Log File Size</h5>
+                        <p id="logFileSize">0 MB</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<div class="row">
+    <!-- Component Status -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title m-0">Component Status</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Status</th>
+                                <th>Events</th>
+                                <th>Last Activity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Keyboard Listener</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                                <td><span id="keyboardEvents">0</span></td>
+                                <td><span id="keyboardLastActivity">N/A</span></td>
+                            </tr>
+                            <tr>
+                                <td>Mouse Listener</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                                <td><span id="mouseEvents">0</span></td>
+                                <td><span id="mouseLastActivity">N/A</span></td>
+                            </tr>
+                            <tr>
+                                <td>Clipboard Monitor</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                                <td><span id="clipboardEvents">0</span></td>
+                                <td><span id="clipboardLastActivity">N/A</span></td>
+                            </tr>
+                            <tr>
+                                <td>Window Monitor</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                                <td><span id="windowEvents">0</span></td>
+                                <td><span id="windowLastActivity">N/A</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Settings -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="card-title m-0">Performance Settings</h3>
+            </div>
+            <div class="card-body">
+                <form id="performanceSettings">
+                    <div class="form-group">
+                        <label for="refreshInterval">Refresh Interval (seconds):</label>
+                        <input type="number" class="form-control" id="refreshInterval" value="5" min="1" max="60">
+                    </div>
+                    <div class="form-group">
+                        <label for="chartHistory">Chart History (minutes):</label>
+                        <input type="number" class="form-control" id="chartHistory" value="30" min="5" max="120">
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="autoRefresh" checked>
+                        <label class="form-check-label" for="autoRefresh">
+                            Auto Refresh
+                        </label>
+                    </div>
+                </form>
+                <button type="button" class="btn btn-primary" onclick="updateSettings()">Update Settings</button>
+                <button type="button" class="btn btn-secondary" onclick="refreshData()">Refresh Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 let performanceChart;
@@ -312,16 +178,64 @@ function updateChart(cpu, memory) {
     performanceChart.update();
 }
 
+function setText(id, value, fallback = 'N/A') {
+    const el = document.getElementById(id);
+    if (el) el.innerText = (value ?? fallback);
+}
+
 function refreshData() {
     fetch('/api/performance')
         .then(response => response.json())
         .then(data => {
-            document.getElementById('cpuUsage').innerText = data.system.cpu_percent + '%';
-            document.getElementById('memoryUsage').innerText = data.system.memory_percent + '%';
-            document.getElementById('diskUsage').innerText = data.system.disk_percent + '%';
-            document.getElementById('loadAverage').innerText = data.system.load_average;
-            
-            updateChart(data.system.cpu_percent, data.system.memory_percent);
+            // Normalize shapes
+            const sys = data.system || {};
+            const cpu = Number(sys.cpu_percent ?? sys.cpu ?? 0);
+            const mem = Number(sys.memory_percent ?? sys.memory ?? 0);
+            const disk = Number(sys.disk_percent ?? sys.disk_usage ?? sys.disk ?? 0);
+            const load = (sys.load_average ?? sys.load ?? 'N/A');
+
+            // System
+            setText('cpuUsage', (isNaN(cpu) ? 0 : cpu) + '%', '0%');
+            setText('memoryUsage', (isNaN(mem) ? 0 : mem) + '%', '0%');
+            setText('diskUsage', (isNaN(disk) ? 0 : disk) + '%', '0%');
+            setText('loadAverage', load, 'N/A');
+            updateChart(isNaN(cpu) ? 0 : cpu, isNaN(mem) ? 0 : mem);
+
+            // Keylogger summary
+            let uptimeVal = data.keylogger?.uptime;
+            if (typeof uptimeVal === 'number') {
+                const hours = Math.floor(uptimeVal / 3600);
+                const minutes = Math.floor((uptimeVal % 3600) / 60);
+                uptimeVal = `${hours}h ${minutes}m`;
+            }
+            setText('uptime', uptimeVal, '0h 0m');
+
+            let eph = data.keylogger?.events_per_hour;
+            if ((eph === undefined || eph === null) && data.session_stats) {
+                const total = Number(data.session_stats.total_events || 0);
+                const upsec = Number(data.session_stats.uptime || 0);
+                eph = upsec ? Math.round((total / (upsec / 3600)) * 100) / 100 : 0;
+            }
+            setText('eventsPerHour', eph ?? '0', '0');
+            setText('bufferSize', data.keylogger?.buffer_size ?? '0', '0');
+            const logSize = (data.keylogger?.log_file_size_mb ?? data.keylogger?.log_file_size ?? '0');
+            setText('logFileSize', `${logSize} MB`, '0 MB');
+
+            // Components (with fallback to session_stats when missing)
+            const c = data.components || {};
+            const ss = data.session_stats || {};
+            setText('keyboardEvents', (c.keyboard?.events ?? ss.keyboard_events ?? '0'), '0');
+            setText('keyboardLastActivity', c.keyboard?.last_activity ?? 'N/A', 'N/A');
+
+            setText('mouseEvents', (c.mouse?.events ?? ss.mouse_events ?? '0'), '0');
+            setText('mouseLastActivity', c.mouse?.last_activity ?? 'N/A', 'N/A');
+
+            setText('clipboardEvents', (c.clipboard?.events ?? ss.clipboard_events ?? '0'), '0');
+            setText('clipboardLastActivity', c.clipboard?.last_activity ?? 'N/A', 'N/A');
+
+            const winEvents = (c.window?.events ?? ss.window_events ?? ss.window_changes ?? '0');
+            setText('windowEvents', winEvents, '0');
+            setText('windowLastActivity', c.window?.last_activity ?? 'N/A', 'N/A');
         })
         .catch(err => console.error('Failed to refresh performance data', err));
 }

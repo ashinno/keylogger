@@ -3,6 +3,7 @@
 import os
 import json
 import logging
+import time
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash
@@ -235,8 +236,7 @@ def create_web_app(keylogger_core, config_manager):
     def performance():
         """Performance monitoring page."""
         try:
-            perf_stats = _get_performance_stats()
-            return render_template('performance.html', performance=perf_stats)
+            return render_template('performance.html')
         except Exception as e:
             logger.exception("Error loading performance")
             return render_template('error.html', error_title='Performance Error', error_message=str(e))
@@ -489,23 +489,96 @@ def create_web_app(keylogger_core, config_manager):
             except Exception:
                 uptime_str = "0h 0m"
 
-            # Component event counts
+            # Compute last activity for components
+            def _format_last_activity(ts):
+                try:
+                    if not ts:
+                        return 'N/A'
+                    ts = float(ts)
+                    delta = max(0, time.time() - ts)
+                    if delta < 5:
+                        return 'just now'
+                    if delta < 60:
+                        return f"{int(delta)}s ago"
+                    if delta < 3600:
+                        return f"{int(delta // 60)}m ago"
+                    hours = int(delta // 3600)
+                    minutes = int((delta % 3600) // 60)
+                    return f"{hours}h {minutes}m ago"
+                except Exception:
+                    return 'N/A'
+
+            keyboard_last = 'N/A'
+            try:
+                if hasattr(keylogger_core, 'keyboard_listener') and keylogger_core.keyboard_listener:
+                    keyboard_last = _format_last_activity(getattr(keylogger_core.keyboard_listener, 'last_key_time', None))
+            except Exception:
+                keyboard_last = 'N/A'
+
+            mouse_last = 'N/A'
+            try:
+                if hasattr(keylogger_core, 'mouse_listener') and keylogger_core.mouse_listener:
+                    candidates = []
+                    try:
+                        candidates.append(getattr(keylogger_core.mouse_listener, 'last_move_time', None))
+                    except Exception:
+                        pass
+                    try:
+                        candidates.append(getattr(keylogger_core.mouse_listener, 'last_batch_time', None))
+                    except Exception:
+                        pass
+                    candidates = [c for c in candidates if c]
+                    mouse_last = _format_last_activity(max(candidates) if candidates else None)
+            except Exception:
+                mouse_last = 'N/A'
+
+            clipboard_last = 'N/A'
+            try:
+                if hasattr(keylogger_core, 'clipboard_listener') and keylogger_core.clipboard_listener:
+                    cl = keylogger_core.clipboard_listener
+                    ts_candidate = None
+                    try:
+                        hist = getattr(cl, 'content_history', None)
+                        if hist and isinstance(hist, list) and len(hist) > 0:
+                            last_entry = hist[-1]
+                            if isinstance(last_entry, dict):
+                                ts_candidate = last_entry.get('timestamp') or last_entry.get('time')
+                    except Exception:
+                        pass
+                    clipboard_last = _format_last_activity(ts_candidate)
+            except Exception:
+                clipboard_last = 'N/A'
+
+            window_last = 'N/A'
+            try:
+                if hasattr(keylogger_core, 'window_monitor') and keylogger_core.window_monitor:
+                    wm = keylogger_core.window_monitor
+                    ts_candidate = getattr(wm, 'window_start_time', None)
+                    if not ts_candidate and getattr(wm, 'current_window', None):
+                        try:
+                            ts_candidate = wm.current_window.get('timestamp')
+                        except Exception:
+                            ts_candidate = None
+                    window_last = _format_last_activity(ts_candidate)
+            except Exception:
+                window_last = 'N/A'
+
             components = {
                 'keyboard': {
                     'events': int(stats.get('keyboard_events', 0) or 0),
-                    'last_activity': 'N/A'
+                    'last_activity': keyboard_last
                 },
                 'mouse': {
                     'events': int(stats.get('mouse_events', 0) or 0),
-                    'last_activity': 'N/A'
+                    'last_activity': mouse_last
                 },
                 'clipboard': {
                     'events': int(stats.get('clipboard_events', 0) or 0),
-                    'last_activity': 'N/A'
+                    'last_activity': clipboard_last
                 },
                 'window': {
                     'events': int(stats.get('window_events', stats.get('window_changes', 0)) or 0),
-                    'last_activity': 'N/A'
+                    'last_activity': window_last
                 }
             }
 
