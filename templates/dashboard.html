@@ -6,13 +6,16 @@
 
 {% block toolbar %}
 <div class="btn-group" role="group">
-    <button type="button" class="btn btn-outline-primary btn-sm" onclick="refreshData()">
+    <button type="button" class="btn btn-outline-primary btn-sm"
+        onclick="refreshData()">
         <i class="fas fa-sync-alt"></i> Refresh
     </button>
-    <button type="button" class="btn btn-outline-success btn-sm" onclick="startKeylogger()" id="startBtn">
+    <button type="button" class="btn btn-outline-success btn-sm"
+        onclick="startKeylogger()" id="startBtn">
         <i class="fas fa-play"></i> Start
     </button>
-    <button type="button" class="btn btn-outline-danger btn-sm" onclick="stopKeylogger()" id="stopBtn">
+    <button type="button" class="btn btn-outline-danger btn-sm"
+        onclick="stopKeylogger()" id="stopBtn">
         <i class="fas fa-stop"></i> Stop
     </button>
 </div>
@@ -22,19 +25,20 @@
 <!-- Status Cards -->
 <div class="row mb-4">
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Status</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            <span class="badge status-badge {{ 'bg-success' if status.running else 'bg-danger' }}">
+        <div class="card h-100 p-3">
+            <div class="card-body p-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="text-muted small mb-1">Status</div>
+                        <div class="h5 mb-0">
+                            <span
+                                class="badge {{ 'bg-success' if status.running else 'bg-danger' }}">
                                 {{ 'Running' if status.running else 'Stopped' }}
                             </span>
                         </div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-power-off fa-2x text-gray-300"></i>
+                        <i class="fas fa-power-off fa-2x text-muted"></i>
                     </div>
                 </div>
             </div>
@@ -42,15 +46,16 @@
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Events Logged</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.events_logged or 0 }}</div>
+        <div class="card h-100 p-3">
+            <div class="card-body p-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="text-muted small mb-1">Events Logged</div>
+                        <div class="h5 mb-0">{{ stats.events_logged or 0
+                            }}</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-keyboard fa-2x text-gray-300"></i>
+                        <i class="fas fa-keyboard fa-2x text-muted"></i>
                     </div>
                 </div>
             </div>
@@ -58,15 +63,16 @@
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Uptime</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.uptime or '0:00:00' }}</div>
+        <div class="card h-100 p-3">
+            <div class="card-body p-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="text-muted small mb-1">Uptime</div>
+                        <div class="h5 mb-0">{{ stats.uptime or '0:00:00'
+                            }}</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-clock fa-2x text-gray-300"></i>
+                        <i class="fas fa-clock fa-2x text-muted"></i>
                     </div>
                 </div>
             </div>
@@ -74,15 +80,16 @@
     </div>
 
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Memory Usage</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.memory_usage or '0 MB' }}</div>
+        <div class="card h-100 p-3">
+            <div class="card-body p-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="text-muted small mb-1">Memory Usage</div>
+                        <div class="h5 mb-0">{{ stats.memory_usage or '0 MB'
+                            }}</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-memory fa-2x text-gray-300"></i>
+                        <i class="fas fa-memory fa-2x text-muted"></i>
                     </div>
                 </div>
             </div>
@@ -93,16 +100,17 @@
 <!-- Features Status -->
 <div class="row mb-4">
     <div class="col-lg-6">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Active Features</h6>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="m-0">Active Features</h6>
             </div>
             <div class="card-body">
                 <div class="row">
                     {% for feature, enabled in features.items() %}
                     <div class="col-md-6 mb-2">
                         <div class="d-flex align-items-center">
-                            <i class="fas fa-{{ 'check-circle text-success' if enabled else 'times-circle text-danger' }} me-2"></i>
+                            <i
+                                class="fas fa-{{ 'check-circle text-success' if enabled else 'times-circle text-danger' }} me-2"></i>
                             <span>{{ feature.replace('_', ' ').title() }}</span>
                         </div>
                     </div>
@@ -113,9 +121,9 @@
     </div>
 
     <div class="col-lg-6">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">System Information</h6>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="m-0">System Information</h6>
             </div>
             <div class="card-body">
                 <table class="table table-sm">
@@ -148,14 +156,14 @@
 <!-- Recent Activity -->
 <div class="row">
     <div class="col-lg-12">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Recent Activity</h6>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="m-0">Recent Activity</h6>
             </div>
             <div class="card-body">
                 {% if recent_events %}
                 <div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0">
+                    <table class="table" width="100%">
                         <thead>
                             <tr>
                                 <th>Time</th>
@@ -168,9 +176,13 @@
                             {% for event in recent_events %}
                             <tr>
                                 <td>{{ event.timestamp }}</td>
-                                <td><span class="badge bg-info">{{ event.type }}</span></td>
-                                <td>{{ event.data[:50] }}{% if event.data|length > 50 %}...{% endif %}</td>
-                                <td>{{ event.window[:30] }}{% if event.window|length > 30 %}...{% endif %}</td>
+                                <td><span class="badge bg-info">{{ event.type
+                                        }}</span></td>
+                                <td>{{ event.data[:50] }}{% if event.data|length
+                                    > 50 %}...{% endif %}</td>
+                                <td>{{ event.window[:30] }}{% if
+                                    event.window|length > 30 %}...{% endif
+                                    %}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

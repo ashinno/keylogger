@@ -1,63 +1,44 @@
 {% extends "base.html" %}
 
-{% block title %}Error - Enhanced Keylogger{% endblock %}
-
-{% block page_title %}Error{% endblock %}
+{% block title %}Error - Keylogger{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-lg-8">
-        <div class="card shadow">
-            <div class="card-header bg-danger text-white">
-                <h5 class="mb-0">
-                    <i class="fas fa-exclamation-triangle me-2"></i>
-                    Error {{ error_code or '500' }}
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="text-center mb-4">
-                    <i class="fas fa-bug fa-5x text-danger mb-3"></i>
-                    <h3 class="text-danger">{{ error_title or 'Internal Server Error' }}</h3>
-                    <p class="text-muted lead">{{ error_message or 'The server encountered an internal error and was unable to complete your request.' }}</p>
-                </div>
-                
-                {% if error_details %}
-                <div class="alert alert-warning" role="alert">
-                    <h6 class="alert-heading">Error Details:</h6>
-                    <pre class="mb-0">{{ error_details }}</pre>
-                </div>
-                {% endif %}
-                
-                <div class="text-center">
-                    <a href="{{ url_for('dashboard') }}" class="btn btn-primary me-2">
-                        <i class="fas fa-home me-1"></i>
-                        Go to Dashboard
-                    </a>
-                    <button onclick="history.back()" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left me-1"></i>
-                        Go Back
-                    </button>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card">
+                <div class="card-body text-center p-5">
+                    <div class="display-4 fw-bold">{{ error_code or 500 }}</div>
+                    <h1 class="h3 mt-2">{{ error_title or 'Something went wrong'
+                        }}</h1>
+                    <p class="text-muted mt-2">{{ error_message or
+                        'An unexpected error occurred. Please try again later.'
+                        }}</p>
+                    <div class="mt-4 d-flex justify-content-center gap-2">
+                        <a href="{{ url_for('dashboard') }}"
+                            class="btn btn-primary">
+                            <i class="fas fa-home me-1"></i> Go to Dashboard
+                        </a>
+                        <button class="btn btn-outline-secondary"
+                            onclick="window.history.back()">
+                            <i class="fas fa-arrow-left me-1"></i> Go Back
+                        </button>
+                    </div>
+                    {% if redirect and redirect_url %}
+                    <p class="text-muted small mt-3">You will be redirected
+                        shortly...</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
 
-{% block scripts %}
+{% if redirect and redirect_url %}
 <script>
-// Auto-redirect to dashboard after 10 seconds if no user interaction
-let redirectTimer = setTimeout(function() {
-    window.location.href = "{{ url_for('dashboard') }}";
+setTimeout(function() {
+    window.location.href = '{{ redirect_url }}';
 }, 10000);
-
-// Clear timer if user interacts with the page
-document.addEventListener('click', function() {
-    clearTimeout(redirectTimer);
-});
-
-document.addEventListener('keydown', function() {
-    clearTimeout(redirectTimer);
-});
 </script>
+{% endif %}
 {% endblock %}

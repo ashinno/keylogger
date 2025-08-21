@@ -1,122 +1,130 @@
 {% extends "base.html" %}
 
-{% block title %}Export Data - Keylogger{% endblock %}
+{% block title %}Export - Keylogger{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Export Keylogger Data</h3>
+                <div
+                    class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title m-0">Export Data</h3>
+                    <div>
+                        <button class="btn btn-outline-secondary me-2"
+                            onclick="previewData()">
+                            <i class="fas fa-eye me-1"></i> Preview
+                        </button>
+                        <button class="btn btn-primary" onclick="exportData()">
+                            <i class="fas fa-download me-1"></i> Export
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <form id="exportForm">
-                        <div class="row">
-                            <div class="col-md-6">
+                        <div class="row g-3">
+                            <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4>Export Format</h4>
+                                        <h4 class="m-0">Format</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="format" id="formatJson" value="json" checked>
-                                            <label class="form-check-label" for="formatJson">
-                                                <strong>JSON</strong> - Structured data format
-                                            </label>
+                                            <input class="form-check-input"
+                                                type="radio" name="format"
+                                                id="formatJson" value="json"
+                                                checked>
+                                            <label class="form-check-label"
+                                                for="formatJson">JSON</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="format" id="formatCsv" value="csv">
-                                            <label class="form-check-label" for="formatCsv">
-                                                <strong>CSV</strong> - Comma-separated values
-                                            </label>
+                                            <input class="form-check-input"
+                                                type="radio" name="format"
+                                                id="formatCsv" value="csv">
+                                            <label class="form-check-label"
+                                                for="formatCsv">CSV</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="format" id="formatTxt" value="txt">
-                                            <label class="form-check-label" for="formatTxt">
-                                                <strong>TXT</strong> - Plain text format
-                                            </label>
+                                            <input class="form-check-input"
+                                                type="radio" name="format"
+                                                id="formatTxt" value="txt">
+                                            <label class="form-check-label"
+                                                for="formatTxt">TXT</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="col-md-6">
+
+                            <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4>Date Range</h4>
+                                        <h4 class="m-0">Date Range</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="startDate">Start Date:</label>
-                                            <input type="date" class="form-control" id="startDate" name="start_date">
+                                            <label for="startDate">Start
+                                                Date:</label>
+                                            <input type="date"
+                                                class="form-control"
+                                                id="startDate"
+                                                name="start_date">
                                         </div>
                                         <div class="form-group">
-                                            <label for="endDate">End Date:</label>
-                                            <input type="date" class="form-control" id="endDate" name="end_date">
+                                            <label for="endDate">End
+                                                Date:</label>
+                                            <input type="date"
+                                                class="form-control"
+                                                id="endDate" name="end_date">
                                         </div>
-                                        <small class="form-text text-muted">
-                                            Leave empty to export all data
-                                        </small>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-12">
+
+                            <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4>Event Types to Export</h4>
+                                        <h4 class="m-0">Event Types</h4>
                                     </div>
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="exportKeyboard" name="event_types" value="keyboard" checked>
-                                                    <label class="form-check-label" for="exportKeyboard">
-                                                        Keyboard Events
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="exportMouse" name="event_types" value="mouse" checked>
-                                                    <label class="form-check-label" for="exportMouse">
-                                                        Mouse Events
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="exportWindow" name="event_types" value="window" checked>
-                                                    <label class="form-check-label" for="exportWindow">
-                                                        Window Events
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="exportClipboard" name="event_types" value="clipboard" checked>
-                                                    <label class="form-check-label" for="exportClipboard">
-                                                        Clipboard Events
-                                                    </label>
-                                                </div>
-                                            </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input"
+                                                type="checkbox"
+                                                id="eventsKeystrokes"
+                                                name="events" value="keystrokes"
+                                                checked>
+                                            <label class="form-check-label"
+                                                for="eventsKeystrokes">Keystrokes</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input"
+                                                type="checkbox"
+                                                id="eventsMouseClicks"
+                                                name="events"
+                                                value="mouse_clicks" checked>
+                                            <label class="form-check-label"
+                                                for="eventsMouseClicks">Mouse
+                                                Clicks</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input"
+                                                type="checkbox"
+                                                id="eventsClipboard"
+                                                name="events" value="clipboard"
+                                                checked>
+                                            <label class="form-check-label"
+                                                for="eventsClipboard">Clipboard</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input"
+                                                type="checkbox"
+                                                id="eventsScreenshots"
+                                                name="events"
+                                                value="screenshots" checked>
+                                            <label class="form-check-label"
+                                                for="eventsScreenshots">Screenshots</label>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <button type="button" class="btn btn-primary btn-lg" onclick="exportData()">
-                                    <i class="fas fa-download"></i> Export Data
-                                </button>
-                                <button type="button" class="btn btn-secondary btn-lg ml-2" onclick="previewData()">
-                                    <i class="fas fa-eye"></i> Preview Data
-                                </button>
                             </div>
                         </div>
                     </form>
@@ -124,86 +132,82 @@
             </div>
         </div>
     </div>
-    
-    <!-- Preview Modal -->
-    <div class="modal fade" id="previewModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Data Preview</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <pre id="previewContent">Loading preview...</pre>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="exportData()">Export This Data</button>
-                </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="modal fade" id="previewModal" tabindex="-1"
+    aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="previewModalLabel">Preview Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <pre class="mb-0"><code id="previewContent"></code></pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-function exportData() {
+function getFormData() {
     const form = document.getElementById('exportForm');
     const formData = new FormData(form);
-    
-    const format = formData.get('format');
-    const startDate = formData.get('start_date');
-    const endDate = formData.get('end_date');
-    const eventTypes = formData.getAll('event_types');
-    
-    let url = `/api/export/${format}?`;
-    if (startDate) url += `start_date=${startDate}&`;
-    if (endDate) url += `end_date=${endDate}&`;
-    eventTypes.forEach(type => url += `event_types=${type}&`);
-    
-    // Create a temporary link to download the file
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `keylogger_export_${new Date().toISOString().split('T')[0]}.${format}`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const params = {
+        format: formData.get('format'),
+        start_date: formData.get('start_date') || '',
+        end_date: formData.get('end_date') || '',
+        events: formData.getAll('events')
+    };
+    return params;
+}
+
+function exportData() {
+    const params = getFormData();
+    const query = new URLSearchParams(params).toString();
+    window.location.href = `/api/export?${query}`;
 }
 
 function previewData() {
-    const form = document.getElementById('exportForm');
-    const formData = new FormData(form);
-    
-    const format = 'json'; // Always preview as JSON
-    const startDate = formData.get('start_date');
-    const endDate = formData.get('end_date');
-    const eventTypes = formData.getAll('event_types');
-    
-    let url = `/api/export/${format}?preview=true&`;
-    if (startDate) url += `start_date=${startDate}&`;
-    if (endDate) url += `end_date=${endDate}&`;
-    eventTypes.forEach(type => url += `event_types=${type}&`);
-    
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('previewContent').textContent = JSON.stringify(data, null, 2);
-            $('#previewModal').modal('show');
-        })
-        .catch(error => {
-            document.getElementById('previewContent').textContent = 'Error loading preview: ' + error;
-            $('#previewModal').modal('show');
-        });
+    const params = getFormData();
+    fetch('/api/export/preview', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+    })
+    .then(res => res.json())
+    .then(data => {
+        const previewEl = document.getElementById('previewContent');
+        previewEl.textContent = (typeof data === 'string') ? data : JSON.stringify(data, null, 2);
+        const modalEl = document.getElementById('previewModal');
+        const modal = new bootstrap.Modal(modalEl);
+        modal.show();
+    })
+    .catch(err => {
+        const previewEl = document.getElementById('previewContent');
+        previewEl.textContent = 'Error fetching preview: ' + err;
+        const modalEl = document.getElementById('previewModal');
+        const modal = new bootstrap.Modal(modalEl);
+        modal.show();
+    });
 }
 
 // Set default dates
-document.addEventListener('DOMContentLoaded', function() {
-    const today = new Date();
-    const lastWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
-    
-    document.getElementById('startDate').value = lastWeek.toISOString().split('T')[0];
-    document.getElementById('endDate').value = today.toISOString().split('T')[0];
-});
+(function setDefaultDates() {
+    const end = new Date();
+    const start = new Date();
+    start.setDate(end.getDate() - 7);
+    document.getElementById('startDate').value = start.toISOString().substr(0,10);
+    document.getElementById('endDate').value = end.toISOString().substr(0,10);
+})();
 </script>
 {% endblock %}
