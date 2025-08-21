@@ -180,8 +180,8 @@ class KeyloggerSetup:
                     "host": "127.0.0.1",
                     "port": 5000,
                     "debug": False,
-                    "username": "admin",
-                    "password": "admin123",
+                    "admin_username": "admin",
+                    "admin_password": "admin123",
                     "secret_key": "your-secret-key-here"
                 }
             }

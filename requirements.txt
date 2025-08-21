@@ -1,20 +1,36 @@
-# Core dependencies
-psutil>=5.9.0
-cryptography>=41.0.0
+# Core dependencies for Enhanced Keylogger
+
+# Input monitoring and system interaction
 pynput>=1.7.6
+psutil>=5.9.0
+
+# Cryptography and security
+cryptography>=41.0.0
+
+# Web interface and API
+Flask>=2.3.0
+Flask-CORS>=4.0.0
+
+# Image processing and screenshots
 Pillow>=10.0.0
+
+# HTTP requests and networking
 requests>=2.31.0
-pyperclip>=1.8.2
+
+# Windows-specific dependencies (for Windows systems)
 pywin32>=306; sys_platform == "win32"
 
-# Development dependencies
-pytest>=7.4.0
-pytest-cov>=4.1.0
-black>=23.0.0
-flake8>=6.0.0
-mypy>=1.5.0
+# Data processing and analysis
+pandas>=2.0.0
+numpy>=1.24.0
 
-# Optional dependencies
-flask>=2.3.0
+# Configuration and file handling
+PyYAML>=6.0
+
+# Logging and monitoring
 watchdog>=3.0.0
-click>=8.1.0
+
+# Optional: Advanced features
+# opencv-python>=4.8.0  # For advanced image processing
+# schedule>=1.2.0       # For scheduled tasks
+# python-telegram-bot>=20.0  # For Telegram notifications

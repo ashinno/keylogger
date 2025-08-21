@@ -2,6 +2,66 @@
 
 A comprehensive, modular keylogger application with advanced security, privacy, and monitoring features.
 
+## Table of Contents
+1. Project Overview
+2. Technical Specifications
+3. Installation Guide
+4. Usage Instructions
+5. Feature Documentation
+6. Contribution Guidelines
+7. Troubleshooting
+8. License Information
+
+## 1. Project Overview
+Purpose: The Enhanced Keylogger helps you monitor and analyze keyboard, mouse, clipboard, window focus, screenshots, USB events, and performance data on authorized systems, with strong security and privacy controls. It is designed for legitimate use cases such as usability testing, parental control, endpoint monitoring within your organization, and academic/security research where you have explicit permission.
+
+Objectives:
+- Provide comprehensive, configurable input and activity monitoring
+- Preserve privacy via sanitization, hashing, and application exclusions
+- Ensure security with encryption and access control
+- Offer a web interface and tools for real-time monitoring and post-hoc analysis
+- Maintain reliable performance with buffering, rotation, and resource tracking
+
+Target audience and use cases:
+- Security analysts and researchers evaluating user behavior or system usage patterns
+- IT administrators monitoring corporate endpoints with consent and policy
+- Parents or guardians monitoring family devices with consent
+- QA/usability teams capturing interaction data during tests
+
+## 2. Technical Specifications
+System architecture and components:
+- Core services orchestrate configuration, encryption, logging, and the main keylogger runtime.
+- Listeners capture inputs/events: keyboard, mouse, and clipboard under listeners/.
+- Utilities monitor environment: window focus/usage, screenshots, USB device changes, and performance under utils/.
+- Web interface built with Flask for dashboard, logs, configuration, export, and performance views under web/ with templates/ and static/ assets.
+- Parsers provide log parsing and export for analysis under parsers/.
+
+Key modules and responsibilities (non-exhaustive):
+- core.config_manager: load, validate, and provide configuration values
+- core.encryption_manager: manage encryption keys and AES-256-GCM operations
+- core.logging_manager: buffered, encrypted log writing with rotation
+- core.keylogger: orchestrates listeners, lifecycle, and exports
+- listeners.keyboard_listener: keystroke capture, sensitive data filtering, shortcut detection
+- listeners.mouse_listener: click, movement, scroll tracking
+- listeners.clipboard_listener: clipboard polling with size and privacy limits
+- utils.window_monitor: active window tracking and usage timing (Windows-focused)
+- utils.screenshot_monitor: periodic screenshots with blur/redaction and compression
+- utils.usb_monitor: USB connect/disconnect detection and device details
+- utils.performance_monitor: CPU/memory/disk/network plus keylogger metrics
+- web.app: Flask routes for login, dashboard, logs, config, export, performance
+- parsers.log_parser: parsing, statistics, and export to text/CSV/JSON
+
+Dependencies and requirements:
+- Python 3.8+ with pip
+- See “Requirements” for the full dependency list and versions
+- Windows-specific functionality (active window and some USB details) requires pywin32
+
+Technical constraints and considerations:
+- Platform differences: active window and some USB metadata collection are Windows-oriented; on other OSes, these features may be reduced or disabled
+- Permissions: some environments require elevated privileges to capture inputs or access system APIs
+- Privacy and compliance: configure exclusions, sanitization, and encryption according to your policies and local laws
+- Performance: screenshots and high-frequency polling can be resource intensive; adjust intervals and buffer sizes via config.json
+
 ## 🚀 Features
 
 ### Core Functionality
@@ -64,6 +124,20 @@ mypy>=0.991
 
 ## 🛠️ Installation
 
+### Quick Setup (recommended)
+```bash
+python setup.py
+```
+This will:
+- Check Python version
+- Create required directories (keys, logs, screenshots, core, listeners, utils, parsers, web, tests)
+- Install dependencies from requirements.txt
+- Generate a default config.json
+- Generate an encryption key at keys/encryption.key
+- Run basic tests and optionally configure autostart
+
+If you prefer manual setup, follow the steps below.
+
 ### 1. Clone the Repository
 ```bash
 git clone <repository-url>
@@ -76,19 +150,17 @@ pip install -r requirements.txt
 ```
 
 ### 3. Initial Configuration
-```bash
-# Copy default configuration
-cp config.json.example config.json
-
-# Edit configuration as needed
-notepad config.json  # Windows
-nano config.json     # Linux/macOS
-```
+- If config.json does not exist, run the setup script above (python setup.py) to create one with sensible defaults.
+- Update credentials and secrets:
+  - web.admin_username and web.admin_password for the web interface login
+  - web.secret_key to a strong random value
+- Review privacy, performance, and feature toggles according to your needs.
 
 ### 4. Generate Encryption Key
 ```bash
-python -c "from core.encryption_manager import EncryptionManager; from core.config_manager import ConfigManager; em = EncryptionManager(ConfigManager('config.json')); em.save_key(em.generate_random_key())"
+python -c "from core.encryption_manager import EncryptionManager; EncryptionManager('keys/encryption.key')"
 ```
+This will initialize and persist a secure key at keys/encryption.key if it does not already exist.
 
 ## 🚀 Usage
 
@@ -104,8 +176,17 @@ python main.py --web-only
 python main.py --daemon
 
 # Parse existing log files
-python main.py --parse-logs path/to/logfile.txt
+python main.py --parse path/to/logfile.txt
 ```
+
+### CLI Reference
+- -c, --config PATH: Configuration file path (default: config.json)
+- -w, --web-only: Run web interface only
+- -d, --daemon: Run as daemon (background)
+- --parse FILE: Parse an existing log file instead of running the keylogger
+- -o, --output FILE: Output file when parsing (default varies by format)
+- -f, --format {text,csv,json}: Output format when parsing (default: text)
+- --version: Show version and exit
 
 ### Web Interface
 1. Start with web interface: `python main.py --web-only`
@@ -113,218 +194,59 @@ python main.py --parse-logs path/to/logfile.txt
 3. Login with configured credentials
 4. Monitor real-time activity and manage settings
 
+Note: The web interface credentials are read from config.json at web.admin_username and web.admin_password. Older configs using web.username and web.password are automatically migrated to the new keys on the next run; you can also rename them manually if desired.
+
 ### Interactive Commands
 When running in interactive mode, use these commands:
 - `status` - Show current keylogger status
 - `stats` - Display statistics
 - `export <format> <file>` - Export logs (json/csv/txt)
-- `reload` - Reload configuration
+- `config` - Reload configuration
 - `stop` - Stop keylogger
+- `quit` - Quit application
 - `help` - Show available commands
 
-## ⚙️ Configuration
+## 5. Feature Documentation
 
-The keylogger is configured through `config.json`. Key sections include:
+### Keyboard Listener (listeners/keyboard_listener.py)
+- Functionality: Captures key presses/releases, detects shortcuts, buffers text with flush behavior, and filters sensitive input.
+- Privacy/Security: Sensitive data detection and sanitization; configurable keywords via privacy.sensitive_keywords and toggles via privacy.sanitize_passwords and privacy.hash_sensitive_data.
+- Performance: Adjustable flush thresholds and typing timeouts to minimize overhead.
+- Enable/Disable: features.keyboard (true/false).
+- Known limitations: OS-level permissions may restrict capture in elevated or protected apps.
 
-### Logging Configuration
-```json
-{
-  "logging": {
-    "level": "INFO",
-    "file_path": "logs/keylog.txt",
-    "max_size_mb": 100,
-    "buffer_size": 100,
-    "flush_interval": 5.0,
-    "enable_rotation": true,
-    "enable_encryption": true
-  }
-}
-```
+### Window Monitor (utils/window_monitor.py)
+- Functionality: Tracks active window changes and time spent per application; sanitizes window titles for privacy.
+- Config: features.window_tracking, performance.window_check_interval.
+- Platform: Primarily Windows-focused; functionality may be reduced on macOS/Linux.
+- Known limitations: Some system or UWP apps may not expose details; permissions can limit access.
 
-### Feature Toggles
-```json
-{
-  "features": {
-    "keyboard": true,
-    "mouse": true,
-    "clipboard": true,
-    "screenshots": false,
-    "usb_monitoring": true,
-    "network_monitoring": false,
-    "window_tracking": true
-  }
-}
-```
+### Screenshot Monitor (utils/screenshot_monitor.py)
+- Functionality: Periodic screenshots with optional blur/redaction, compression, resolution limits; can hash/encrypt outputs.
+- Config: features.screenshots (enable/disable), performance.screenshot_interval, privacy exclusions/filters.
+- Security: Supports encryption and hashing for tamper detection and confidentiality.
+- Performance considerations: Screenshots can be resource-intensive; tune interval and compression.
+- Known limitations: Some environments block screenshot capture; redaction rules depend on configuration.
 
-### Privacy Settings
-```json
-{
-  "privacy": {
-    "sanitize_passwords": true,
-    "hash_sensitive_data": true,
-    "clipboard_max_length": 1000,
-    "excluded_applications": ["password_manager.exe"],
-    "sensitive_keywords": ["password", "ssn", "credit"]
-  }
-}
-```
+### USB Monitor (utils/usb_monitor.py)
+- Functionality: Detects USB device connect/disconnect events and logs details; uses psutil cross-platform and win32 APIs on Windows for richer metadata.
+- Config: features.usb_monitoring; polling/check intervals.
+- Platform: Works cross-platform with reduced metadata outside Windows.
+- Known limitations: Vendor/product details may be unavailable on certain OSes; timing granularity limited by polling interval.
 
-### Security Configuration
-```json
-{
-  "encryption": {
-    "enabled": true,
-    "key_file": "keys/encryption.key",
-    "algorithm": "AES-256-GCM"
-  },
-  "stealth": {
-    "hide_console": true,
-    "process_name": "system_service",
-    "startup_delay": 30
-  }
-}
-```
+### Performance Monitor (utils/performance_monitor.py)
+- Functionality: Tracks CPU, memory, disk, network, and keylogger-specific metrics (process memory/CPU, threads, events logged).
+- Config: performance thresholds (e.g., max_memory_usage_mb), history size, and sampling intervals.
+- Use cases: Alerting on resource spikes, tuning intervals and buffer sizes based on observed load.
 
-## 📊 Log Analysis
+### Web Interface (web/app.py)
+- Routes: /login, / (dashboard), /logs (+ /api/logs), /config (+ /api/config), /export (+ /api/export), /performance (+ /api/performance), /test.
+- Auth: Basic session auth using credentials from web.admin_username and web.admin_password; secret set via web.secret_key; web.debug controls debug mode.
+- Notes: Protect access, change defaults, and bind host/port via web.host and web.port.
 
-### Using the Log Parser
-```bash
-# Parse and analyze logs
-python -m parsers.log_parser logs/keylog.txt
-
-# Generate readable report
-python -m parsers.log_parser logs/keylog.txt --report output_report.txt
-
-# Export to different formats
-python -m parsers.log_parser logs/keylog.txt --export-csv output.csv
-python -m parsers.log_parser logs/keylog.txt --export-json output.json
-```
-
-### Programmatic Analysis
-```python
-from parsers.log_parser import LogParser
-from core.config_manager import ConfigManager
-
-# Initialize parser
-config = ConfigManager('config.json')
-parser = LogParser(config)
-
-# Parse log file
-events = parser.parse_log_file('logs/keylog.txt')
-
-# Get statistics
-stats = parser.get_statistics()
-print(f"Total events: {stats['total_events']}")
-print(f"Total keystrokes: {stats['total_keystrokes']}")
-
-# Generate report
-report = parser.generate_readable_report(events, 'analysis_report.txt')
-```
-
-## 🧪 Testing
-
-### Run All Tests
-```bash
-# Run complete test suite
-python tests/test_keylogger.py
-
-# Run with pytest for detailed output
-pytest tests/ -v
-
-# Run with coverage
-pytest tests/ --cov=. --cov-report=html
-```
-
-### Test Categories
-- **Unit Tests**: Individual component testing
-- **Integration Tests**: Cross-component functionality
-- **Performance Tests**: Resource usage and speed
-- **Security Tests**: Encryption and privacy features
-
-## 🔧 Development
-
-### Project Structure
-```
-keylogger/
-├── core/                   # Core functionality
-│   ├── config_manager.py   # Configuration management
-│   ├── encryption_manager.py # Encryption/decryption
-│   ├── logging_manager.py  # Event logging
-│   └── keylogger.py       # Main orchestrator
-├── listeners/             # Input listeners
-│   ├── keyboard_listener.py
-│   ├── mouse_listener.py
-│   └── clipboard_listener.py
-├── utils/                 # Utility modules
-│   ├── window_monitor.py
-│   ├── screenshot_monitor.py
-│   ├── usb_monitor.py
-│   └── performance_monitor.py
-├── parsers/              # Log analysis
-│   └── log_parser.py
-├── web/                  # Web interface
-│   └── app.py
-├── tests/                # Test suite
-│   └── test_keylogger.py
-├── config.json           # Configuration file
-├── requirements.txt      # Dependencies
-├── main.py              # Entry point
-└── README.md            # Documentation
-```
-
-### Code Style
-- Follow PEP 8 guidelines
-- Use type hints for all functions
-- Comprehensive docstrings
-- Error handling for all operations
-- Security-first approach
-
-### Adding New Features
-1. Create feature branch
-2. Implement with tests
-3. Update configuration schema
-4. Add documentation
-5. Submit pull request
-
-## 🔒 Security Considerations
-
-### Data Protection
-- All sensitive data is encrypted at rest
-- Memory is cleared after use
-- Secure key derivation and storage
-- Regular security audits
-
-### Privacy Compliance
-- Configurable data retention policies
-- Automatic sensitive data detection
-- User consent mechanisms
-- Data anonymization options
-
-### Access Control
-- Multi-factor authentication support
-- Role-based permissions
-- Audit logging
-- Session management
-
-## 📈 Performance Optimization
-
-### Memory Management
-- Efficient buffering strategies
-- Automatic garbage collection
-- Memory usage monitoring
-- Resource leak detection
-
-### CPU Optimization
-- Event batching
-- Asynchronous processing
-- Thread pool management
-- Performance profiling
-
-### Storage Efficiency
-- Log compression
-- Automatic cleanup
-- Size-based rotation
-- Efficient file formats
+### Log Parser (parsers/log_parser.py)
+- Functionality: Parses keylogger output for reporting and export to text/CSV/JSON.
+- CLI: See Usage > CLI Reference and Log Analysis section for examples.
 
 ## 🐛 Troubleshooting
 
@@ -347,8 +269,8 @@ pip install -r requirements.txt --force-reinstall
 
 #### Configuration Errors
 ```bash
-# Validate configuration
-python -c "from core.config_manager import ConfigManager; cm = ConfigManager('config.json'); print('Valid' if cm.validate_config() else 'Invalid')"
+# Validate configuration (example check)
+python -c "from core.config_manager import ConfigManager; cm = ConfigManager('config.json'); errs = cm.validate_config(); print('Valid' if not errs else f'Invalid: {errs}')"
 ```
 
 #### Performance Issues
@@ -358,13 +280,11 @@ python -c "from core.config_manager import ConfigManager; cm = ConfigManager('co
 - Monitor system resources
 
 ### Debug Mode
-```bash
-# Enable debug logging
-python main.py --debug
-
-# Verbose output
-python main.py --verbose
-```
+- Set logging.level to "DEBUG" in config.json and restart the application.
+- Optionally set web.debug to true for verbose Flask output.
+- View runtime logs:
+  - Windows (PowerShell): `Get-Content .\keylogger_main.log -Wait`
+  - Linux/macOS: `tail -f keylogger_main.log`
 
 ## 📝 Changelog
 
@@ -403,7 +323,32 @@ python tests/test_keylogger.py
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+The Enhanced Keylogger is released under the MIT License. The full text is provided below for convenience.
+
+MIT License
+
+Copyright (c) 2025 Enhanced Keylogger Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Third-party licenses: This project depends on open-source libraries (e.g., pynput, cryptography, psutil, Flask, Pillow, requests, pyperclip, pywin32). Each remains under its own license; please review those projects for details.
+
 
 ## ⚠️ Legal Notice
 

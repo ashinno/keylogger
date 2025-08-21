@@ -1,333 +1,579 @@
-"""Advanced logging management with buffering, rotation, and encryption."""
+"""Event logging management with buffering and encryption."""
 
 import os
 import time
-import threading
-from datetime import datetime
-from pathlib import Path
-from typing import Optional, List, Dict, Any
-from collections import deque
-from dataclasses import dataclass, asdict
 import json
+import threading
 import logging
-from logging.handlers import RotatingFileHandler
-
-from .encryption_manager import EncryptionManager
+from typing import Any, Dict, List, Optional, Union
+from pathlib import Path
+from datetime import datetime
+from queue import Queue, Empty
+from dataclasses import dataclass, field
 from .config_manager import ConfigManager
+from .encryption_manager import EncryptionManager
 
 logger = logging.getLogger(__name__)
 
 
 @dataclass
 class LogEntry:
-    """Structured log entry with metadata."""
-    timestamp: datetime
+    """Represents a single log entry with schema expected by parser/tests."""
     event_type: str
-    details: str
-    window_name: str
-    user_id: Optional[str] = None
+    content: Any
+    window_name: str = "Unknown"
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    timestamp: float = field(default_factory=time.time)
+    datetime: str = field(default_factory=lambda: datetime.now().isoformat())
     session_id: Optional[str] = None
-    metadata: Optional[Dict[str, Any]] = None
-    
+
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization."""
-        data = asdict(self)
-        data['timestamp'] = self.timestamp.isoformat()
-        return data
-    
-    def to_log_string(self) -> str:
-        """Convert to formatted log string."""
-        timestamp_str = self.timestamp.strftime('%Y-%m-%d %H:%M:%S,%f')[:-3]
-        return f"{timestamp_str}: {self.event_type}: {self.details} in {self.window_name}"
-    
-    @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> 'LogEntry':
-        """Create LogEntry from dictionary."""
-        data['timestamp'] = datetime.fromisoformat(data['timestamp'])
-        return cls(**data)
+        """Convert entry to dictionary with canonical keys."""
+        return {
+            'timestamp': self.timestamp,
+            'datetime': self.datetime,
+            'event_type': self.event_type,
+            'content': self.content,
+            'window_name': self.window_name,
+            'metadata': self.metadata,
+            'session_id': self.session_id,
+        }
+
+    def to_json(self) -> str:
+        """Convert entry to JSON string."""
+        return json.dumps(self.to_dict(), ensure_ascii=False)
+
+
+class LogEvent(LogEntry):
+    """Backward-compatible alias that accepts legacy parameter names."""
+    def __init__(self, event_type: str, data: Any, window: str = None, metadata: Dict[str, Any] = None):
+        super().__init__(
+            event_type=event_type,
+            content=data,
+            window_name=window or "Unknown",
+            metadata=metadata or {},
+        )
+
+
+class _BufferView:
+    """Lightweight view to report current buffered (in-memory + queued) events."""
+    def __init__(self, manager: 'LoggingManager'):
+        self._manager = manager
+
+    def __len__(self) -> int:
+        try:
+            return len(self._manager.event_buffer) + self._manager.event_queue.qsize()
+        except Exception:
+            return len(self._manager.event_buffer)
 
 
 class LoggingManager:
-    """Advanced logging manager with buffering, encryption, and rotation."""
+    """Manages event logging with buffering, encryption, and rotation."""
     
-    def __init__(self, config_manager: ConfigManager, encryption_manager: Optional[EncryptionManager] = None):
+    def __init__(self, config_manager: ConfigManager, encryption_manager: EncryptionManager = None):
         self.config = config_manager
         self.encryption = encryption_manager
-        self.log_buffer: deque[LogEntry] = deque()
-        self.buffer_lock = threading.RLock()
-        self.flush_timer: Optional[threading.Timer] = None
-        self.session_id = self._generate_session_id()
+        
+        # Logging configuration
+        self.log_file = Path(self.config.get('logging.file_path', 'logs/keylog.txt'))
+        self.log_file_path = str(self.log_file)
+        self.max_size_mb = self.config.get('logging.max_size_mb', 100)
+        self.buffer_size = self.config.get('logging.buffer_size', 100)
+        self.flush_interval = self.config.get('logging.flush_interval', 5.0)
+        self.enable_rotation = self.config.get('logging.enable_rotation', True)
+        self.enable_encryption = self.config.get('logging.enable_encryption', True)
+        self.backup_count = self.config.get('logging.backup_count', 5)
+        
+        # Event buffer and processing
+        self.event_buffer: List[LogEntry] = []
+        self.event_queue = Queue()
+        self.buffer_lock = threading.Lock()
+        self.is_running = False
+        self.buffer = _BufferView(self)
+        
+        # Statistics
         self.stats = {
-            'total_entries': 0,
+            'total_events': 0,
+            'events_written': 0,
+            'events_encrypted': 0,
             'buffer_flushes': 0,
-            'encryption_operations': 0,
-            'errors': 0
+            'file_rotations': 0,
+            'errors': 0,
+            'start_time': time.time()
         }
         
-        self._setup_logging()
-        self._start_periodic_flush()
+        # Session tracking
+        self.session_id = self._generate_session_id()
+        
+        # Ensure log directory exists
+        self.log_file.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Start background processing
+        self._start_background_processing()
     
     def _generate_session_id(self) -> str:
-        """Generate unique session identifier."""
+        """Generate unique session ID."""
         return f"session_{int(time.time())}_{os.getpid()}"
     
-    def _setup_logging(self) -> None:
-        """Setup file logging with rotation."""
-        log_file = self.config.get('logging.file_path', 'keylog.txt')
-        max_size = self.config.get('logging.max_file_size_mb', 100) * 1024 * 1024
-        backup_count = self.config.get('logging.backup_count', 5)
+    def _start_background_processing(self) -> None:
+        """Start background threads for log processing."""
+        self.is_running = True
         
-        # Create log directory if it doesn't exist
-        log_path = Path(log_file)
-        log_path.parent.mkdir(parents=True, exist_ok=True)
+        # Buffer flush thread
+        self.flush_thread = threading.Thread(target=self._flush_worker, daemon=True)
+        self.flush_thread.start()
         
-        # Setup rotating file handler
-        self.file_handler = RotatingFileHandler(
-            log_file,
-            maxBytes=max_size,
-            backupCount=backup_count,
-            encoding='utf-8'
-        )
+        # Event processing thread
+        self.process_thread = threading.Thread(target=self._process_worker, daemon=True)
+        self.process_thread.start()
         
-        # Setup formatter
-        formatter = logging.Formatter('%(message)s')
-        self.file_handler.setFormatter(formatter)
-        
-        logger.info(f"Logging setup complete: {log_file}")
+        logger.info("Logging manager background processing started")
     
-    def _start_periodic_flush(self) -> None:
-        """Start periodic buffer flushing."""
-        interval = self.config.get('logging.flush_interval_seconds', 10)
-        self.flush_timer = threading.Timer(interval, self._periodic_flush)
-        self.flush_timer.daemon = True
-        self.flush_timer.start()
+    def _flush_worker(self) -> None:
+        """Background worker for periodic buffer flushing."""
+        while self.is_running:
+            try:
+                time.sleep(self.flush_interval)
+                self._flush_buffer()
+            except Exception as e:
+                logger.error(f"Error in flush worker: {e}")
+                self.stats['errors'] += 1
     
-    def _periodic_flush(self) -> None:
-        """Periodically flush the log buffer."""
-        try:
-            self.flush_buffer()
-        except Exception as e:
-            logger.error(f"Error in periodic flush: {e}")
-            self.stats['errors'] += 1
-        finally:
-            # Schedule next flush
-            if self.flush_timer:
-                self._start_periodic_flush()
-    
-    def log_event(self, event_type: str, details: str, window_name: str, 
-                  user_id: Optional[str] = None, metadata: Optional[Dict[str, Any]] = None) -> None:
-        """Log an event with structured data."""
-        try:
-            # Check if application should be excluded
-            if self.config.is_application_excluded(window_name):
-                return
-            
-            # Sanitize sensitive data
-            if self.config.contains_sensitive_data(details):
-                if self.config.get('privacy.hash_sensitive_data', True):
-                    details = self.config.hash_sensitive_data(details)
-                else:
-                    details = "[SENSITIVE DATA REDACTED]"
-            
-            # Create log entry
-            entry = LogEntry(
-                timestamp=datetime.now(),
-                event_type=event_type,
-                details=details,
-                window_name=window_name,
-                user_id=user_id,
-                session_id=self.session_id,
-                metadata=metadata
-            )
-            
-            # Add to buffer
-            with self.buffer_lock:
-                self.log_buffer.append(entry)
-                self.stats['total_entries'] += 1
+    def _process_worker(self) -> None:
+        """Background worker for event processing."""
+        while self.is_running:
+            try:
+                # Get event from queue with timeout
+                event = self.event_queue.get(timeout=1.0)
+                # Append to buffer under lock
+                with self.buffer_lock:
+                    self.event_buffer.append(event)
+                self.event_queue.task_done()
                 
-                # Check if buffer should be flushed
-                buffer_size = self.config.get('logging.buffer_size', 10)
-                if len(self.log_buffer) >= buffer_size:
-                    self.flush_buffer()
+                # Auto-flush if needed
+                if len(self.event_buffer) >= self.buffer_size:
+                    self._flush_buffer()
+            except Empty:
+                continue
+            except Exception as e:
+                logger.error(f"Error in process worker: {e}")
+                self.stats['errors'] += 1
+    
+    def _drain_queue_to_buffer(self) -> None:
+        """Synchronously drain queued events into the buffer."""
+        drained = 0
+        while True:
+            try:
+                event = self.event_queue.get_nowait()
+            except Empty:
+                break
+            else:
+                with self.buffer_lock:
+                    self.event_buffer.append(event)
+                self.event_queue.task_done()
+                drained += 1
+        # If we reached capacity, flush
+        if len(self.event_buffer) >= self.buffer_size:
+            self._flush_buffer()
+    
+    def _maybe_auto_flush(self) -> None:
+        """Ensure timely flushing when combined pending items exceed capacity."""
+        try:
+            combined = len(self.event_buffer) + self.event_queue.qsize()
+        except Exception:
+            combined = len(self.event_buffer)
+        if combined >= self.buffer_size:
+            self._drain_queue_to_buffer()
+    
+    def log_event(self, event_type: str, data: Any, window: str = None, metadata: Dict[str, Any] = None) -> bool:
+        """Log an event asynchronously (with synchronous auto-flush assistance)."""
+        try:
+            event = LogEntry(event_type=event_type, content=data, window_name=window or "Unknown", metadata=metadata or {})
+            event.session_id = self.session_id
             
-            # Log to standard logger
-            logger.info(entry.to_log_string())
+            # Add to queue for processing
+            self.event_queue.put(event)
+            self.stats['total_events'] += 1
+            
+            # Help the background worker keep up when needed
+            self._maybe_auto_flush()
+            
+            return True
             
         except Exception as e:
             logger.error(f"Error logging event: {e}")
             self.stats['errors'] += 1
+            return False
     
-    def flush_buffer(self) -> None:
-        """Flush the log buffer to file."""
-        with self.buffer_lock:
-            if not self.log_buffer:
-                return
-            
-            entries_to_flush = list(self.log_buffer)
-            self.log_buffer.clear()
-        
+    def _flush_buffer(self) -> bool:
+        """Flush event buffer to file."""
         try:
-            # Write entries to file
-            log_file = self.config.get('logging.file_path', 'keylog.txt')
+            with self.buffer_lock:
+                if not self.event_buffer:
+                    return True
+                
+                events_to_write = self.event_buffer.copy()
+                self.event_buffer.clear()
             
-            # Ensure directory exists
-            log_dir = os.path.dirname(log_file)
-            if log_dir and not os.path.exists(log_dir):
-                os.makedirs(log_dir, exist_ok=True)
+            # Check if log rotation is needed
+            if self.enable_rotation and self._should_rotate_log():
+                self._rotate_log_file()
             
-            with open(log_file, 'a', encoding='utf-8') as f:
-                for entry in entries_to_flush:
-                    f.write(entry.to_log_string() + '\n')
+            # Write events to file
+            success = self._write_events_to_file(events_to_write)
             
-            # Encrypt if enabled
-            if self.encryption and self.config.get('encryption.enabled', True):
-                self._encrypt_log_file(log_file)
+            if success:
+                self.stats['events_written'] += len(events_to_write)
+                self.stats['buffer_flushes'] += 1
             
-            self.stats['buffer_flushes'] += 1
-            logger.debug(f"Flushed {len(entries_to_flush)} entries to log")
+            return success
             
         except Exception as e:
             logger.error(f"Error flushing buffer: {e}")
             self.stats['errors'] += 1
-            
-            # Re-add entries to buffer if flush failed
-            with self.buffer_lock:
-                self.log_buffer.extendleft(reversed(entries_to_flush))
-    
-    def _encrypt_log_file(self, log_file: str) -> None:
-        """Encrypt the log file."""
+            return False
+
+    def flush_buffer(self) -> bool:
+        """Public method to flush all pending events (queued + buffered) to disk."""
         try:
-            encrypted_file = self.encryption.encrypt_file(log_file)
-            self.stats['encryption_operations'] += 1
-            logger.debug(f"Log file encrypted: {encrypted_file}")
+            # Wait briefly for queue consumer, then drain any remaining
+            self._drain_queue_to_buffer()
+            return self._flush_buffer()
         except Exception as e:
-            logger.error(f"Error encrypting log file: {e}")
+            logger.error(f"Error in flush_buffer: {e}")
             self.stats['errors'] += 1
+            return False
     
-    def export_logs(self, output_file: str, format_type: str = 'json', 
-                   start_time: Optional[datetime] = None, 
-                   end_time: Optional[datetime] = None) -> None:
-        """Export logs in specified format."""
+    def _write_events_to_file(self, events: List[LogEntry]) -> bool:
+        """Write events to log file."""
         try:
-            # First flush any pending entries
-            self.flush_buffer()
+            # Prepare log entries
+            log_entries = []
             
-            # Read and parse log file
-            log_file = self.config.get('logging.file_path', 'keylog.txt')
-            entries = self._read_log_entries(log_file, start_time, end_time)
+            for event in events:
+                entry = event.to_json()
+                
+                # Encrypt if enabled
+                if self.enable_encryption and self.encryption and hasattr(self.encryption, 'is_initialized') and self.encryption.is_initialized():
+                    # Use available encryption API if present
+                    encrypt_fn = getattr(self.encryption, 'encrypt_string', None) or getattr(self.encryption, 'encrypt_data', None)
+                    if encrypt_fn:
+                        encrypted_entry = encrypt_fn(entry)
+                        if encrypted_entry:
+                            # If bytes returned, convert to base64/utf-8 string-like
+                            if isinstance(encrypted_entry, bytes):
+                                try:
+                                    encrypted_entry = encrypted_entry.decode('utf-8')
+                                except Exception:
+                                    encrypted_entry = encrypted_entry.hex()
+                            entry = f"ENC:{encrypted_entry}"
+                            self.stats['events_encrypted'] += 1
+                        else:
+                            logger.warning("Failed to encrypt log entry, writing unencrypted")
+                
+                log_entries.append(entry)
             
-            # Export in requested format
-            if format_type.lower() == 'json':
-                self._export_json(entries, output_file)
-            elif format_type.lower() == 'csv':
-                self._export_csv(entries, output_file)
-            elif format_type.lower() == 'txt':
-                self._export_text(entries, output_file)
-            else:
-                raise ValueError(f"Unsupported export format: {format_type}")
+            # Write to file
+            with open(self.log_file, 'a', encoding='utf-8') as f:
+                for entry in log_entries:
+                    f.write(entry + '\n')
+                f.flush()
+                os.fsync(f.fileno())  # Force write to disk
             
-            logger.info(f"Logs exported to {output_file} in {format_type} format")
+            return True
             
         except Exception as e:
-            logger.error(f"Error exporting logs: {e}")
-            raise
+            logger.error(f"Error writing events to file: {e}")
+            return False
     
-    def _read_log_entries(self, log_file: str, start_time: Optional[datetime] = None, 
-                         end_time: Optional[datetime] = None) -> List[LogEntry]:
-        """Read and parse log entries from file."""
-        entries = []
-        
+    def _should_rotate_log(self) -> bool:
+        """Check if log file should be rotated."""
         try:
-            with open(log_file, 'r', encoding='utf-8') as f:
-                for line in f:
-                    try:
-                        entry = self._parse_log_line(line.strip())
-                        if entry:
-                            # Filter by time range if specified
-                            if start_time and entry.timestamp < start_time:
-                                continue
-                            if end_time and entry.timestamp > end_time:
-                                continue
-                            entries.append(entry)
-                    except Exception as e:
-                        logger.warning(f"Error parsing log line: {e}")
-                        continue
-        except FileNotFoundError:
-            logger.warning(f"Log file not found: {log_file}")
-        
-        return entries
-    
-    def _parse_log_line(self, line: str) -> Optional[LogEntry]:
-        """Parse a log line into a LogEntry."""
-        # Basic parsing - can be enhanced based on log format
-        import re
-        
-        pattern = r'(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}): ([^:]+): (.*?) in (.+)$'
-        match = re.match(pattern, line)
-        
-        if match:
-            timestamp_str, event_type, details, window_name = match.groups()
-            timestamp = datetime.strptime(timestamp_str, '%Y-%m-%d %H:%M:%S,%f')
+            if not self.log_file.exists():
+                return False
             
-            return LogEntry(
-                timestamp=timestamp,
-                event_type=event_type,
-                details=details,
-                window_name=window_name,
-                session_id=self.session_id
-            )
-        
-        return None
+            file_size_mb = self.log_file.stat().st_size / (1024 * 1024)
+            return file_size_mb >= self.max_size_mb
+            
+        except Exception:
+            return False
     
-    def _export_json(self, entries: List[LogEntry], output_file: str) -> None:
-        """Export entries as JSON."""
-        data = [entry.to_dict() for entry in entries]
-        with open(output_file, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
+    def _rotate_log_file(self) -> bool:
+        """Rotate log file."""
+        try:
+            if not self.log_file.exists():
+                return True
+            
+            # Create backup filename with timestamp
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            backup_file = self.log_file.with_name(f"{self.log_file.stem}_{timestamp}.log")
+            
+            # Move current log to backup
+            self.log_file.rename(backup_file)
+            
+            # Clean up old backups
+            self._cleanup_old_backups()
+            
+            self.stats['file_rotations'] += 1
+            logger.info(f"Log file rotated: {backup_file}")
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error rotating log file: {e}")
+            return False
     
-    def _export_csv(self, entries: List[LogEntry], output_file: str) -> None:
-        """Export entries as CSV."""
-        import csv
-        
-        with open(output_file, 'w', newline='', encoding='utf-8') as f:
-            if entries:
-                writer = csv.DictWriter(f, fieldnames=entries[0].to_dict().keys())
-                writer.writeheader()
-                for entry in entries:
-                    writer.writerow(entry.to_dict())
-    
-    def _export_text(self, entries: List[LogEntry], output_file: str) -> None:
-        """Export entries as formatted text."""
-        with open(output_file, 'w', encoding='utf-8') as f:
-            for entry in entries:
-                f.write(entry.to_log_string() + '\n')
+    def _cleanup_old_backups(self) -> None:
+        """Remove old backup files."""
+        try:
+            log_dir = self.log_file.parent
+            pattern = f"{self.log_file.stem}_*.log"
+            
+            # Find all backup files
+            backup_files = list(log_dir.glob(pattern))
+            backup_files.sort(key=lambda x: x.stat().st_mtime, reverse=True)
+            
+            # Remove excess backups
+            for backup_file in backup_files[self.backup_count:]:
+                backup_file.unlink()
+                logger.info(f"Removed old backup: {backup_file}")
+                
+        except Exception as e:
+            logger.error(f"Error cleaning up old backups: {e}")
     
     def get_stats(self) -> Dict[str, Any]:
         """Get logging statistics."""
-        with self.buffer_lock:
-            buffer_size = len(self.log_buffer)
+        current_time = time.time()
+        uptime_hours = (current_time - self.stats['start_time']) / 3600
         
-        return {
-            **self.stats,
-            'buffer_size': buffer_size,
+        stats = self.stats.copy()
+        stats.update({
+            'buffer_size': len(self.event_buffer),
+            'queue_size': self.event_queue.qsize(),
+            'uptime_hours': uptime_hours,
+            'events_per_hour': self.stats['total_events'] / max(uptime_hours, 0.001),
+            'log_file_size_mb': self._get_log_file_size_mb(),
             'session_id': self.session_id
-        }
+        })
+        
+        return stats
     
-    def cleanup(self) -> None:
-        """Cleanup resources and flush remaining logs."""
+    def _get_log_file_size_mb(self) -> float:
+        """Get current log file size in MB."""
         try:
-            # Cancel periodic flush timer
-            if self.flush_timer:
-                self.flush_timer.cancel()
-            
-            # Final flush
+            if self.log_file.exists():
+                return self.log_file.stat().st_size / (1024 * 1024)
+            return 0.0
+        except Exception:
+            return 0.0
+    
+    def export_logs(self, output_file: str, format_type: str = 'json', 
+                   start_time: float = None, end_time: float = None) -> bool:
+        """Export logs to different formats."""
+        try:
+            # Flush current buffer first
             self.flush_buffer()
             
-            # Close file handler
-            if hasattr(self, 'file_handler'):
-                self.file_handler.close()
+            # Read and parse log file
+            events = self._read_log_file(start_time, end_time)
             
-            logger.info("Logging manager cleanup completed")
+            if not events:
+                logger.warning("No events found for export")
+                return False
+            
+            # Export based on format
+            if format_type.lower() == 'json':
+                return self._export_json(events, output_file)
+            elif format_type.lower() == 'csv':
+                return self._export_csv(events, output_file)
+            elif format_type.lower() == 'text':
+                return self._export_text(events, output_file)
+            else:
+                logger.error(f"Unsupported export format: {format_type}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error exporting logs: {e}")
+            return False
+    
+    def _read_log_file(self, start_time: float = None, end_time: float = None) -> List[Dict[str, Any]]:
+        """Read and parse log file."""
+        events = []
+        
+        try:
+            if not self.log_file.exists():
+                return events
+            
+            with open(self.log_file, 'r', encoding='utf-8') as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    
+                    try:
+                        # Check if line is encrypted
+                        if line.startswith('ENC:'):
+                            if self.encryption and hasattr(self.encryption, 'is_initialized') and self.encryption.is_initialized():
+                                decrypt_fn = getattr(self.encryption, 'decrypt_string', None) or getattr(self.encryption, 'decrypt_data', None)
+                                if decrypt_fn:
+                                    decrypted = decrypt_fn(line[4:])
+                                    if decrypted and isinstance(decrypted, bytes):
+                                        try:
+                                            decrypted = decrypted.decode('utf-8')
+                                        except Exception:
+                                            continue
+                                    if decrypted:
+                                        event_data = json.loads(decrypted)
+                                    else:
+                                        continue
+                                else:
+                                    continue
+                            else:
+                                continue
+                        else:
+                            event_data = json.loads(line)
+                        
+                        # Filter by time range if specified
+                        if start_time and event_data.get('timestamp', 0) < start_time:
+                            continue
+                        if end_time and event_data.get('timestamp', 0) > end_time:
+                            continue
+                        
+                        events.append(event_data)
+                        
+                    except json.JSONDecodeError:
+                        logger.warning(f"Invalid JSON in log line: {line[:100]}...")
+                        continue
+            
+            return events
             
         except Exception as e:
-            logger.error(f"Error during cleanup: {e}")
+            logger.error(f"Error reading log file: {e}")
+            return []
+    
+    def _export_json(self, events: List[Dict[str, Any]], output_file: str) -> bool:
+        """Export events to JSON format."""
+        try:
+            with open(output_file, 'w', encoding='utf-8') as f:
+                json.dump(events, f, indent=2, ensure_ascii=False)
+            
+            logger.info(f"Exported {len(events)} events to JSON: {output_file}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error exporting to JSON: {e}")
+            return False
+    
+    def _export_csv(self, events: List[Dict[str, Any]], output_file: str) -> bool:
+        """Export events to CSV format."""
+        try:
+            import csv
+            
+            if not events:
+                return False
+            
+            # Get all possible field names
+            fieldnames = set()
+            for event in events:
+                fieldnames.update(event.keys())
+                if 'metadata' in event and isinstance(event['metadata'], dict):
+                    for key in event['metadata'].keys():
+                        fieldnames.add(f"metadata_{key}")
+            
+            fieldnames = sorted(list(fieldnames))
+            
+            with open(output_file, 'w', newline='', encoding='utf-8') as f:
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                
+                for event in events:
+                    row = event.copy()
+                    
+                    # Flatten metadata
+                    if 'metadata' in row and isinstance(row['metadata'], dict):
+                        for key, value in row['metadata'].items():
+                            row[f"metadata_{key}"] = value
+                        del row['metadata']
+                    
+                    # Convert complex objects to strings
+                    for key, value in row.items():
+                        if isinstance(value, (dict, list)):
+                            row[key] = json.dumps(value)
+                    
+                    writer.writerow(row)
+            
+            logger.info(f"Exported {len(events)} events to CSV: {output_file}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error exporting to CSV: {e}")
+            return False
+    
+    def _export_text(self, events: List[Dict[str, Any]], output_file: str) -> bool:
+        """Export events to readable text format."""
+        try:
+            with open(output_file, 'w', encoding='utf-8') as f:
+                f.write("Enhanced Keylogger Log Report\n")
+                f.write("=" * 50 + "\n\n")
+                
+                for event in events:
+                    f.write(f"Timestamp: {event.get('datetime', 'Unknown')}\n")
+                    f.write(f"Event Type: {event.get('event_type', 'Unknown')}\n")
+                    f.write(f"Window: {event.get('window', 'Unknown')}\n")
+                    f.write(f"Data: {event.get('data', '')}\n")
+                    
+                    if event.get('metadata'):
+                        f.write(f"Metadata: {json.dumps(event['metadata'], indent=2)}\n")
+                    
+                    f.write("-" * 30 + "\n\n")
+            
+            logger.info(f"Exported {len(events)} events to text: {output_file}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error exporting to text: {e}")
+            return False
+    
+    def stop(self) -> None:
+        """Stop logging manager and flush remaining events."""
+        try:
+            logger.info("Stopping logging manager...")
+            self.is_running = False
+            
+            # Wait for queue to empty
+            try:
+                self.event_queue.join()
+            except Exception:
+                pass
+            
+            # Final buffer flush
+            self.flush_buffer()
+            
+            logger.info("Logging manager stopped")
+            logger.info(f"Final stats: {self.get_stats()}")
+            
+        except Exception as e:
+            logger.error(f"Error stopping logging manager: {e}")
+    
+    def reload_config(self) -> bool:
+        """Reload configuration settings."""
+        try:
+            # Update settings from config
+            self.log_file = Path(self.config.get('logging.file_path', 'logs/keylog.txt'))
+            self.log_file_path = str(self.log_file)
+            self.max_size_mb = self.config.get('logging.max_size_mb', 100)
+            self.buffer_size = self.config.get('logging.buffer_size', 100)
+            self.flush_interval = self.config.get('logging.flush_interval', 5.0)
+            self.enable_rotation = self.config.get('logging.enable_rotation', True)
+            self.enable_encryption = self.config.get('logging.enable_encryption', True)
+            self.backup_count = self.config.get('logging.backup_count', 5)
+            
+            # Ensure new log directory exists
+            self.log_file.parent.mkdir(parents=True, exist_ok=True)
+            
+            logger.info("Logging manager configuration reloaded")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error reloading logging config: {e}")
+            return False
