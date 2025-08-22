@@ -50,8 +50,8 @@ class ScreenshotMonitor:
         self.max_screenshots = self.config.get('performance.max_screenshots', 1000)
          
         # Security settings
-        # Allow screenshot-specific override, else fall back to global encryption setting
-        self.encrypt_screenshots = self.config.get('screenshots.encrypt', self.config.get('encryption.enabled', False))
+        # Explicit per-feature control: screenshots are unencrypted by default unless explicitly enabled
+        self.encrypt_screenshots = bool(self.config.get('screenshots.encrypt', False))
         self.hash_screenshots = self.config.get('security.hash_screenshots', True)
         
         # Statistics
