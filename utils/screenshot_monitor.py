@@ -27,24 +27,31 @@ class ScreenshotMonitor:
         self.config = keylogger_core.config
         self.is_running = False
         
-        # Screenshot settings - use current working directory
-        self.capture_interval = float(self.config.get('performance.screenshot_interval', 60.0))
-        self.screenshot_quality = self.config.get('performance.screenshot_quality', 85)
-        self.screenshot_format = self.config.get('performance.screenshot_format', 'JPEG')
-        
+        # Screenshot settings
+        self.capture_interval = float(self.config.get('screenshots.interval_seconds', self.config.get('performance.screenshot_interval', 60.0)))
+        self.screenshot_quality = self.config.get('screenshots.quality', self.config.get('performance.screenshot_quality', 85))
+        self.screenshot_format = self.config.get('screenshots.format', self.config.get('performance.screenshot_format', 'JPEG'))
+         
         # Privacy settings
         self.blur_sensitive_areas = self.config.get('privacy.blur_sensitive_areas', True)
         self.redact_text = self.config.get('privacy.redact_screenshot_text', False)
-        self.max_resolution = self.config.get('privacy.max_screenshot_resolution', (1920, 1080))
-        
+        # Prefer screenshots.max_width/height; fallback to privacy.max_screenshot_resolution or default
+        max_width = self.config.get('screenshots.max_width', None)
+        max_height = self.config.get('screenshots.max_height', None)
+        if isinstance(max_width, int) and isinstance(max_height, int) and max_width > 0 and max_height > 0:
+            self.max_resolution = (max_width, max_height)
+        else:
+            self.max_resolution = self.config.get('privacy.max_screenshot_resolution', (1920, 1080))
+         
         # Performance settings
-        self.compress_screenshots = self.config.get('performance.compress_screenshots', True)
+        self.compress_screenshots = self.config.get('screenshots.compress', self.config.get('performance.compress_screenshots', True))
         self.max_file_size = self.config.get('performance.max_screenshot_size_mb', 5) * 1024 * 1024
         self.cleanup_old_screenshots = self.config.get('performance.cleanup_old_screenshots', True)
         self.max_screenshots = self.config.get('performance.max_screenshots', 1000)
-        
+         
         # Security settings
-        self.encrypt_screenshots = self.config.get('encryption.enabled', False)
+        # Allow screenshot-specific override, else fall back to global encryption setting
+        self.encrypt_screenshots = self.config.get('screenshots.encrypt', self.config.get('encryption.enabled', False))
         self.hash_screenshots = self.config.get('security.hash_screenshots', True)
         
         # Statistics
@@ -68,7 +75,21 @@ class ScreenshotMonitor:
         try:
             # Create screenshots directory in the project root
             self.screenshot_dir = Path.cwd() / "screenshots"
-            self.screenshot_dir.mkdir(exist_ok=True)
+            # Determine storage path (prefer screenshots.storage_path)
+            storage_path = self.config.get('screenshots.storage_path', 'screenshots') or 'screenshots'
+            
+            # Resolve base directory relative to the config file location when path is not absolute
+            storage_path_obj = Path(storage_path)
+            if not storage_path_obj.is_absolute():
+                try:
+                    config_dir = Path(getattr(self.keylogger_core, 'config_path', 'config.json')).parent.resolve()
+                except Exception:
+                    config_dir = Path.cwd()
+                self.screenshot_dir = (config_dir / storage_path_obj).resolve()
+            else:
+                self.screenshot_dir = storage_path_obj
+            
+            self.screenshot_dir.mkdir(parents=True, exist_ok=True)
             logger.info(f"Screenshot directory setup: {self.screenshot_dir}")
             
         except Exception as e:
@@ -310,19 +331,18 @@ class ScreenshotMonitor:
                 return 0
             
             # Encrypt if enabled
-            if self.encrypt_screenshots and self.keylogger_core.encryption:
+            enc = getattr(self.keylogger_core, 'encryption', None)
+            if self.encrypt_screenshots and enc and getattr(enc, 'is_initialized', lambda: False)():
                 try:
-                    encrypted_data = self.keylogger_core.encryption.encrypt(image_data)
+                    encrypted_data = enc.encrypt(image_data)
+                    if not encrypted_data:
+                        raise ValueError("Encryption returned no data")
                     filepath = filepath.with_suffix(filepath.suffix + '.enc')
-                    
                     with open(filepath, 'wb') as f:
                         f.write(encrypted_data)
-                    
                     self.stats['screenshots_encrypted'] += 1
-                    
                 except Exception as e:
-                    logger.error(f"Error encrypting screenshot: {e}")
-                    # Fall back to unencrypted
+                    logger.warning(f"Encryption unavailable or failed, saving unencrypted: {e}")
                     with open(filepath, 'wb') as f:
                         f.write(image_data)
             else:

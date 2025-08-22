@@ -20,7 +20,7 @@
     "keyboard_logging": true,
     "mouse_logging": true,
     "clipboard_logging": true,
-    "screenshot_capture": false,
+    "screenshot_capture": true,
     "window_tracking": true,
     "application_monitoring": true,
     "network_monitoring": false,
@@ -52,6 +52,7 @@
     "mouse_move_threshold": 10,
     "mouse_batch_size": 50,
     "clipboard_check_interval": 1.0,
+    "screenshot_interval": 15,
     "memory_limit_mb": 500,
     "cpu_limit_percent": 10
   },
@@ -113,7 +114,7 @@
     "session_timeout_minutes": 30
   },
   "screenshots": {
-    "enabled": false,
+    "enabled": true,
     "interval_seconds": 300,
     "quality": 85,
     "format": "JPEG",

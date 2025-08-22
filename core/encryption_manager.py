@@ -12,6 +12,7 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.backends import default_backend
 from cryptography.fernet import Fernet
 import secrets
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -56,6 +57,18 @@ class EncryptionManager:
         try:
             if self.key_file.exists():
                 self.key = self._load_key()
+                if not self.key:
+                    logger.warning("Encryption key file is invalid or unreadable, creating a fresh key and backing up the old file")
+                    # Attempt to backup the corrupted key file
+                    try:
+                        backup_name = self.key_file.with_name(self.key_file.name + f'.corrupt.{int(time.time())}')
+                        self.key_file.replace(backup_name)
+                        logger.info(f"Backed up corrupted key to {backup_name}")
+                    except Exception as be:
+                        logger.error(f"Failed to backup corrupted key file: {be}")
+                    # Generate and save a new key
+                    self.key = self._generate_key()
+                    self._save_key(self.key)
             else:
                 logger.info("No encryption key found, generating new key")
                 self.key = self._generate_key()
@@ -141,12 +154,19 @@ class EncryptionManager:
         """Public wrapper to load the encryption key from file."""
         return self._load_key()
     
+    def encrypt(self, data: Union[str, bytes]) -> Optional[bytes]:
+        """Compatibility alias: encrypt data using AES-256-GCM (delegates to encrypt_data)."""
+        return self.encrypt_data(data)
+    
     def encrypt_data(self, data: Union[str, bytes]) -> Optional[bytes]:
         """Encrypt data using AES-256-GCM."""
         try:
             if not self.key:
-                logger.error("No encryption key available")
-                return None
+                # Attempt to initialize if not yet initialized
+                self._initialize_encryption()
+                if not self.key:
+                    logger.error("No encryption key available")
+                    return None
             
             # Convert string to bytes if necessary
             if isinstance(data, str):
@@ -174,6 +194,10 @@ class EncryptionManager:
         except Exception as e:
             logger.error(f"Error encrypting data: {e}")
             return None
+    
+    def decrypt(self, encrypted_data: bytes) -> Optional[str]:
+        """Compatibility alias: decrypt data (delegates to decrypt_data)."""
+        return self.decrypt_data(encrypted_data)
     
     def decrypt_data(self, encrypted_data: bytes) -> Optional[str]:
         """Decrypt data using AES-256-GCM and return UTF-8 string."""

