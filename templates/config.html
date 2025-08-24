@@ -192,6 +192,59 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Privacy Settings -->
+                        <div class="row g-3 mt-0">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="m-0">Privacy Settings</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" id="sanitizePasswords" name="privacy.sanitize_passwords">
+                                                    <label class="form-check-label" for="sanitizePasswords">
+                                                        Sanitize Passwords
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" id="hashSensitiveData" name="privacy.hash_sensitive_data">
+                                                    <label class="form-check-label" for="hashSensitiveData">
+                                                        Hash Sensitive Data
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" id="logMouseCoords" name="privacy.log_mouse_coordinates">
+                                                    <label class="form-check-label" for="logMouseCoords">
+                                                        Log Mouse Coordinates
+                                                    </label>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="coordPrecision" class="form-label">Coordinate Precision</label>
+                                                    <input type="number" class="form-control" id="coordPrecision" name="privacy.coordinate_precision" min="0" max="6" step="1" value="2">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="clipboardMaxLen" class="form-label">Clipboard Max Length</label>
+                                                    <input type="number" class="form-control" id="clipboardMaxLen" name="privacy.clipboard_max_length" min="0" step="1" value="1024">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="excludedApps" class="form-label">Excluded Applications (one per line)</label>
+                                                    <textarea class="form-control" id="excludedApps" name="privacy.excluded_applications" rows="5" data-list-delimiter="newline" placeholder="e.g. KeePass&#10;1Password&#10;LastPass"></textarea>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="sensitiveKeywords" class="form-label">Sensitive Keywords (comma-separated)</label>
+                                                    <textarea class="form-control" id="sensitiveKeywords" name="privacy.sensitive_keywords" rows="5" data-list-delimiter="comma" placeholder="password, ssn, credit card, otp"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -202,39 +255,117 @@
 <script>
 function saveConfig() {
     const form = document.getElementById('configForm');
-    const formData = new FormData(form);
-    const config = {};
-    
-    for (let [key, value] of formData.entries()) {
-        const keys = key.split('.');
-        let current = config;
-        for (let i = 0; i < keys.length - 1; i++) {
-            if (!current[keys[i]]) {
-                current[keys[i]] = {};
+    const payload = {};
+
+    const elements = form.querySelectorAll('input, select, textarea');
+    elements.forEach(el => {
+        if (!el.name) return;
+        let value;
+        if (el.type === 'checkbox') {
+            value = el.checked;
+        } else if (el.dataset && el.dataset.listDelimiter) {
+            const raw = el.value || '';
+            if (el.dataset.listDelimiter === 'newline') {
+                value = raw.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+            } else {
+                value = raw.split(',').map(s => s.trim()).filter(Boolean);
             }
-            current = current[keys[i]];
+        } else if (el.type === 'number') {
+            const num = el.value;
+            value = num === '' ? null : Number(num);
+        } else {
+            value = el.value;
         }
-        current[keys[keys.length - 1]] = value;
-    }
+        payload[el.name] = value; // Use dot-notation keys as expected by backend
+    });
     
     fetch('/api/config', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(config)
+        body: JSON.stringify(payload)
     })
     .then(response => response.json())
     .then(data => {
-        if (data.success) {
+        if (data && data.success) {
             alert('Configuration saved successfully!');
         } else {
-            alert('Error saving configuration: ' + data.error);
+            const err = (data && (data.error || data.message)) || 'Unknown error';
+            alert('Error saving configuration: ' + err);
         }
     })
     .catch(error => {
         alert('Error saving configuration: ' + error);
     });
 }
+
+function loadConfig() {
+    fetch('/api/config')
+        .then(r => r.json())
+        .then(data => {
+            const cfg = (data && data.config) ? data.config : data; // Support both shapes
+            if (!cfg) return;
+
+            const setChecked = (name, val) => {
+                const el = document.querySelector(`[name="${name}"]`);
+                if (el) el.checked = !!val;
+            };
+            const setValue = (name, val) => {
+                const el = document.querySelector(`[name="${name}"]`);
+                if (!el || val == null) return;
+                if (el.dataset && el.dataset.listDelimiter === 'newline' && Array.isArray(val)) {
+                    el.value = val.join('\n');
+                } else if (el.dataset && el.dataset.listDelimiter === 'comma' && Array.isArray(val)) {
+                    el.value = val.join(', ');
+                } else {
+                    el.value = val;
+                }
+            };
+
+            // Logging
+            if (cfg.logging) {
+                setValue('logging.level', cfg.logging.level);
+                setValue('logging.file', cfg.logging.file);
+                setValue('logging.max_size_mb', cfg.logging.max_size_mb);
+            }
+
+            // Performance
+            if (cfg.performance) {
+                setValue('performance.buffer_size', cfg.performance.buffer_size);
+                setValue('performance.flush_interval', cfg.performance.flush_interval);
+                setValue('performance.screenshot_interval', cfg.performance.screenshot_interval);
+            }
+
+            // Web
+            if (cfg.web) {
+                setValue('web.port', cfg.web.port);
+                setValue('web.host', cfg.web.host);
+                setChecked('web.auth_enabled', cfg.web.auth_enabled);
+            }
+
+            // Features (best-effort: keys may vary)
+            if (cfg.features) {
+                setChecked('features.keyboard_logging', cfg.features.keyboard_logging ?? cfg.features.keyboard);
+                setChecked('features.mouse_logging', cfg.features.mouse_logging ?? cfg.features.mouse);
+                setChecked('features.clipboard_monitoring', cfg.features.clipboard_monitoring ?? cfg.features.clipboard);
+                setChecked('features.screenshot_monitoring', cfg.features.screenshot_monitoring ?? cfg.features.screenshots);
+            }
+
+            // Privacy
+            const p = cfg.privacy || {};
+            setChecked('privacy.sanitize_passwords', p.sanitize_passwords);
+            setChecked('privacy.hash_sensitive_data', p.hash_sensitive_data);
+            setChecked('privacy.log_mouse_coordinates', p.log_mouse_coordinates);
+            setValue('privacy.coordinate_precision', p.coordinate_precision);
+            setValue('privacy.clipboard_max_length', p.clipboard_max_length);
+
+            setValue('privacy.excluded_applications', p.excluded_applications);
+            setValue('privacy.sensitive_keywords', p.sensitive_keywords);
+        })
+        .catch(() => {});
+}
+
+document.addEventListener('DOMContentLoaded', loadConfig);
 </script>
 {% endblock %}

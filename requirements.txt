@@ -29,8 +29,8 @@ PyYAML>=6.0
 
 # Logging and monitoring
 watchdog>=3.0.0
+opencv-python>=4.8.0
 
 # Optional: Advanced features
-# opencv-python>=4.8.0  # For advanced image processing
 # schedule>=1.2.0       # For scheduled tasks
 # python-telegram-bot>=20.0  # For Telegram notifications
