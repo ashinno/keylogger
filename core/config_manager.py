@@ -248,7 +248,28 @@ class ConfigManager:
     def update_config(self, updates: Dict[str, Any]) -> bool:
         """Update multiple configuration values using dot notation keys."""
         try:
-            for k, v in updates.items():
+            # Normalize known alias keys to canonical config keys for backward/forward compatibility
+            alias_map = {
+                # Features aliases
+                'features.keyboard_logging': 'features.keyboard',
+                'features.mouse_logging': 'features.mouse',
+                'features.clipboard_logging': 'features.clipboard',
+                'features.clipboard_monitoring': 'features.clipboard',
+                'features.screenshot_monitoring': 'features.screenshots',
+                'features.screenshot_capture': 'features.screenshots',
+                # Logging aliases
+                'logging.file': 'logging.file_path',
+                # Web credential legacy keys
+                'web.username': 'web.admin_username',
+                'web.password': 'web.admin_password',
+            }
+
+            normalized_updates: Dict[str, Any] = {}
+            for k, v in (updates or {}).items():
+                target_key = alias_map.get(k, k)
+                normalized_updates[target_key] = v
+
+            for k, v in normalized_updates.items():
                 self.set(k, v)
             return True
         except Exception as e:

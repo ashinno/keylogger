@@ -286,17 +286,17 @@ function saveConfig() {
         },
         body: JSON.stringify(payload)
     })
-    .then(response => response.json())
+    .then(response => response.json().catch(() => ({ success: false, message: 'Invalid JSON response' })))
     .then(data => {
         if (data && data.success) {
-            alert('Configuration saved successfully!');
+            if (window.showToast) { showToast('success', 'Configuration saved successfully!'); } else { alert('Configuration saved successfully!'); }
         } else {
             const err = (data && (data.error || data.message)) || 'Unknown error';
-            alert('Error saving configuration: ' + err);
+            if (window.showToast) { showToast('error', 'Error saving configuration: ' + err); } else { alert('Error saving configuration: ' + err); }
         }
     })
     .catch(error => {
-        alert('Error saving configuration: ' + error);
+        if (window.showToast) { showToast('error', 'Error saving configuration: ' + error); } else { alert('Error saving configuration: ' + error); }
     });
 }
 

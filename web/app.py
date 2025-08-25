@@ -200,6 +200,15 @@ def create_web_app(keylogger_core, config_manager):
             if request.method == 'POST':
                 new_config = request.get_json()
                 config_manager.update_config(new_config)
+                # Persist changes to disk and reload core configuration if possible
+                try:
+                    config_manager.save_config()
+                except Exception:
+                    logger.exception("Error saving updated configuration to disk")
+                try:
+                    app.keylogger_core.reload_config()
+                except Exception:
+                    logger.exception("Error reloading core configuration after update")
                 return jsonify({'success': True, 'message': 'Configuration updated'})
             else:
                 return jsonify(config_manager.get_all_config())
