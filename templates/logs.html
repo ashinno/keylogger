@@ -32,7 +32,7 @@
                         <div class="col-md-3">
                             <label>&nbsp;</label><br>
                             <button class="btn btn-primary"
-                                onclick="filterLogs()">Filter</button>
+                                onclick="applyFilters(1)">Filter</button>
                             <button class="btn btn-secondary"
                                 onclick="clearFilters()">Clear</button>
                         </div>
@@ -55,8 +55,8 @@
                                     <td>{{ log.timestamp }}</td>
                                     <td><span class="badge bg-info text-dark">{{
                                             log.type }}</span></td>
-                                    <td>{{ log.details }}</td>
-                                    <td>{{ log.window }}</td>
+                                    <td>{{ log.message }}</td>
+                                    <td>{{ log.window or '' }}</td>
                                 </tr>
                                 {% endfor %}
                                 {% else %}
@@ -71,17 +71,8 @@
                     </div>
 
                     <nav aria-label="Logs pagination">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#"
-                                    tabindex="-1">Previous</a>
-                            </li>
-                            <li class="page-item active">
-                                <a class="page-link" href="#">1</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
+                        <ul class="pagination justify-content-center" id="pagination">
+                            <!-- Dynamic pagination -->
                         </ul>
                     </nav>
                 </div>
@@ -91,14 +82,113 @@
 </div>
 
 <script>
-function filterLogs() {
-    // Implement log filtering
-    console.log('Filtering logs...');
+const state = {
+    page: 1,
+    perPage: 50,
+    type: '',
+    windowFilter: ''
+};
+
+async function fetchLogs(page = 1) {
+    try {
+        const params = new URLSearchParams();
+        params.set('page', page);
+        params.set('per_page', state.perPage);
+        if (state.type) params.set('type', state.type);
+        const res = await fetch(`/api/logs?${params.toString()}`);
+        const data = await res.json();
+        renderLogs(data.logs || []);
+        buildPagination(data.pagination || { page: 1, pages: 1 });
+    } catch (e) {
+        console.error('Failed to fetch logs', e);
+    }
+}
+
+function renderLogs(logs) {
+    const tbody = document.getElementById('logsTableBody');
+    tbody.innerHTML = '';
+
+    // Apply client-side window filter if any (backend entries may not include window field yet)
+    const windowFilter = state.windowFilter.trim().toLowerCase();
+
+    const filtered = logs.filter(item => {
+        if (!windowFilter) return true;
+        const win = (item.window || '').toLowerCase();
+        return win.includes(windowFilter);
+    });
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted">No logs match current filters</td></tr>`;
+        return;
+    }
+
+    for (const item of filtered) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${item.timestamp || ''}</td>
+            <td><span class="badge bg-info text-dark">${item.type || 'Log'}</span></td>
+            <td>${item.message || ''}</td>
+            <td>${item.window || ''}</td>
+        `;
+        tbody.appendChild(tr);
+    }
+}
+
+function buildPagination(pagination) {
+    const ul = document.getElementById('pagination');
+    ul.innerHTML = '';
+
+    const current = pagination.page || 1;
+    const totalPages = pagination.pages || 1;
+
+    function addPage(label, page, disabled = false, active = false) {
+        const li = document.createElement('li');
+        li.className = `page-item ${disabled ? 'disabled' : ''} ${active ? 'active' : ''}`;
+        const a = document.createElement('a');
+        a.className = 'page-link';
+        a.href = '#';
+        a.textContent = label;
+        a.onclick = (e) => {
+            e.preventDefault();
+            if (!disabled && !active) {
+                applyFilters(page);
+            }
+        };
+        li.appendChild(a);
+        ul.appendChild(li);
+    }
+
+    addPage('Previous', Math.max(1, current - 1), current === 1, false);
+
+    // Show up to 5 pages around current
+    const start = Math.max(1, current - 2);
+    const end = Math.min(totalPages, start + 4);
+
+    for (let p = start; p <= end; p++) {
+        addPage(String(p), p, false, p === current);
+    }
+
+    addPage('Next', Math.min(totalPages, current + 1), current === totalPages, false);
+}
+
+function applyFilters(page = 1) {
+    state.page = page;
+    state.type = document.getElementById('eventType').value;
+    state.windowFilter = document.getElementById('windowFilter').value;
+    fetchLogs(state.page);
 }
 
 function clearFilters() {
     document.getElementById('eventType').value = '';
     document.getElementById('windowFilter').value = '';
+    state.type = '';
+    state.windowFilter = '';
+    applyFilters(1);
 }
+
+// Initial load
+window.addEventListener('DOMContentLoaded', () => {
+    applyFilters(1);
+});
 </script>
 {% endblock %}
