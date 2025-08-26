@@ -278,6 +278,13 @@ function saveConfig() {
         }
         payload[el.name] = value; // Use dot-notation keys as expected by backend
     });
+
+    // Normalize aliases to canonical keys for backend
+    if (Object.prototype.hasOwnProperty.call(payload, 'features.clipboard_monitoring')) {
+        payload['features.clipboard'] = payload['features.clipboard_monitoring'];
+        // Remove alias to avoid conflicting updates and ensure canonical wins server-side
+        delete payload['features.clipboard_monitoring'];
+    }
     
     fetch('/api/config', {
         method: 'POST',
