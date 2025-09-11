@@ -66,6 +66,14 @@
                             </li>
                             <li class="nav-item">
                                 <a
+                                    class="nav-link {% if request.endpoint == 'ml_dashboard' %}active{% endif %}"
+                                    href="{{ url_for('ml_dashboard') }}">
+                                    <i class="fas fa-robot"></i>
+                                    ML Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a
                                     class="nav-link {% if request.endpoint == 'export' %}active{% endif %}"
                                     href="{{ url_for('export') }}">
                                     <i class="fas fa-download"></i> Export
@@ -155,6 +163,6 @@
             };
         </script>
         {% block scripts %}{% endblock %}
-        
+
     </body>
 </html>

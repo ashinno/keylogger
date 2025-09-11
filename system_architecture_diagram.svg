@@ -1,0 +1,174 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #2c3e50; }
+      .component { font-family: Arial, sans-serif; font-size: 12px; fill: #34495e; }
+      .label { font-family: Arial, sans-serif; font-size: 10px; fill: #7f8c8d; }
+      .core-box { fill: #3498db; stroke: #2980b9; stroke-width: 2; }
+      .listener-box { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; }
+      .util-box { fill: #f39c12; stroke: #e67e22; stroke-width: 2; }
+      .web-box { fill: #2ecc71; stroke: #27ae60; stroke-width: 2; }
+      .parser-box { fill: #9b59b6; stroke: #8e44ad; stroke-width: 2; }
+      .test-box { fill: #95a5a6; stroke: #7f8c8d; stroke-width: 2; }
+      .arrow { stroke: #34495e; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .data-flow { stroke: #e67e22; stroke-width: 2; fill: none; stroke-dasharray: 5,5; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#34495e" />
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="400" y="25" text-anchor="middle" class="title">Enhanced Keylogger System Architecture</text>
+  
+  <!-- Core Components -->
+  <g id="core-layer">
+    <text x="50" y="70" class="label">CORE LAYER</text>
+    
+    <!-- Config Manager -->
+    <rect x="50" y="80" width="120" height="60" rx="5" class="core-box"/>
+    <text x="110" y="100" text-anchor="middle" class="component">Config Manager</text>
+    <text x="110" y="115" text-anchor="middle" class="label">JSON Configuration</text>
+    <text x="110" y="125" text-anchor="middle" class="label">Validation & Reload</text>
+    
+    <!-- Encryption Manager -->
+    <rect x="190" y="80" width="120" height="60" rx="5" class="core-box"/>
+    <text x="250" y="100" text-anchor="middle" class="component">Encryption Manager</text>
+    <text x="250" y="115" text-anchor="middle" class="label">AES-256-GCM</text>
+    <text x="250" y="125" text-anchor="middle" class="label">Key Management</text>
+    
+    <!-- Logging Manager -->
+    <rect x="330" y="80" width="120" height="60" rx="5" class="core-box"/>
+    <text x="390" y="100" text-anchor="middle" class="component">Logging Manager</text>
+    <text x="390" y="115" text-anchor="middle" class="label">Buffered Logging</text>
+    <text x="390" y="125" text-anchor="middle" class="label">Rotation & Compression</text>
+  </g>
+  
+  <!-- Listeners Layer -->
+  <g id="listeners-layer">
+    <text x="50" y="190" class="label">LISTENERS LAYER</text>
+    
+    <!-- Keyboard Listener -->
+    <rect x="50" y="200" width="100" height="60" rx="5" class="listener-box"/>
+    <text x="100" y="220" text-anchor="middle" class="component">Keyboard</text>
+    <text x="100" y="235" text-anchor="middle" class="label">Keystroke Capture</text>
+    <text x="100" y="245" text-anchor="middle" class="label">Privacy Filtering</text>
+    
+    <!-- Mouse Listener -->
+    <rect x="170" y="200" width="100" height="60" rx="5" class="listener-box"/>
+    <text x="220" y="220" text-anchor="middle" class="component">Mouse</text>
+    <text x="220" y="235" text-anchor="middle" class="label">Click & Movement</text>
+    <text x="220" y="245" text-anchor="middle" class="label">Drag Detection</text>
+    
+    <!-- Clipboard Listener -->
+    <rect x="290" y="200" width="100" height="60" rx="5" class="listener-box"/>
+    <text x="340" y="220" text-anchor="middle" class="component">Clipboard</text>
+    <text x="340" y="235" text-anchor="middle" class="label">Content Monitoring</text>
+    <text x="340" y="245" text-anchor="middle" class="label">Type Analysis</text>
+  </g>
+  
+  <!-- Utils Layer -->
+  <g id="utils-layer">
+    <text x="450" y="190" class="label">UTILITIES LAYER</text>
+    
+    <!-- Window Monitor -->
+    <rect x="450" y="200" width="100" height="50" rx="5" class="util-box"/>
+    <text x="500" y="220" text-anchor="middle" class="component">Window Monitor</text>
+    <text x="500" y="235" text-anchor="middle" class="label">App Usage Tracking</text>
+    
+    <!-- Performance Monitor -->
+    <rect x="570" y="200" width="100" height="50" rx="5" class="util-box"/>
+    <text x="620" y="220" text-anchor="middle" class="component">Performance</text>
+    <text x="620" y="235" text-anchor="middle" class="label">Resource Monitoring</text>
+    
+    <!-- Screenshot Monitor -->
+    <rect x="450" y="270" width="100" height="50" rx="5" class="util-box"/>
+    <text x="500" y="290" text-anchor="middle" class="component">Screenshot</text>
+    <text x="500" y="305" text-anchor="middle" class="label">Privacy Controls</text>
+    
+    <!-- USB Monitor -->
+    <rect x="570" y="270" width="100" height="50" rx="5" class="util-box"/>
+    <text x="620" y="290" text-anchor="middle" class="component">USB Monitor</text>
+    <text x="620" y="305" text-anchor="middle" class="label">Device Tracking</text>
+  </g>
+  
+  <!-- Web Interface -->
+  <g id="web-layer">
+    <text x="50" y="370" class="label">WEB INTERFACE</text>
+    
+    <rect x="50" y="380" width="200" height="80" rx="5" class="web-box"/>
+    <text x="150" y="405" text-anchor="middle" class="component">Flask Web Application</text>
+    <text x="150" y="420" text-anchor="middle" class="label">Dashboard & Configuration</text>
+    <text x="150" y="435" text-anchor="middle" class="label">Real-time Monitoring</text>
+    <text x="150" y="450" text-anchor="middle" class="label">Export & Analysis</text>
+  </g>
+  
+  <!-- Parser Layer -->
+  <g id="parser-layer">
+    <text x="300" y="370" class="label">ANALYSIS LAYER</text>
+    
+    <rect x="300" y="380" width="150" height="80" rx="5" class="parser-box"/>
+    <text x="375" y="405" text-anchor="middle" class="component">Log Parser</text>
+    <text x="375" y="420" text-anchor="middle" class="label">Pattern Detection</text>
+    <text x="375" y="435" text-anchor="middle" class="label">Statistics Generation</text>
+    <text x="375" y="450" text-anchor="middle" class="label">Export (CSV/JSON/TXT)</text>
+  </g>
+  
+  <!-- Test Layer -->
+  <g id="test-layer">
+    <text x="500" y="370" class="label">TESTING LAYER</text>
+    
+    <rect x="500" y="380" width="150" height="80" rx="5" class="test-box"/>
+    <text x="575" y="405" text-anchor="middle" class="component">Test Suite</text>
+    <text x="575" y="420" text-anchor="middle" class="label">Unit & Integration Tests</text>
+    <text x="575" y="435" text-anchor="middle" class="label">Security Validation</text>
+    <text x="575" y="450" text-anchor="middle" class="label">Performance Testing</text>
+  </g>
+  
+  <!-- Data Flow Arrows -->
+  <!-- Listeners to Logging Manager -->
+  <line x1="100" y1="260" x2="390" y2="140" class="data-flow"/>
+  <line x1="220" y1="260" x2="390" y2="140" class="data-flow"/>
+  <line x1="340" y1="260" x2="390" y2="140" class="data-flow"/>
+  
+  <!-- Utils to Logging Manager -->
+  <line x1="500" y1="250" x2="390" y2="140" class="data-flow"/>
+  <line x1="620" y1="250" x2="390" y2="140" class="data-flow"/>
+  
+  <!-- Core component interactions -->
+  <line x1="170" y1="110" x2="190" y2="110" class="arrow"/>
+  <line x1="310" y1="110" x2="330" y2="110" class="arrow"/>
+  
+  <!-- Logging to Parser -->
+  <line x1="390" y1="140" x2="375" y2="380" class="data-flow"/>
+  
+  <!-- Parser to Web -->
+  <line x1="300" y1="420" x2="250" y2="420" class="arrow"/>
+  
+  <!-- Legend -->
+  <g id="legend">
+    <text x="50" y="520" class="label">LEGEND:</text>
+    <line x1="50" y1="535" x2="80" y2="535" class="arrow"/>
+    <text x="90" y="540" class="label">Control Flow</text>
+    <line x1="50" y1="550" x2="80" y2="550" class="data-flow"/>
+    <text x="90" y="555" class="label">Data Flow</text>
+    
+    <rect x="200" y="530" width="15" height="10" class="core-box"/>
+    <text x="220" y="540" class="label">Core Components</text>
+    
+    <rect x="320" y="530" width="15" height="10" class="listener-box"/>
+    <text x="340" y="540" class="label">Input Listeners</text>
+    
+    <rect x="440" y="530" width="15" height="10" class="util-box"/>
+    <text x="460" y="540" class="label">Utility Modules</text>
+    
+    <rect x="200" y="550" width="15" height="10" class="web-box"/>
+    <text x="220" y="560" class="label">Web Interface</text>
+    
+    <rect x="320" y="550" width="15" height="10" class="parser-box"/>
+    <text x="340" y="560" class="label">Analysis Layer</text>
+    
+    <rect x="440" y="550" width="15" height="10" class="test-box"/>
+    <text x="460" y="560" class="label">Testing Framework</text>
+  </g>
+</svg>

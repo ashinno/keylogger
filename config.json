@@ -198,6 +198,61 @@
     "compress": true,
     "encrypt": true
   },
+  "ml": {
+    "enabled": true,
+    "models_dir": "models",
+    "behavioral_analytics": {
+      "enabled": true,
+      "sensitivity": 0.1,
+      "learning_rate": 0.01,
+      "baseline_window": 1000,
+      "adaptation_threshold": 0.8,
+      "min_samples_for_training": 50
+    },
+    "keystroke_dynamics": {
+      "enabled": true,
+      "min_samples": 100,
+      "auth_threshold": 0.8,
+      "adaptation_rate": 0.1,
+      "window_size": 50,
+      "feature_window_size": 50
+    },
+    "insider_threat": {
+      "enabled": true,
+      "threshold": 0.7,
+      "baseline_window": 1000,
+      "analysis_window": 100,
+      "correlation_threshold": 0.8
+    },
+    "risk_scoring": {
+      "enabled": true,
+      "threshold": 0.8,
+      "alert_threshold": 0.9,
+      "decay_rate": 0.95,
+      "window_size": 100,
+      "update_interval": 10,
+      "weights": {
+        "behavioral": 0.25,
+        "keystroke": 0.20,
+        "insider_threat": 0.30,
+        "temporal": 0.15,
+        "access": 0.10
+      }
+    },
+    "model_manager": {
+      "auto_retrain": true,
+      "retrain_interval": 3600,
+      "min_samples_retrain": 100,
+      "validation": true,
+      "hyperparameter_tuning": false
+    },
+    "preprocessing": {
+      "window_size": 100,
+      "cache_size": 1000,
+      "feature_scaling": true,
+      "dimensionality_reduction": false
+    }
+  },
   "system": {
     "auto_start": false,
     "check_updates": false,

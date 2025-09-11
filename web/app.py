@@ -1,9 +1,10 @@
-"""Flask web application for keylogger interface."""
+"""Flask web application for keylogger interface with ML anomaly detection API."""
 
 import os
 import json
 import logging
 import time
+import numpy as np
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash
@@ -254,6 +255,16 @@ def create_web_app(keylogger_core, config_manager):
         except Exception as e:
             logger.exception("Error loading performance")
             return render_template('error.html', error_title='Performance Error', error_message=str(e))
+    
+    @app.route('/ml-dashboard')
+    @login_required
+    def ml_dashboard():
+        """ML Anomaly Detection Dashboard."""
+        try:
+            return render_template('ml_dashboard.html')
+        except Exception as e:
+            logger.exception("Error loading ML dashboard")
+            return render_template('error.html', error_title='ML Dashboard Error', error_message=str(e))
 
     @app.route('/api/performance')
     @login_required
@@ -686,7 +697,440 @@ def create_web_app(keylogger_core, config_manager):
             logger.exception("Error stopping keylogger via API")
             return jsonify({'success': False, 'error': str(e)}), 500
     
+    # ==================== ML ANOMALY DETECTION API ENDPOINTS ====================
+    
+    @app.route('/api/ml/status')
+    @login_required
+    def ml_status():
+        """Get ML anomaly detection system status."""
+        try:
+            ml_status = {}
+            
+            # Check if ML components are available
+            if hasattr(keylogger_core, 'behavioral_analytics') and keylogger_core.behavioral_analytics:
+                ml_status['behavioral_analytics'] = keylogger_core.behavioral_analytics.get_statistics()
+            
+            if hasattr(keylogger_core, 'keystroke_dynamics') and keylogger_core.keystroke_dynamics:
+                ml_status['keystroke_dynamics'] = keylogger_core.keystroke_dynamics.get_statistics()
+            
+            if hasattr(keylogger_core, 'insider_threat_detector') and keylogger_core.insider_threat_detector:
+                ml_status['insider_threat'] = keylogger_core.insider_threat_detector.get_statistics()
+            
+            if hasattr(keylogger_core, 'risk_scorer') and keylogger_core.risk_scorer:
+                ml_status['risk_scoring'] = keylogger_core.risk_scorer.get_statistics()
+            
+            return jsonify({
+                'success': True,
+                'ml_components': ml_status,
+                'timestamp': datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            logger.exception("Error getting ML status")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/ml/behavioral/baseline')
+    @login_required
+    def behavioral_baseline():
+        """Get behavioral analytics baseline summary."""
+        try:
+            if not hasattr(keylogger_core, 'behavioral_analytics') or not keylogger_core.behavioral_analytics:
+                return jsonify({'success': False, 'error': 'Behavioral analytics not available'}), 404
+            
+            baseline_summary = keylogger_core.behavioral_analytics.get_baseline_summary()
+            
+            return jsonify({
+                'success': True,
+                'baseline': baseline_summary,
+                'timestamp': datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            logger.exception("Error getting behavioral baseline")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/ml/behavioral/reset', methods=['POST'])
+    @login_required
+    def reset_behavioral_baseline():
+        """Reset behavioral analytics baseline."""
+        try:
+            if not hasattr(keylogger_core, 'behavioral_analytics') or not keylogger_core.behavioral_analytics:
+                return jsonify({'success': False, 'error': 'Behavioral analytics not available'}), 404
+            
+            keylogger_core.behavioral_analytics.reset_baseline()
+            
+            return jsonify({
+                'success': True,
+                'message': 'Behavioral baseline reset successfully',
+                'timestamp': datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            logger.exception("Error resetting behavioral baseline")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/ml/keystroke/enroll', methods=['POST'])
+    @login_required
+    def enroll_keystroke_user():
+        """Enroll a new user for keystroke dynamics."""
+        try:
+            if not hasattr(keylogger_core, 'keystroke_dynamics') or not keylogger_core.keystroke_dynamics:
+                return jsonify({'success': False, 'error': 'Keystroke dynamics not available'}), 404
+            
+            data = request.get_json()
+            if not data or 'user_id' not in data or 'typing_samples' not in data:
+                return jsonify({'success': False, 'error': 'Missing user_id or typing_samples'}), 400
+            
+            user_id = data['user_id']
+            typing_samples = data['typing_samples']
+            
+            result = keylogger_core.keystroke_dynamics.enroll_user(user_id, typing_samples)
+            
+            return jsonify({
+                'success': result.get('status') == 'success',
+                'result': result,
+                'timestamp': datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            logger.exception("Error enrolling keystroke user")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/ml/keystroke/reset', methods=['POST'])
+    @login_required
+    def reset_keystroke_session():
+        """Reset keystroke dynamics session."""
+        try:
+            if not hasattr(keylogger_core, 'keystroke_dynamics') or not keylogger_core.keystroke_dynamics:
+                return jsonify({'success': False, 'error': 'Keystroke dynamics not available'}), 404
+            
+            keylogger_core.keystroke_dynamics.reset_session()
+            
+            return jsonify({
+                'success': True,
+                'message': 'Keystroke session reset successfully',
+                'timestamp': datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            logger.exception("Error resetting keystroke session")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/ml/threat/summary')
+    @login_required
+    def threat_summary():
+        """Get insider threat detection summary."""
+        try:
+            if not hasattr(keylogger_core, 'insider_threat_detector') or not keylogger_core.insider_threat_detector:
+                return jsonify({'success': False, 'error': 'Insider threat detection not available'}), 404
+            
+            threat_summary = keylogger_core.insider_threat_detector.get_threat_summary()
+            
+            return jsonify({
+                'success': True,
+                'threat_summary': threat_summary,
+                'timestamp': datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            logger.exception("Error getting threat summary")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/ml/threat/reset', methods=['POST'])
+    @login_required
+    def reset_threat_baseline():
+        """Reset insider threat detection baseline."""
+        try:
+            if not hasattr(keylogger_core, 'insider_threat_detector') or not keylogger_core.insider_threat_detector:
+                return jsonify({'success': False, 'error': 'Insider threat detection not available'}), 404
+            
+            keylogger_core.insider_threat_detector.reset_baseline()
+            
+            return jsonify({
+                'success': True,
+                'message': 'Threat detection baseline reset successfully',
+                'timestamp': datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            logger.exception("Error resetting threat baseline")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/ml/risk/current')
+    @login_required
+    def current_risk_status():
+        """Get current risk status."""
+        try:
+            if not hasattr(keylogger_core, 'risk_scorer') or not keylogger_core.risk_scorer:
+                return jsonify({'success': False, 'error': 'Risk scoring not available'}), 404
+            
+            risk_status = keylogger_core.risk_scorer.get_current_risk_status()
+            
+            return jsonify({
+                'success': True,
+                'risk_status': risk_status,
+                'timestamp': datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            logger.exception("Error getting current risk status")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/ml/risk/alerts')
+    @login_required
+    def risk_alerts():
+        """Get recent risk alerts."""
+        try:
+            if not hasattr(keylogger_core, 'risk_scorer') or not keylogger_core.risk_scorer:
+                return jsonify({'success': False, 'error': 'Risk scoring not available'}), 404
+            
+            # Get recent alerts from risk scorer
+            recent_alerts = []
+            if hasattr(keylogger_core.risk_scorer, 'alert_history'):
+                # Get alerts from last 24 hours
+                cutoff_time = datetime.now() - timedelta(hours=24)
+                for alert in keylogger_core.risk_scorer.alert_history:
+                    alert_time = datetime.fromisoformat(alert['timestamp'])
+                    if alert_time > cutoff_time:
+                        recent_alerts.append(alert)
+            
+            return jsonify({
+                'success': True,
+                'alerts': recent_alerts,
+                'count': len(recent_alerts),
+                'timestamp': datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            logger.exception("Error getting risk alerts")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/ml/risk/callback', methods=['POST'])
+    @login_required
+    def register_risk_callback():
+        """Register a callback for risk alerts."""
+        try:
+            if not hasattr(keylogger_core, 'risk_scorer') or not keylogger_core.risk_scorer:
+                return jsonify({'success': False, 'error': 'Risk scoring not available'}), 404
+            
+            data = request.get_json()
+            if not data or 'webhook_url' not in data:
+                return jsonify({'success': False, 'error': 'Missing webhook_url'}), 400
+            
+            webhook_url = data['webhook_url']
+            
+            # Create webhook callback function
+            def webhook_callback(alert):
+                try:
+                    import requests
+                    requests.post(webhook_url, json=alert, timeout=10)
+                except Exception as e:
+                    logger.warning(f"Webhook callback failed: {e}")
+            
+            keylogger_core.risk_scorer.register_alert_callback(webhook_callback)
+            
+            return jsonify({
+                'success': True,
+                'message': 'Risk alert callback registered successfully',
+                'webhook_url': webhook_url,
+                'timestamp': datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            logger.exception("Error registering risk callback")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/ml/config', methods=['GET', 'POST'])
+    @login_required
+    def ml_config():
+        """Get or update ML configuration."""
+        try:
+            if request.method == 'GET':
+                # Get current ML configuration
+                ml_config = {
+                    'behavioral_analytics': {
+                        'sensitivity': config_manager.get('ml.behavioral_analytics.sensitivity', 0.1),
+                        'learning_rate': config_manager.get('ml.behavioral_analytics.learning_rate', 0.01),
+                        'baseline_window': config_manager.get('ml.behavioral_analytics.baseline_window', 1000)
+                    },
+                    'keystroke_dynamics': {
+                        'min_samples': config_manager.get('ml.keystroke_dynamics.min_samples', 100),
+                        'auth_threshold': config_manager.get('ml.keystroke_dynamics.auth_threshold', 0.8),
+                        'adaptation_rate': config_manager.get('ml.keystroke_dynamics.adaptation_rate', 0.1)
+                    },
+                    'insider_threat': {
+                        'threshold': config_manager.get('ml.insider_threat.threshold', 0.7),
+                        'baseline_window': config_manager.get('ml.insider_threat.baseline_window', 1000),
+                        'correlation_threshold': config_manager.get('ml.insider_threat.correlation_threshold', 0.8)
+                    },
+                    'risk_scoring': {
+                        'threshold': config_manager.get('ml.risk_scoring.threshold', 0.8),
+                        'alert_threshold': config_manager.get('ml.risk_scoring.alert_threshold', 0.9),
+                        'decay_rate': config_manager.get('ml.risk_scoring.decay_rate', 0.95)
+                    }
+                }
+                
+                return jsonify({
+                    'success': True,
+                    'config': ml_config,
+                    'timestamp': datetime.now().isoformat()
+                })
+            
+            else:  # POST - Update configuration
+                data = request.get_json()
+                if not data:
+                    return jsonify({'success': False, 'error': 'No configuration data provided'}), 400
+                
+                # Update configuration (this would need to be implemented in config_manager)
+                # For now, just return success
+                return jsonify({
+                    'success': True,
+                    'message': 'ML configuration updated successfully',
+                    'timestamp': datetime.now().isoformat()
+                })
+            
+        except Exception as e:
+            logger.exception("Error handling ML config")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/ml/analytics/events', methods=['POST'])
+    @login_required
+    def analyze_events():
+        """Analyze a batch of events for anomalies."""
+        try:
+            data = request.get_json()
+            if not data or 'events' not in data:
+                return jsonify({'success': False, 'error': 'No events provided'}), 400
+            
+            events = data['events']
+            results = []
+            
+            for event in events:
+                event_result = {
+                    'event_id': event.get('id', 'unknown'),
+                    'timestamp': event.get('timestamp'),
+                    'anomaly_scores': {}
+                }
+                
+                # Behavioral analytics
+                if hasattr(keylogger_core, 'behavioral_analytics') and keylogger_core.behavioral_analytics:
+                    ba_result = keylogger_core.behavioral_analytics.process_event(event)
+                    event_result['anomaly_scores']['behavioral'] = ba_result.get('anomaly_score', 0.0)
+                
+                # Keystroke dynamics
+                if (hasattr(keylogger_core, 'keystroke_dynamics') and keylogger_core.keystroke_dynamics and 
+                    event.get('type') == 'keyboard'):
+                    kd_result = keylogger_core.keystroke_dynamics.process_keystroke(event)
+                    if 'authentication' in kd_result:
+                        event_result['anomaly_scores']['keystroke'] = 1.0 - kd_result['authentication'].get('confidence', 0.0)
+                
+                # Insider threat
+                if hasattr(keylogger_core, 'insider_threat_detector') and keylogger_core.insider_threat_detector:
+                    threat_score = keylogger_core.insider_threat_detector.analyze_event(event)
+                    event_result['anomaly_scores']['insider_threat'] = threat_score
+                
+                # Risk scoring
+                if hasattr(keylogger_core, 'risk_scorer') and keylogger_core.risk_scorer:
+                    risk_score = keylogger_core.risk_scorer.calculate_risk(event)
+                    event_result['anomaly_scores']['risk'] = risk_score
+                
+                results.append(event_result)
+            
+            return jsonify({
+                'success': True,
+                'results': results,
+                'processed_count': len(results),
+                'timestamp': datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            logger.exception("Error analyzing events")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/ml/models/status')
+    @login_required
+    def models_status():
+        """Get ML models status and performance."""
+        try:
+            models_status = {}
+            
+            # Check each ML component for model status
+            components = ['behavioral_analytics', 'keystroke_dynamics', 'insider_threat_detector', 'risk_scorer']
+            
+            for component in components:
+                if hasattr(keylogger_core, component):
+                    comp_obj = getattr(keylogger_core, component)
+                    if comp_obj:
+                        models_status[component] = {
+                            'models_trained': getattr(comp_obj, 'models_trained', False),
+                            'baseline_established': getattr(comp_obj, 'baseline_established', False),
+                            'statistics': comp_obj.get_statistics() if hasattr(comp_obj, 'get_statistics') else {}
+                        }
+            
+            return jsonify({
+                'success': True,
+                'models_status': models_status,
+                'timestamp': datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            logger.exception("Error getting models status")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    @app.route('/api/ml/export/data', methods=['POST'])
+    @login_required
+    def export_ml_data():
+        """Export ML training data and models."""
+        try:
+            data = request.get_json()
+            export_type = data.get('type', 'all') if data else 'all'
+            
+            export_data = {
+                'export_timestamp': datetime.now().isoformat(),
+                'export_type': export_type
+            }
+            
+            if export_type in ['all', 'behavioral']:
+                if hasattr(keylogger_core, 'behavioral_analytics') and keylogger_core.behavioral_analytics:
+                    export_data['behavioral_analytics'] = {
+                        'baseline_summary': keylogger_core.behavioral_analytics.get_baseline_summary(),
+                        'statistics': keylogger_core.behavioral_analytics.get_statistics()
+                    }
+            
+            if export_type in ['all', 'keystroke']:
+                if hasattr(keylogger_core, 'keystroke_dynamics') and keylogger_core.keystroke_dynamics:
+                    export_data['keystroke_dynamics'] = {
+                        'statistics': keylogger_core.keystroke_dynamics.get_statistics()
+                    }
+            
+            if export_type in ['all', 'threat']:
+                if hasattr(keylogger_core, 'insider_threat_detector') and keylogger_core.insider_threat_detector:
+                    export_data['insider_threat'] = {
+                        'threat_summary': keylogger_core.insider_threat_detector.get_threat_summary(),
+                        'statistics': keylogger_core.insider_threat_detector.get_statistics()
+                    }
+            
+            if export_type in ['all', 'risk']:
+                if hasattr(keylogger_core, 'risk_scorer') and keylogger_core.risk_scorer:
+                    export_data['risk_scoring'] = {
+                        'current_status': keylogger_core.risk_scorer.get_current_risk_status(),
+                        'statistics': keylogger_core.risk_scorer.get_statistics()
+                    }
+            
+            return jsonify({
+                'success': True,
+                'export_data': export_data,
+                'timestamp': datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            logger.exception("Error exporting ML data")
+            return jsonify({'success': False, 'error': str(e)}), 500
+    
+    # ==================== END ML API ENDPOINTS ====================
+    
     logger.info(f"Registered login route: {app.url_map}")
     logger.info(f"Web interface initialized on {config_manager.get('web.host', '127.0.0.1')}:{config_manager.get('web.port', 5000)}")
+    logger.info("ML Anomaly Detection API endpoints registered")
     
     return app

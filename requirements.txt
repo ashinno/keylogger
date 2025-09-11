@@ -31,6 +31,48 @@ PyYAML>=6.0
 watchdog>=3.0.0
 opencv-python>=4.8.0
 
+# Machine Learning and Anomaly Detection
+scikit-learn>=1.3.0
+scipy>=1.11.0
+joblib>=1.3.0
+
+# Advanced ML libraries
+xgboost>=1.7.0
+lightgbm>=4.0.0
+
+# Anomaly detection specialized
+pyod>=1.1.0
+
+# Statistical analysis
+statsmodels>=0.14.0
+
+# Feature engineering
+featuretools>=1.26.0
+
+# Model persistence and management
+pickle5>=0.0.12
+dill>=0.3.7
+
+# Performance optimization
+numba>=0.58.0
+
+# Progress tracking
+tqdm>=4.66.0
+
+# Enhanced JSON handling
+orjson>=3.9.0
+
+# Parallel processing
+multiprocessing-logging>=0.3.4
+
+# Caching for ML models
+cachetools>=5.3.0
+
+# Memory optimization
+memory-profiler>=0.61.0
+
 # Optional: Advanced features
 # schedule>=1.2.0       # For scheduled tasks
 # python-telegram-bot>=20.0  # For Telegram notifications
+# tensorflow>=2.13.0   # For deep learning models
+# torch>=2.0.0         # For PyTorch models
