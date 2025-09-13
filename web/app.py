@@ -13,6 +13,39 @@ from functools import wraps
 
 logger = logging.getLogger(__name__)
 
+# JSON-safe conversion helper to avoid serialization errors (e.g., numpy types, datetime, sets, deque)
+from typing import Any as _Any  # alias to avoid shadowing in local scopes
+
+def _json_safe(obj: _Any):
+    try:
+        if obj is None or isinstance(obj, (str, int, float, bool)):
+            return obj
+        if isinstance(obj, (datetime,)):
+            return obj.isoformat()
+        if isinstance(obj, dict):
+            return {str(_json_safe(k)): _json_safe(v) for k, v in obj.items()}
+        if isinstance(obj, (list, tuple, set)):
+            return [_json_safe(x) for x in obj]
+        try:
+            from collections import deque
+            if isinstance(obj, deque):
+                return [_json_safe(x) for x in list(obj)]
+        except Exception:
+            pass
+        try:
+            if isinstance(obj, np.ndarray):
+                return obj.tolist()
+            if isinstance(obj, np.generic):
+                return obj.item()
+        except Exception:
+            pass
+        return str(obj)
+    except Exception:
+        try:
+            return str(obj)
+        except Exception:
+            return None
+
 
 def create_web_app(keylogger_core, config_manager):
     """Create and configure Flask web application."""
@@ -708,16 +741,16 @@ def create_web_app(keylogger_core, config_manager):
             
             # Check if ML components are available
             if hasattr(keylogger_core, 'behavioral_analytics') and keylogger_core.behavioral_analytics:
-                ml_status['behavioral_analytics'] = keylogger_core.behavioral_analytics.get_statistics()
+                ml_status['behavioral_analytics'] = _json_safe(keylogger_core.behavioral_analytics.get_statistics())
             
             if hasattr(keylogger_core, 'keystroke_dynamics') and keylogger_core.keystroke_dynamics:
-                ml_status['keystroke_dynamics'] = keylogger_core.keystroke_dynamics.get_statistics()
+                ml_status['keystroke_dynamics'] = _json_safe(keylogger_core.keystroke_dynamics.get_statistics())
             
             if hasattr(keylogger_core, 'insider_threat_detector') and keylogger_core.insider_threat_detector:
-                ml_status['insider_threat'] = keylogger_core.insider_threat_detector.get_statistics()
+                ml_status['insider_threat'] = _json_safe(keylogger_core.insider_threat_detector.get_statistics())
             
             if hasattr(keylogger_core, 'risk_scorer') and keylogger_core.risk_scorer:
-                ml_status['risk_scoring'] = keylogger_core.risk_scorer.get_statistics()
+                ml_status['risk_scoring'] = _json_safe(keylogger_core.risk_scorer.get_statistics())
             
             return jsonify({
                 'success': True,
@@ -741,7 +774,7 @@ def create_web_app(keylogger_core, config_manager):
             
             return jsonify({
                 'success': True,
-                'baseline': baseline_summary,
+                'baseline': _json_safe(baseline_summary),
                 'timestamp': datetime.now().isoformat()
             })
             
@@ -788,7 +821,7 @@ def create_web_app(keylogger_core, config_manager):
             
             return jsonify({
                 'success': result.get('status') == 'success',
-                'result': result,
+                'result': _json_safe(result),
                 'timestamp': datetime.now().isoformat()
             })
             
@@ -828,7 +861,7 @@ def create_web_app(keylogger_core, config_manager):
             
             return jsonify({
                 'success': True,
-                'threat_summary': threat_summary,
+                'threat_summary': _json_safe(threat_summary),
                 'timestamp': datetime.now().isoformat()
             })
             
@@ -868,7 +901,7 @@ def create_web_app(keylogger_core, config_manager):
             
             return jsonify({
                 'success': True,
-                'risk_status': risk_status,
+                'risk_status': _json_safe(risk_status),
                 'timestamp': datetime.now().isoformat()
             })
             
@@ -896,7 +929,7 @@ def create_web_app(keylogger_core, config_manager):
             
             return jsonify({
                 'success': True,
-                'alerts': recent_alerts,
+                'alerts': _json_safe(recent_alerts),
                 'count': len(recent_alerts),
                 'timestamp': datetime.now().isoformat()
             })
@@ -1038,7 +1071,7 @@ def create_web_app(keylogger_core, config_manager):
             
             return jsonify({
                 'success': True,
-                'results': results,
+                'results': _json_safe(results),
                 'processed_count': len(results),
                 'timestamp': datetime.now().isoformat()
             })
@@ -1064,7 +1097,7 @@ def create_web_app(keylogger_core, config_manager):
                         models_status[component] = {
                             'models_trained': getattr(comp_obj, 'models_trained', False),
                             'baseline_established': getattr(comp_obj, 'baseline_established', False),
-                            'statistics': comp_obj.get_statistics() if hasattr(comp_obj, 'get_statistics') else {}
+                            'statistics': _json_safe(comp_obj.get_statistics() if hasattr(comp_obj, 'get_statistics') else {})
                         }
             
             return jsonify({
@@ -1093,28 +1126,28 @@ def create_web_app(keylogger_core, config_manager):
             if export_type in ['all', 'behavioral']:
                 if hasattr(keylogger_core, 'behavioral_analytics') and keylogger_core.behavioral_analytics:
                     export_data['behavioral_analytics'] = {
-                        'baseline_summary': keylogger_core.behavioral_analytics.get_baseline_summary(),
-                        'statistics': keylogger_core.behavioral_analytics.get_statistics()
+                        'baseline_summary': _json_safe(keylogger_core.behavioral_analytics.get_baseline_summary()),
+                        'statistics': _json_safe(keylogger_core.behavioral_analytics.get_statistics())
                     }
             
             if export_type in ['all', 'keystroke']:
                 if hasattr(keylogger_core, 'keystroke_dynamics') and keylogger_core.keystroke_dynamics:
                     export_data['keystroke_dynamics'] = {
-                        'statistics': keylogger_core.keystroke_dynamics.get_statistics()
+                        'statistics': _json_safe(keylogger_core.keystroke_dynamics.get_statistics())
                     }
             
             if export_type in ['all', 'threat']:
                 if hasattr(keylogger_core, 'insider_threat_detector') and keylogger_core.insider_threat_detector:
                     export_data['insider_threat'] = {
-                        'threat_summary': keylogger_core.insider_threat_detector.get_threat_summary(),
-                        'statistics': keylogger_core.insider_threat_detector.get_statistics()
+                        'threat_summary': _json_safe(keylogger_core.insider_threat_detector.get_threat_summary()),
+                        'statistics': _json_safe(keylogger_core.insider_threat_detector.get_statistics())
                     }
             
             if export_type in ['all', 'risk']:
                 if hasattr(keylogger_core, 'risk_scorer') and keylogger_core.risk_scorer:
                     export_data['risk_scoring'] = {
-                        'current_status': keylogger_core.risk_scorer.get_current_risk_status(),
-                        'statistics': keylogger_core.risk_scorer.get_statistics()
+                        'current_status': _json_safe(keylogger_core.risk_scorer.get_current_risk_status()),
+                        'statistics': _json_safe(keylogger_core.risk_scorer.get_statistics())
                     }
             
             return jsonify({

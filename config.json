@@ -23,7 +23,7 @@
     "clipboard": false,
     "window_tracking": true,
     "screenshots": false,
-    "camera": true,
+    "camera": false,
     "keyboard_logging": true,
     "mouse_logging": true,
     "clipboard_logging": true,
@@ -233,10 +233,10 @@
       "update_interval": 10,
       "weights": {
         "behavioral": 0.25,
-        "keystroke": 0.20,
-        "insider_threat": 0.30,
+        "keystroke": 0.2,
+        "insider_threat": 0.3,
         "temporal": 0.15,
-        "access": 0.10
+        "access": 0.1
       }
     },
     "model_manager": {
