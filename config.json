@@ -20,10 +20,10 @@
   "features": {
     "keyboard": true,
     "mouse": true,
-    "clipboard": false,
+    "clipboard": true,
     "window_tracking": true,
-    "screenshots": false,
-    "camera": false,
+    "screenshots": true,
+    "camera": true,
     "keyboard_logging": true,
     "mouse_logging": true,
     "clipboard_logging": true,
