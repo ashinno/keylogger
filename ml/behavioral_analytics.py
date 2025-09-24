@@ -20,6 +20,9 @@ from sklearn.metrics import silhouette_score
 from sklearn.model_selection import train_test_split
 
 from .data_preprocessing import DataPreprocessor
+from .interpretability import ModelInterpretabilityEngine
+from .confidence_engine import ConfidenceEngine
+from .visualization import InterpretabilityVisualizer
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +33,11 @@ class BehavioralAnalyticsEngine:
     def __init__(self, config):
         self.config = config
         self.preprocessor = DataPreprocessor(config)
+        
+        # Initialize interpretability components
+        self.interpretability_engine = ModelInterpretabilityEngine(config)
+        self.confidence_engine = ConfidenceEngine(config)
+        self.visualizer = InterpretabilityVisualizer(config)
         
         # Model configuration
         self.sensitivity = config.get('ml.behavioral_analytics.sensitivity', 0.1)
@@ -84,6 +92,9 @@ class BehavioralAnalyticsEngine:
         # Load existing models if available
         self._load_models()
         
+        # Setup interpretability explainers after models are loaded
+        self._setup_interpretability_explainers()
+        
         logger.info("BehavioralAnalyticsEngine initialized")
     
     def process_event(self, event: Dict[str, Any]) -> Dict[str, Any]:
@@ -104,8 +115,17 @@ class BehavioralAnalyticsEngine:
             # Update statistics
             self.stats['events_processed'] += 1
             
-            # Analyze for anomalies
+            # Analyze anomaly with interpretability
             result = self._analyze_anomaly(features, event)
+            
+            # Generate explanation if anomaly detected or requested
+            if result.get('is_anomaly') or self.config.get('ml.interpretability.always_explain', False):
+                explanation = self._generate_prediction_explanation(features, event, result)
+                result['explanation'] = explanation
+            
+            # Update confidence assessment
+            confidence_assessment = self._assess_prediction_confidence(features, result)
+            result['confidence_assessment'] = confidence_assessment
             
             # Update baseline if needed
             self._update_baseline(features, result)
@@ -760,3 +780,260 @@ class BehavioralAnalyticsEngine:
         """Save models on destruction."""
         if self.models_trained:
             self._save_models()
+    
+    def _setup_interpretability_explainers(self):
+        """Setup interpretability explainers for trained models."""
+        try:
+            if not self.models_trained or not self.baseline_data:
+                return
+            
+            # Prepare training data for explainer setup
+            training_data = list(self.baseline_data)
+            if len(training_data) < 10:
+                return
+            
+            # Get feature names
+            if hasattr(self, 'feature_names') and self.feature_names:
+                feature_names = self.feature_names
+            else:
+                # Generate default feature names
+                sample_features = training_data[0] if training_data else {}
+                feature_names = sorted(list(sample_features.keys()))
+            
+            # Create feature matrix
+            X_train = []
+            for data in training_data:
+                vector = []
+                for feature_name in feature_names:
+                    value = data.get(feature_name, 0.0)
+                    if isinstance(value, bool):
+                        value = float(value)
+                    elif isinstance(value, str):
+                        value = hash(value) % 1000 / 1000.0  # Simple string hashing
+                    vector.append(float(value))
+                X_train.append(vector)
+            
+            X_train = np.array(X_train)
+            
+            # Setup explainers for each model
+            for model_name, model in self.unsupervised_models.items():
+                if hasattr(model, 'predict'):
+                    try:
+                        explainer_info = self.interpretability_engine.setup_explainers(
+                            model, X_train, feature_names, 'classifier'
+                        )
+                        logger.info(f"Setup explainers for {model_name}: {explainer_info}")
+                    except Exception as e:
+                        logger.warning(f"Failed to setup explainers for {model_name}: {e}")
+            
+            # Setup for supervised model if available
+            if hasattr(self.supervised_model, 'predict'):
+                try:
+                    explainer_info = self.interpretability_engine.setup_explainers(
+                        self.supervised_model, X_train, feature_names, 'classifier'
+                    )
+                    logger.info(f"Setup explainers for supervised model: {explainer_info}")
+                except Exception as e:
+                    logger.warning(f"Failed to setup explainers for supervised model: {e}")
+            
+        except Exception as e:
+            logger.error(f"Error setting up interpretability explainers: {e}")
+    
+    def _generate_prediction_explanation(self, features: Dict[str, Any], 
+                                       event: Dict[str, Any], 
+                                       result: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate comprehensive explanation for the prediction."""
+        try:
+            # Prepare feature vector
+            feature_vector = self._prepare_feature_vector(features)
+            if feature_vector is None:
+                return {'status': 'error', 'message': 'Could not prepare feature vector'}
+            
+            # Choose the best model for explanation (highest confidence)
+            best_model = None
+            best_score = 0
+            
+            # Check ensemble predictions for best model
+            ensemble_predictions = result.get('ensemble_predictions', {})
+            for model_name, prediction in ensemble_predictions.items():
+                if prediction.get('score', 0) > best_score:
+                    best_score = prediction['score']
+                    if model_name in self.unsupervised_models:
+                        best_model = self.unsupervised_models[model_name]
+                    elif model_name == 'supervised' and hasattr(self.supervised_model, 'predict'):
+                        best_model = self.supervised_model
+            
+            # Fallback to isolation forest if no best model found
+            if best_model is None:
+                best_model = self.unsupervised_models.get('isolation_forest')
+            
+            if best_model is None:
+                return {'status': 'error', 'message': 'No suitable model for explanation'}
+            
+            # Generate explanation using interpretability engine
+            explanation = self.interpretability_engine.explain_prediction(
+                best_model, 
+                feature_vector,
+                explanation_types=['shap', 'lime', 'feature_importance', 'uncertainty']
+            )
+            
+            # Add behavioral context
+            explanation['behavioral_context'] = {
+                'event_type': event.get('type'),
+                'timestamp': event.get('timestamp'),
+                'anomaly_score': result.get('anomaly_score', 0.0),
+                'ensemble_agreement': self._calculate_ensemble_agreement(ensemble_predictions)
+            }
+            
+            return explanation
+            
+        except Exception as e:
+            logger.error(f"Error generating prediction explanation: {e}")
+            return {'status': 'error', 'message': str(e)}
+    
+    def _assess_prediction_confidence(self, features: Dict[str, Any], 
+                                    result: Dict[str, Any]) -> Dict[str, Any]:
+        """Assess confidence for the current prediction."""
+        try:
+            # Prepare feature vector
+            feature_vector = self._prepare_feature_vector(features)
+            if feature_vector is None:
+                return {'status': 'error', 'message': 'Could not prepare feature vector'}
+            
+            # Get ensemble predictions for uncertainty estimation
+            ensemble_predictions = result.get('ensemble_predictions', {})
+            ensemble_scores = [pred.get('score', 0) for pred in ensemble_predictions.values()]
+            
+            # Use the best performing model for confidence assessment
+            best_model = None
+            best_score = 0
+            
+            for model_name, prediction in ensemble_predictions.items():
+                if prediction.get('score', 0) > best_score:
+                    best_score = prediction['score']
+                    if model_name in self.unsupervised_models:
+                        best_model = self.unsupervised_models[model_name]
+                    elif model_name == 'supervised' and hasattr(self.supervised_model, 'predict'):
+                        best_model = self.supervised_model
+            
+            if best_model is None:
+                best_model = self.unsupervised_models.get('isolation_forest')
+            
+            if best_model is None:
+                return {'status': 'error', 'message': 'No suitable model for confidence assessment'}
+            
+            # Generate confidence assessment
+            confidence_assessment = self.confidence_engine.assess_prediction_confidence(
+                best_model,
+                feature_vector,
+                model_id=str(id(best_model)),
+                ensemble_predictions=ensemble_scores
+            )
+            
+            return confidence_assessment
+            
+        except Exception as e:
+            logger.error(f"Error assessing prediction confidence: {e}")
+            return {'status': 'error', 'message': str(e)}
+    
+    def _calculate_ensemble_agreement(self, ensemble_predictions: Dict[str, Dict[str, Any]]) -> float:
+        """Calculate agreement between ensemble model predictions."""
+        try:
+            if len(ensemble_predictions) < 2:
+                return 1.0  # Perfect agreement if only one model
+            
+            # Get binary predictions (anomaly or not)
+            predictions = []
+            for pred in ensemble_predictions.values():
+                predictions.append(1 if pred.get('is_anomaly', False) else 0)
+            
+            # Calculate agreement as ratio of models that agree with majority
+            majority_vote = 1 if sum(predictions) > len(predictions) / 2 else 0
+            agreement_count = sum(1 for pred in predictions if pred == majority_vote)
+            
+            return agreement_count / len(predictions)
+            
+        except Exception as e:
+            logger.error(f"Error calculating ensemble agreement: {e}")
+            return 0.0
+    
+    def get_interpretability_summary(self) -> Dict[str, Any]:
+        """Get comprehensive interpretability summary."""
+        try:
+            summary = {
+                'timestamp': datetime.now().isoformat(),
+                'interpretability_engine': self.interpretability_engine.get_explanation_summary(),
+                'confidence_engine': self.confidence_engine.get_confidence_summary(),
+                'model_status': {
+                    'models_trained': self.models_trained,
+                    'baseline_established': self.baseline_established,
+                    'baseline_size': len(self.baseline_data),
+                    'feature_count': len(self.feature_names) if hasattr(self, 'feature_names') else 0
+                }
+            }
+            
+            return summary
+            
+        except Exception as e:
+            logger.error(f"Error generating interpretability summary: {e}")
+            return {'status': 'error', 'message': str(e)}
+    
+    def generate_visualization(self, explanation_data: Dict[str, Any], 
+                             visualization_type: str = 'feature_importance') -> Dict[str, Any]:
+        """Generate visualization for explanation data."""
+        try:
+            if visualization_type == 'feature_importance':
+                return self.visualizer.create_feature_importance_plot(explanation_data)
+            elif visualization_type == 'confidence':
+                return self.visualizer.create_confidence_indicator(explanation_data)
+            elif visualization_type == 'decision_path':
+                return self.visualizer.create_decision_path_visualization(explanation_data)
+            elif visualization_type == 'shap_waterfall':
+                return self.visualizer.create_shap_waterfall_plot(explanation_data)
+            elif visualization_type == 'uncertainty':
+                return self.visualizer.create_uncertainty_visualization(explanation_data)
+            else:
+                return {'status': 'error', 'message': f'Unknown visualization type: {visualization_type}'}
+                
+        except Exception as e:
+            logger.error(f"Error generating visualization: {e}")
+            return {'status': 'error', 'message': str(e)}
+    
+    def calibrate_models(self, X_cal: np.ndarray, y_cal: np.ndarray) -> Dict[str, Any]:
+        """Calibrate models for better confidence estimation."""
+        try:
+            calibration_results = {}
+            
+            # Calibrate each model that supports probability prediction
+            for model_name, model in self.unsupervised_models.items():
+                if hasattr(model, 'predict_proba') or hasattr(model, 'decision_function'):
+                    try:
+                        result = self.confidence_engine.calibrate_model(
+                            model, X_cal, y_cal, model_id=f"{model_name}_{id(model)}"
+                        )
+                        calibration_results[model_name] = result
+                    except Exception as e:
+                        logger.warning(f"Failed to calibrate {model_name}: {e}")
+                        calibration_results[model_name] = {'status': 'error', 'message': str(e)}
+            
+            # Calibrate supervised model if available
+            if hasattr(self.supervised_model, 'predict_proba'):
+                try:
+                    result = self.confidence_engine.calibrate_model(
+                        self.supervised_model, X_cal, y_cal, 
+                        model_id=f"supervised_{id(self.supervised_model)}"
+                    )
+                    calibration_results['supervised'] = result
+                except Exception as e:
+                    logger.warning(f"Failed to calibrate supervised model: {e}")
+                    calibration_results['supervised'] = {'status': 'error', 'message': str(e)}
+            
+            return {
+                'status': 'success',
+                'calibration_results': calibration_results,
+                'timestamp': datetime.now().isoformat()
+            }
+            
+        except Exception as e:
+            logger.error(f"Error calibrating models: {e}")
+            return {'status': 'error', 'message': str(e)}

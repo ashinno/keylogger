@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Interpretability Dashboard - Enhanced Keylogger</title>
+    
+    <!-- CSS Dependencies -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    
+    <!-- Plotly.js for interactive visualizations -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+    <style>
+        .interpretability-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .confidence-gauge {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .confidence-level {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .confidence-very-high { color: #28a745; }
+        .confidence-high { color: #6f42c1; }
+        .confidence-medium { color: #ffc107; }
+        .confidence-low { color: #fd7e14; }
+        .confidence-very-low { color: #dc3545; }
+        
+        .feature-importance-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            margin: 4px 0;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+        }
+        
+        .feature-importance-positive {
+            border-left: 4px solid #28a745;
+        }
+        
+        .feature-importance-negative {
+            border-left: 4px solid #dc3545;
+        }
+        
+        .uncertainty-metric {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .decision-path-step {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            position: relative;
+        }
+        
+        .decision-path-step::after {
+            content: '↓';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            color: #2196f3;
+        }
+        
+        .decision-path-step:last-child::after {
+            display: none;
+        }
+        
+        .explanation-tabs {
+            margin-top: 20px;
+        }
+        
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .alert-interpretability {
+            border-left: 4px solid #17a2b8;
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+        }
+        
+        .metric-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .metric-label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    {% extends "base.html" %}
+    
+    {% block content %}
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1><i class="fas fa-brain"></i> ML Interpretability Dashboard</h1>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-primary" onclick="refreshExplanations()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                        <button type="button" class="btn btn-info" onclick="exportExplanations()">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="showSettings()">
+                            <i class="fas fa-cog"></i> Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Status and Metrics Row -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <div class="metric-value" id="totalExplanations">-</div>
+                    <div class="metric-label">Total Explanations</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <div class="metric-value" id="averageConfidence">-</div>
+                    <div class="metric-label">Average Confidence</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <div class="metric-value" id="highConfidenceRatio">-</div>
+                    <div class="metric-label">High Confidence %</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <div class="metric-value" id="modelStatus">-</div>
+                    <div class="metric-label">Model Status</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content Row -->
+        <div class="row">
+            <!-- Left Column: Current Prediction Analysis -->
+            <div class="col-lg-6">
+                <div class="interpretability-card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-search"></i> Current Prediction Analysis</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Prediction Info -->
+                        <div class="alert alert-interpretability" id="predictionInfo">
+                            <strong>Latest Prediction:</strong> <span id="latestPrediction">No recent predictions</span><br>
+                            <strong>Timestamp:</strong> <span id="predictionTimestamp">-</span>
+                        </div>
+                        
+                        <!-- Confidence Gauge -->
+                        <div class="confidence-gauge">
+                            <div id="confidenceGauge"></div>
+                            <div class="confidence-level" id="confidenceLevel">Unknown</div>
+                            <small class="text-muted" id="confidenceDetails">Confidence details will appear here</small>
+                        </div>
+                        
+                        <!-- Uncertainty Metrics -->
+                        <div class="mt-4">
+                            <h6>Uncertainty Metrics</h6>
+                            <div id="uncertaintyMetrics">
+                                <div class="uncertainty-metric">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Entropy:</span>
+                                        <span id="entropyValue">-</span>
+                                    </div>
+                                </div>
+                                <div class="uncertainty-metric">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Margin:</span>
+                                        <span id="marginValue">-</span>
+                                    </div>
+                                </div>
+                                <div class="uncertainty-metric">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Reliability Score:</span>
+                                        <span id="reliabilityScore">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature Importance -->
+                <div class="interpretability-card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-bar"></i> Feature Importance</h5>
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button type="button" class="btn btn-outline-primary active" onclick="showFeatureImportance('shap')">SHAP</button>
+                            <button type="button" class="btn btn-outline-primary" onclick="showFeatureImportance('lime')">LIME</button>
+                            <button type="button" class="btn btn-outline-primary" onclick="showFeatureImportance('builtin')">Built-in</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="featureImportanceList">
+                            <div class="text-center text-muted">
+                                <i class="fas fa-spinner fa-spin"></i> Loading feature importance...
+                            </div>
+                        </div>
+                        <div id="featureImportancePlot" style="height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Visualizations and Analysis -->
+            <div class="col-lg-6">
+                <!-- Explanation Tabs -->
+                <div class="interpretability-card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs" id="explanationTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="shap-tab" data-bs-toggle="tab" data-bs-target="#shap-content" type="button" role="tab">
+                                    <i class="fas fa-chart-line"></i> SHAP Analysis
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="lime-tab" data-bs-toggle="tab" data-bs-target="#lime-content" type="button" role="tab">
+                                    <i class="fas fa-microscope"></i> LIME Analysis
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="decision-tab" data-bs-toggle="tab" data-bs-target="#decision-content" type="button" role="tab">
+                                    <i class="fas fa-sitemap"></i> Decision Path
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="uncertainty-tab" data-bs-toggle="tab" data-bs-target="#uncertainty-content" type="button" role="tab">
+                                    <i class="fas fa-question-circle"></i> Uncertainty
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="explanationTabContent">
+                            <!-- SHAP Analysis Tab -->
+                            <div class="tab-pane fade show active" id="shap-content" role="tabpanel">
+                                <div id="shapWaterfallPlot" style="height: 500px;"></div>
+                                <div class="mt-3">
+                                    <h6>SHAP Summary</h6>
+                                    <div id="shapSummary" class="text-muted">
+                                        SHAP analysis provides insights into how each feature contributes to the prediction.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- LIME Analysis Tab -->
+                            <div class="tab-pane fade" id="lime-content" role="tabpanel">
+                                <div id="limeExplanationPlot" style="height: 500px;"></div>
+                                <div class="mt-3">
+                                    <h6>LIME Summary</h6>
+                                    <div id="limeSummary" class="text-muted">
+                                        LIME provides local explanations by approximating the model locally with an interpretable model.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Decision Path Tab -->
+                            <div class="tab-pane fade" id="decision-content" role="tabpanel">
+                                <div id="decisionPathVisualization">
+                                    <div class="text-center text-muted">
+                                        <i class="fas fa-info-circle"></i> Decision path available for tree-based models only
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <h6>Decision Path Explanation</h6>
+                                    <div id="decisionPathSummary" class="text-muted">
+                                        The decision path shows the sequence of decisions made by the model to reach the final prediction.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Uncertainty Analysis Tab -->
+                            <div class="tab-pane fade" id="uncertainty-content" role="tabpanel">
+                                <div id="uncertaintyVisualization" style="height: 500px;"></div>
+                                <div class="mt-3">
+                                    <h6>Uncertainty Analysis</h6>
+                                    <div id="uncertaintyAnalysis" class="text-muted">
+                                        Uncertainty analysis helps understand the model's confidence and potential areas of improvement.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Model Insights -->
+                <div class="interpretability-card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-lightbulb"></i> Model Insights & Recommendations</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="modelInsights">
+                            <div class="alert alert-info">
+                                <h6><i class="fas fa-info-circle"></i> Key Insights</h6>
+                                <ul id="insightsList">
+                                    <li>Model insights will appear here after analysis</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="alert alert-warning" id="recommendationsAlert" style="display: none;">
+                                <h6><i class="fas fa-exclamation-triangle"></i> Recommendations</h6>
+                                <ul id="recommendationsList">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Historical Analysis Row -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="interpretability-card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-history"></i> Historical Analysis</h5>
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button type="button" class="btn btn-outline-secondary" onclick="loadHistoricalData('1h')">1 Hour</button>
+                            <button type="button" class="btn btn-outline-secondary active" onclick="loadHistoricalData('24h')">24 Hours</button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="loadHistoricalData('7d')">7 Days</button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="loadHistoricalData('30d')">30 Days</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div id="confidenceTrendPlot" style="height: 300px;"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="uncertaintyTrendPlot" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Settings Modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Interpretability Settings</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="interpretabilitySettings">
+                        <div class="mb-3">
+                            <label class="form-label">Explanation Methods</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="enableSHAP" checked>
+                                <label class="form-check-label" for="enableSHAP">Enable SHAP Explanations</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="enableLIME" checked>
+                                <label class="form-check-label" for="enableLIME">Enable LIME Explanations</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="enableDecisionPath" checked>
+                                <label class="form-check-label" for="enableDecisionPath">Enable Decision Path</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="confidenceThreshold" class="form-label">Confidence Threshold</label>
+                            <input type="range" class="form-range" id="confidenceThreshold" min="0.5" max="0.95" step="0.05" value="0.8">
+                            <div class="form-text">Current: <span id="confidenceThresholdValue">0.8</span></div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="topFeatures" class="form-label">Top Features to Display</label>
+                            <select class="form-select" id="topFeatures">
+                                <option value="10">10</option>
+                                <option value="15" selected>15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="refreshInterval" class="form-label">Auto-refresh Interval (seconds)</label>
+                            <select class="form-select" id="refreshInterval">
+                                <option value="0">Disabled</option>
+                                <option value="30" selected>30</option>
+                                <option value="60">60</option>
+                                <option value="300">300</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-spinner" id="loadingOverlay">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="mt-2">Generating explanations...</div>
+    </div>
+    
+    <!-- JavaScript Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Global variables
+        let currentExplanation = null;
+        let refreshTimer = null;
+        let settings = {
+            enableSHAP: true,
+            enableLIME: true,
+            enableDecisionPath: true,
+            confidenceThreshold: 0.8,
+            topFeatures: 15,
+            refreshInterval: 30
+        };
+        
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings();
+            refreshExplanations();
+            setupAutoRefresh();
+            setupEventListeners();
+        });
+        
+        // Load interpretability settings
+        function loadSettings() {
+            const saved = localStorage.getItem('interpretabilitySettings');
+            if (saved) {
+                settings = {...settings, ...JSON.parse(saved)};
+                updateSettingsUI();
+            }
+        }
+        
+        // Update settings UI
+        function updateSettingsUI() {
+            document.getElementById('enableSHAP').checked = settings.enableSHAP;
+            document.getElementById('enableLIME').checked = settings.enableLIME;
+            document.getElementById('enableDecisionPath').checked = settings.enableDecisionPath;
+            document.getElementById('confidenceThreshold').value = settings.confidenceThreshold;
+            document.getElementById('confidenceThresholdValue').textContent = settings.confidenceThreshold;
+            document.getElementById('topFeatures').value = settings.topFeatures;
+            document.getElementById('refreshInterval').value = settings.refreshInterval;
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            document.getElementById('confidenceThreshold').addEventListener('input', function() {
+                document.getElementById('confidenceThresholdValue').textContent = this.value;
+            });
+        }
+        
+        // Setup auto-refresh
+        function setupAutoRefresh() {
+            if (refreshTimer) {
+                clearInterval(refreshTimer);
+            }
+            
+            if (settings.refreshInterval > 0) {
+                refreshTimer = setInterval(refreshExplanations, settings.refreshInterval * 1000);
+            }
+        }
+        
+        // Refresh explanations
+        async function refreshExplanations() {
+            showLoading(true);
+            
+            try {
+                // Get latest prediction explanation
+                const response = await fetch('/api/ml/interpretability/latest');
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    currentExplanation = data;
+                    updateDashboard(data);
+                } else {
+                    showError('Failed to load explanations: ' + (data.message || 'Unknown error'));
+                }
+                
+                // Update statistics
+                await updateStatistics();
+                
+            } catch (error) {
+                console.error('Error refreshing explanations:', error);
+                showError('Network error while loading explanations');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // Update dashboard with explanation data
+        function updateDashboard(explanation) {
+            // Update prediction info
+            updatePredictionInfo(explanation);
+            
+            // Update confidence gauge
+            updateConfidenceGauge(explanation);
+            
+            // Update uncertainty metrics
+            updateUncertaintyMetrics(explanation);
+            
+            // Update feature importance
+            updateFeatureImportance(explanation);
+            
+            // Update visualizations
+            updateVisualizations(explanation);
+            
+            // Update insights
+            updateInsights(explanation);
+        }
+        
+        // Update prediction information
+        function updatePredictionInfo(explanation) {
+            const predictionElement = document.getElementById('latestPrediction');
+            const timestampElement = document.getElementById('predictionTimestamp');
+            
+            if (explanation.prediction !== null) {
+                predictionElement.textContent = `${explanation.prediction} (${explanation.confidence_level})`;
+                timestampElement.textContent = new Date(explanation.timestamp).toLocaleString();
+            }
+        }
+        
+        // Update confidence gauge
+        function updateConfidenceGauge(explanation) {
+            const confidence = explanation.confidence || 0;
+            const confidenceLevel = explanation.confidence_level || 'unknown';
+            
+            // Create Plotly gauge
+            const gaugeData = [{
+                type: "indicator",
+                mode: "gauge+number+delta",
+                value: confidence * 100,
+                domain: {x: [0, 1], y: [0, 1]},
+                title: {text: "Confidence (%)"},
+                delta: {reference: settings.confidenceThreshold * 100},
+                gauge: {
+                    axis: {range: [null, 100]},
+                    bar: {color: getConfidenceColor(confidenceLevel)},
+                    steps: [
+                        {range: [0, 40], color: "lightgray"},
+                        {range: [40, 60], color: "yellow"},
+                        {range: [60, 80], color: "orange"},
+                        {range: [80, 100], color: "green"}
+                    ],
+                    threshold: {
+                        line: {color: "red", width: 4},
+                        thickness: 0.75,
+                        value: settings.confidenceThreshold * 100
+                    }
+                }
+            }];
+            
+            const layout = {
+                height: 250,
+                margin: {t: 0, b: 0, l: 0, r: 0}
+            };
+            
+            Plotly.newPlot('confidenceGauge', gaugeData, layout, {displayModeBar: false});
+            
+            // Update confidence level text
+            const levelElement = document.getElementById('confidenceLevel');
+            levelElement.textContent = confidenceLevel.replace('_', ' ').toUpperCase();
+            levelElement.className = `confidence-level confidence-${confidenceLevel}`;
+            
+            // Update confidence details
+            const detailsElement = document.getElementById('confidenceDetails');
+            detailsElement.textContent = `Reliability Score: ${(explanation.reliability_score || 0).toFixed(3)}`;
+        }
+        
+        // Update uncertainty metrics
+        function updateUncertaintyMetrics(explanation) {
+            const uncertaintyMetrics = explanation.explanations?.uncertainty || {};
+            
+            document.getElementById('entropyValue').textContent = 
+                (uncertaintyMetrics.entropy || 0).toFixed(3);
+            document.getElementById('marginValue').textContent = 
+                (explanation.confidence_metrics?.margin || 0).toFixed(3);
+            document.getElementById('reliabilityScore').textContent = 
+                (explanation.reliability_score || 0).toFixed(3);
+        }
+        
+        // Update feature importance
+        function updateFeatureImportance(explanation, method = 'shap') {
+            const explanations = explanation.explanations || {};
+            let featureData = null;
+            
+            if (method === 'shap' && explanations.shap) {
+                featureData = explanations.shap.feature_importance;
+            } else if (method === 'lime' && explanations.lime) {
+                featureData = explanations.lime.feature_importance;
+            } else if (method === 'builtin' && explanations.feature_importance) {
+                featureData = explanations.feature_importance.built_in || explanations.feature_importance;
+            }
+            
+            if (featureData) {
+                updateFeatureImportanceList(featureData, method);
+                updateFeatureImportancePlot(featureData, method);
+            }
+        }
+        
+        // Update feature importance list
+        function updateFeatureImportanceList(features, method) {
+            const container = document.getElementById('featureImportanceList');
+            const topFeatures = features.slice(0, settings.topFeatures);
+            
+            container.innerHTML = topFeatures.map(feature => {
+                const value = feature.shap_value || feature.lime_value || feature.importance || 0;
+                const isPositive = value >= 0;
+                const className = isPositive ? 'feature-importance-positive' : 'feature-importance-negative';
+                
+                return `
+                    <div class="feature-importance-item ${className}">
+                        <span class="feature-name">${feature.feature}</span>
+                        <span class="feature-value">${value.toFixed(4)}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Update feature importance plot
+        function updateFeatureImportancePlot(features, method) {
+            const topFeatures = features.slice(0, settings.topFeatures);
+            const featureNames = topFeatures.map(f => f.feature);
+            const values = topFeatures.map(f => f.shap_value || f.lime_value || f.importance || 0);
+            const colors = values.map(v => v >= 0 ? '#28a745' : '#dc3545');
+            
+            const plotData = [{
+                type: 'bar',
+                x: values,
+                y: featureNames,
+                orientation: 'h',
+                marker: {color: colors},
+                text: values.map(v => v.toFixed(4)),
+                textposition: 'auto'
+            }];
+            
+            const layout = {
+                title: `Feature Importance (${method.toUpperCase()})`,
+                xaxis: {title: 'Importance Value'},
+                yaxis: {title: 'Features'},
+                height: 400,
+                margin: {l: 150, r: 50, t: 50, b: 50}
+            };
+            
+            Plotly.newPlot('featureImportancePlot', plotData, layout, {displayModeBar: false});
+        }
+        
+        // Update visualizations
+        function updateVisualizations(explanation) {
+            updateSHAPVisualization(explanation);
+            updateLIMEVisualization(explanation);
+            updateDecisionPathVisualization(explanation);
+            updateUncertaintyVisualization(explanation);
+        }
+        
+        // Update SHAP visualization
+        function updateSHAPVisualization(explanation) {
+            const shapData = explanation.explanations?.shap;
+            if (!shapData) return;
+            
+            // Create waterfall plot
+            const features = shapData.feature_importance.slice(0, 15);
+            const baseValue = shapData.base_value || 0;
+            
+            // Calculate cumulative values
+            let cumulative = [baseValue];
+            features.forEach(f => {
+                cumulative.push(cumulative[cumulative.length - 1] + f.shap_value);
+            });
+            
+            const plotData = [];
+            
+            // Base value
+            plotData.push({
+                type: 'bar',
+                x: ['Base'],
+                y: [baseValue],
+                name: 'Base Value',
+                marker: {color: 'gray'}
+            });
+            
+            // Feature contributions
+            features.forEach((feature, i) => {
+                const color = feature.shap_value >= 0 ? '#28a745' : '#dc3545';
+                plotData.push({
+                    type: 'bar',
+                    x: [feature.feature],
+                    y: [feature.shap_value],
+                    base: [cumulative[i]],
+                    name: feature.feature,
+                    marker: {color: color},
+                    showlegend: false
+                });
+            });
+            
+            // Final prediction
+            plotData.push({
+                type: 'bar',
+                x: ['Prediction'],
+                y: [cumulative[cumulative.length - 1]],
+                name: 'Final Prediction',
+                marker: {color: '#17a2b8'}
+            });
+            
+            const layout = {
+                title: 'SHAP Waterfall Plot',
+                xaxis: {title: 'Features'},
+                yaxis: {title: 'Contribution'},
+                height: 500,
+                showlegend: false
+            };
+            
+            Plotly.newPlot('shapWaterfallPlot', plotData, layout, {displayModeBar: false});
+            
+            // Update summary
+            document.getElementById('shapSummary').innerHTML = `
+                <strong>Total Impact:</strong> ${shapData.total_impact?.toFixed(4) || 'N/A'}<br>
+                <strong>Base Value:</strong> ${baseValue.toFixed(4)}<br>
+                <strong>Top Contributing Feature:</strong> ${features[0]?.feature || 'N/A'}
+            `;
+        }
+        
+        // Update LIME visualization
+        function updateLIMEVisualization(explanation) {
+            const limeData = explanation.explanations?.lime;
+            if (!limeData) return;
+            
+            const features = limeData.feature_importance.slice(0, 15);
+            const featureNames = features.map(f => f.feature);
+            const values = features.map(f => f.lime_value);
+            const colors = values.map(v => v >= 0 ? '#28a745' : '#dc3545');
+            
+            const plotData = [{
+                type: 'bar',
+                x: values,
+                y: featureNames,
+                orientation: 'h',
+                marker: {color: colors}
+            }];
+            
+            const layout = {
+                title: 'LIME Feature Importance',
+                xaxis: {title: 'LIME Value'},
+                yaxis: {title: 'Features'},
+                height: 500,
+                margin: {l: 150}
+            };
+            
+            Plotly.newPlot('limeExplanationPlot', plotData, layout, {displayModeBar: false});
+            
+            // Update summary
+            document.getElementById('limeSummary').innerHTML = `
+                <strong>Score:</strong> ${limeData.score?.toFixed(4) || 'N/A'}<br>
+                <strong>Intercept:</strong> ${limeData.intercept?.toFixed(4) || 'N/A'}<br>
+                <strong>Features Analyzed:</strong> ${features.length}
+            `;
+        }
+        
+        // Update decision path visualization
+        function updateDecisionPathVisualization(explanation) {
+            const decisionData = explanation.explanations?.decision_path;
+            if (!decisionData) {
+                document.getElementById('decisionPathVisualization').innerHTML = `
+                    <div class="text-center text-muted">
+                        <i class="fas fa-info-circle"></i> No decision path available for this model type
+                    </div>
+                `;
+                return;
+            }
+            
+            const path = decisionData.path;
+            const pathHTML = path.map((step, index) => {
+                if (step.feature === 'leaf') return '';
+                
+                return `
+                    <div class="decision-path-step">
+                        <strong>Step ${index + 1}:</strong> ${step.feature}<br>
+                        <span class="text-muted">
+                            Condition: ${step.threshold_sign} ${step.threshold.toFixed(3)}<br>
+                            Value: ${step.value?.toFixed(3) || 'N/A'}
+                        </span>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('decisionPathVisualization').innerHTML = pathHTML;
+            
+            // Update summary
+            document.getElementById('decisionPathSummary').innerHTML = `
+                <strong>Path Length:</strong> ${path.length} steps<br>
+                <strong>Leaf ID:</strong> ${decisionData.leaf_id}<br>
+                <strong>Decision Type:</strong> Tree-based model
+            `;
+        }
+        
+        // Update uncertainty visualization
+        function updateUncertaintyVisualization(explanation) {
+            const uncertaintyData = explanation.explanations?.uncertainty;
+            if (!uncertaintyData) return;
+            
+            // Create uncertainty metrics plot
+            const metrics = ['Confidence', 'Uncertainty', 'Entropy'];
+            const values = [
+                uncertaintyData.confidence || 0,
+                uncertaintyData.uncertainty || 0,
+                (uncertaintyData.entropy || 0) / Math.log(2)  // Normalize entropy
+            ];
+            const colors = ['#28a745', '#dc3545', '#ffc107'];
+            
+            const plotData = [{
+                type: 'bar',
+                x: metrics,
+                y: values,
+                marker: {color: colors}
+            }];
+            
+            const layout = {
+                title: 'Uncertainty Metrics',
+                xaxis: {title: 'Metrics'},
+                yaxis: {title: 'Value'},
+                height: 500
+            };
+            
+            Plotly.newPlot('uncertaintyVisualization', plotData, layout, {displayModeBar: false});
+            
+            // Update analysis
+            document.getElementById('uncertaintyAnalysis').innerHTML = `
+                <strong>Entropy:</strong> ${(uncertaintyData.entropy || 0).toFixed(4)}<br>
+                <strong>Margin:</strong> ${(uncertaintyData.margin || 0).toFixed(4)}<br>
+                <strong>Confidence Level:</strong> ${explanation.confidence_level || 'Unknown'}
+            `;
+        }
+        
+        // Update insights and recommendations
+        function updateInsights(explanation) {
+            const insights = [];
+            const recommendations = [];
+            
+            // Generate insights based on explanation data
+            const confidence = explanation.confidence || 0;
+            const confidenceLevel = explanation.confidence_level || 'unknown';
+            
+            if (confidence > 0.9) {
+                insights.push('Model is very confident in this prediction');
+            } else if (confidence < 0.6) {
+                insights.push('Model has low confidence in this prediction');
+                recommendations.push('Consider collecting more training data for similar cases');
+            }
+            
+            const uncertaintyData = explanation.explanations?.uncertainty;
+            if (uncertaintyData?.entropy > 1.5) {
+                insights.push('High uncertainty detected in prediction');
+                recommendations.push('Review input features for potential noise or outliers');
+            }
+            
+            if (explanation.explanations?.shap) {
+                const topFeature = explanation.explanations.shap.feature_importance[0];
+                insights.push(`Most important feature: ${topFeature?.feature || 'Unknown'}`);
+            }
+            
+            // Update UI
+            document.getElementById('insightsList').innerHTML = 
+                insights.map(insight => `<li>${insight}</li>`).join('');
+            
+            const recommendationsAlert = document.getElementById('recommendationsAlert');
+            const recommendationsList = document.getElementById('recommendationsList');
+            
+            if (recommendations.length > 0) {
+                recommendationsList.innerHTML = 
+                    recommendations.map(rec => `<li>${rec}</li>`).join('');
+                recommendationsAlert.style.display = 'block';
+            } else {
+                recommendationsAlert.style.display = 'none';
+            }
+        }
+        
+        // Update statistics
+        async function updateStatistics() {
+            try {
+                const response = await fetch('/api/ml/interpretability/statistics');
+                const stats = await response.json();
+                
+                if (stats.status === 'success') {
+                    document.getElementById('totalExplanations').textContent = 
+                        stats.statistics?.explanations_generated || 0;
+                    document.getElementById('averageConfidence').textContent = 
+                        (stats.statistics?.average_confidence || 0).toFixed(2);
+                    
+                    const total = stats.statistics?.total_predictions || 1;
+                    const highConf = stats.statistics?.high_confidence_predictions || 0;
+                    document.getElementById('highConfidenceRatio').textContent = 
+                        ((highConf / total) * 100).toFixed(1) + '%';
+                    
+                    document.getElementById('modelStatus').textContent = 
+                        stats.calibrated_models > 0 ? 'Calibrated' : 'Uncalibrated';
+                }
+            } catch (error) {
+                console.error('Error updating statistics:', error);
+            }
+        }
+        
+        // Show feature importance for specific method
+        function showFeatureImportance(method) {
+            // Update active button
+            document.querySelectorAll('.btn-group .btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update feature importance display
+            if (currentExplanation) {
+                updateFeatureImportance(currentExplanation, method);
+            }
+        }
+        
+        // Load historical data
+        async function loadHistoricalData(period) {
+            try {
+                const response = await fetch(`/api/ml/interpretability/historical?period=${period}`);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    updateHistoricalPlots(data.historical_data);
+                }
+                
+                // Update active button
+                document.querySelectorAll('.btn-group .btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                event.target.classList.add('active');
+                
+            } catch (error) {
+                console.error('Error loading historical data:', error);
+            }
+        }
+        
+        // Update historical plots
+        function updateHistoricalPlots(historicalData) {
+            // Confidence trend
+            const confidenceData = [{
+                type: 'scatter',
+                mode: 'lines+markers',
+                x: historicalData.timestamps,
+                y: historicalData.confidence_scores,
+                name: 'Confidence',
+                line: {color: '#007bff'}
+            }];
+            
+            const confidenceLayout = {
+                title: 'Confidence Trend',
+                xaxis: {title: 'Time'},
+                yaxis: {title: 'Confidence Score'},
+                height: 300
+            };
+            
+            Plotly.newPlot('confidenceTrendPlot', confidenceData, confidenceLayout, {displayModeBar: false});
+            
+            // Uncertainty trend
+            const uncertaintyData = [{
+                type: 'scatter',
+                mode: 'lines+markers',
+                x: historicalData.timestamps,
+                y: historicalData.uncertainty_scores,
+                name: 'Uncertainty',
+                line: {color: '#dc3545'}
+            }];
+            
+            const uncertaintyLayout = {
+                title: 'Uncertainty Trend',
+                xaxis: {title: 'Time'},
+                yaxis: {title: 'Uncertainty Score'},
+                height: 300
+            };
+            
+            Plotly.newPlot('uncertaintyTrendPlot', uncertaintyData, uncertaintyLayout, {displayModeBar: false});
+        }
+        
+        // Export explanations
+        function exportExplanations() {
+            if (!currentExplanation) {
+                alert('No explanation data to export');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(currentExplanation, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `explanation_${new Date().toISOString().slice(0, 19)}.json`;
+            link.click();
+            
+            URL.revokeObjectURL(url);
+        }
+        
+        // Show settings modal
+        function showSettings() {
+            const modal = new bootstrap.Modal(document.getElementById('settingsModal'));
+            modal.show();
+        }
+        
+        // Save settings
+        function saveSettings() {
+            settings.enableSHAP = document.getElementById('enableSHAP').checked;
+            settings.enableLIME = document.getElementById('enableLIME').checked;
+            settings.enableDecisionPath = document.getElementById('enableDecisionPath').checked;
+            settings.confidenceThreshold = parseFloat(document.getElementById('confidenceThreshold').value);
+            settings.topFeatures = parseInt(document.getElementById('topFeatures').value);
+            settings.refreshInterval = parseInt(document.getElementById('refreshInterval').value);
+            
+            localStorage.setItem('interpretabilitySettings', JSON.stringify(settings));
+            
+            // Update auto-refresh
+            setupAutoRefresh();
+            
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('settingsModal'));
+            modal.hide();
+            
+            // Refresh with new settings
+            refreshExplanations();
+        }
+        
+        // Utility functions
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').style.display = show ? 'block' : 'none';
+        }
+        
+        function showError(message) {
+            console.error(message);
+            // Could implement toast notifications here
+        }
+        
+        function getConfidenceColor(level) {
+            const colors = {
+                'very_high': '#28a745',
+                'high': '#6f42c1',
+                'medium': '#ffc107',
+                'low': '#fd7e14',
+                'very_low': '#dc3545'
+            };
+            return colors[level] || '#6c757d';
+        }
+    </script>
+    {% endblock %}
+</body>
+</html>
