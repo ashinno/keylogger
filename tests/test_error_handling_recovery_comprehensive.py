@@ -1,5 +1,4 @@
 """Comprehensive error handling and recovery tests for the Enhanced Keylogger system.
-
 This module tests various failure scenarios and recovery mechanisms including:
 - Configuration errors and validation failures
 - Encryption key corruption and recovery
