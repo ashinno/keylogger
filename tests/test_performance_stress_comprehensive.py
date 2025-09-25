@@ -1,5 +1,4 @@
 """Comprehensive performance and stress tests for the keylogger system.
-
 This module contains tests for:
 - Performance benchmarking and profiling
 - Resource usage monitoring and limits
