@@ -1,5 +1,4 @@
 """Comprehensive security and privacy tests for the Enhanced Keylogger.
-
 This module contains extensive tests for:
 - Encryption and cryptographic security
 - Access control mechanisms
