@@ -30,7 +30,8 @@ class ScreenshotMonitor:
         # Screenshot settings
         self.capture_interval = float(self.config.get('screenshots.interval_seconds', self.config.get('performance.screenshot_interval', 60.0)))
         self.screenshot_quality = self.config.get('screenshots.quality', self.config.get('performance.screenshot_quality', 85))
-        self.screenshot_format = self.config.get('screenshots.format', self.config.get('performance.screenshot_format', 'JPEG'))
+        # Force PNG format for high quality and accessibility
+        self.screenshot_format = 'PNG'
          
         # Privacy settings
         self.blur_sensitive_areas = self.config.get('privacy.blur_sensitive_areas', True)
@@ -50,8 +51,8 @@ class ScreenshotMonitor:
         self.max_screenshots = self.config.get('performance.max_screenshots', 1000)
          
         # Security settings
-        # Explicit per-feature control: screenshots are unencrypted by default unless explicitly enabled
-        self.encrypt_screenshots = bool(self.config.get('screenshots.encrypt', False))
+        # Force screenshots to be unencrypted for accessibility
+        self.encrypt_screenshots = False
         self.hash_screenshots = self.config.get('security.hash_screenshots', True)
         
         # Statistics
@@ -320,7 +321,9 @@ class ScreenshotMonitor:
                 save_kwargs['quality'] = self.screenshot_quality
                 save_kwargs['optimize'] = True
             elif self.screenshot_format.upper() == 'PNG':
+                # PNG settings for high quality
                 save_kwargs['optimize'] = True
+                save_kwargs['compress_level'] = 6  # Good balance between compression and speed
             
             image.save(buffer, format=self.screenshot_format, **save_kwargs)
             image_data = buffer.getvalue()
