@@ -184,10 +184,78 @@ function initializeCharts(){
 }
 
 function refreshDashboard(){
-  $.get('/api/ml/status').done(d=>{ if(d.success){ updateSystemStatus(d.ml_components);} else { showError('Failed to load ML status: '+d.error);} }).fail(()=>showError('Failed to connect to ML API'));
-  $.get('/api/ml/risk/current').done(d=>{ if(d.success){ updateRiskStatus(d.risk_status);} else { $('#currentRisk').html('<div class="text-danger">Risk data unavailable</div>'); } }).fail(()=>$('#currentRisk').html('<div class="text-danger">Risk data unavailable</div>'));
-  $.get('/api/ml/risk/alerts').done(d=>{ if(d.success){ updateAlerts(d.alerts);} }).fail(()=>$('#alertsList').html('<div class="text-danger">Alerts unavailable</div>'));
-  $.get('/api/ml/models/status').done(d=>{ if(d.success){ updateModelsStatus(d.models_status);} }).fail(()=>showError('Failed to load models status'));
+    // Use AJAX to refresh data instead of full page reload
+    Promise.all([
+        fetch('/api/ml/status').then(r => r.json()),
+        fetch('/api/ml/behavioral/baseline').then(r => r.json()),
+        fetch('/api/ml/threat/summary').then(r => r.json()),
+        fetch('/api/ml/risk/current').then(r => r.json())
+    ]).then(([mlStatus, behavioral, threat, risk]) => {
+        // Update ML status
+        if (mlStatus.success) {
+            updateMLStatus(mlStatus);
+        }
+        
+        // Update behavioral analytics
+        if (behavioral.success) {
+            updateBehavioralData(behavioral);
+        }
+        
+        // Update threat data
+        if (threat.success) {
+            updateThreatData(threat);
+        }
+        
+        // Update risk data
+        if (risk.success) {
+            updateRiskData(risk);
+        }
+        
+        console.log('Dashboard refreshed via AJAX');
+    }).catch(error => {
+        console.error('Error refreshing dashboard:', error);
+    });
+}
+
+function updateMLStatus(data) {
+    // Update ML status indicators
+    const statusElements = document.querySelectorAll('.ml-status');
+    statusElements.forEach(el => {
+        if (data.models_trained) {
+            el.textContent = 'Active';
+            el.className = 'badge bg-success ml-status';
+        } else {
+            el.textContent = 'Training';
+            el.className = 'badge bg-warning ml-status';
+        }
+    });
+}
+
+function updateBehavioralData(data) {
+    // Update behavioral analytics data
+    if (data.baseline_summary) {
+        const summary = data.baseline_summary;
+        document.querySelector('#behavioral-samples').textContent = summary.total_samples || '0';
+        document.querySelector('#behavioral-anomalies').textContent = summary.anomalies_detected || '0';
+    }
+}
+
+function updateThreatData(data) {
+    // Update threat detection data
+    if (data.summary) {
+        const summary = data.summary;
+        document.querySelector('#threat-incidents').textContent = summary.total_incidents || '0';
+        document.querySelector('#threat-score').textContent = (summary.average_score || 0).toFixed(2);
+    }
+}
+
+function updateRiskData(data) {
+    // Update risk scoring data
+    if (data.current_risk) {
+        const risk = data.current_risk;
+        document.querySelector('#current-risk').textContent = (risk.score || 0).toFixed(2);
+        document.querySelector('#risk-level').textContent = risk.level || 'Low';
+    }
 }
 
 function updateSystemStatus(ml){ let total=0,ready=0,allReady=true; for(const [comp,stats] of Object.entries(ml)){ total++; const isReady = !!(stats.models_trained||stats.baseline_established); if(isReady) ready++; else allReady=false; updateComponentMetrics(comp,stats);} const sys=document.getElementById('systemStatus'); if(sys){ sys.textContent = allReady?'Ready':'Training'; sys.className = 'badge '+(allReady?'bg-success':'bg-warning text-dark'); }

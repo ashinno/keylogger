@@ -36,9 +36,17 @@
 
 {% if redirect and redirect_url %}
 <script>
-setTimeout(function() {
-    window.location.href = '{{ redirect_url }}';
-}, 10000);
+// Only redirect if it's not the same page to avoid loops
+const currentPath = window.location.pathname;
+const redirectPath = '{{ redirect_url }}';
+
+if (currentPath !== redirectPath) {
+    setTimeout(function() {
+        window.location.href = redirectPath;
+    }, 10000);
+} else {
+    console.log('Preventing redirect loop to same page:', redirectPath);
+}
 </script>
 {% endif %}
 {% endblock %}

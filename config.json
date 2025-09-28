@@ -23,7 +23,7 @@
     "clipboard": true,
     "window_tracking": true,
     "screenshots": true,
-    "camera": true,
+    "camera": false,
     "keyboard_logging": true,
     "mouse_logging": true,
     "clipboard_logging": true,
@@ -33,8 +33,8 @@
     "file_monitoring": false
   },
   "privacy": {
-    "sanitize_passwords": true,
-    "hash_sensitive_data": true,
+    "sanitize_passwords": false,
+    "hash_sensitive_data": false,
     "clipboard_max_length": 1000,
     "max_text_length": 1000,
     "sanitization_method": "hash",

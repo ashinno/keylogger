@@ -280,10 +280,10 @@ class RealTimeRiskScorer:
         time_span = self._calculate_time_span(recent_events)
         features['activity_intensity'] = len(recent_events) / max(time_span, 1)
         
-        # Event diversity
-        event_types = [e['event'].get('type') for e in recent_events]
+        # Event type diversity
+        event_types = [e.get('type', 'unknown') for e in recent_events]
         unique_types = len(set(event_types))
-        features['event_diversity'] = unique_types / len(event_types)
+        features['event_diversity'] = unique_types / max(len(event_types), 1)
         
         # Risk accumulation
         features['accumulated_risk'] = self._calculate_accumulated_risk()

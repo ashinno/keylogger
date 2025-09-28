@@ -458,10 +458,31 @@ class InsiderThreatDetector:
             if len(feature_vector) == 0:
                 return 0.0
             
+            # Ensure consistent feature dimensions
+            if hasattr(self, 'all_feature_names'):
+                expected_features = len(self.all_feature_names)
+                if len(feature_vector) != expected_features:
+                    # Pad or truncate features to match expected dimensions
+                    if len(feature_vector) < expected_features:
+                        padding = np.zeros(expected_features - len(feature_vector))
+                        feature_vector = np.hstack([feature_vector, padding])
+                    else:
+                        feature_vector = feature_vector[:expected_features]
+            
+            # Check if model is fitted
+            if not hasattr(model, 'n_features_in_') and not hasattr(model, 'feature_importances_') and not hasattr(model, 'support_vectors_'):
+                # Model is not fitted, return neutral score
+                logger.warning(f"{dimension} model is not fitted yet")
+                return 0.0
+            
             # Scale features
             if dimension in self.scalers:
                 scaler = self.scalers[dimension]
-                scaled_vector = scaler.transform(feature_vector.reshape(1, -1))
+                try:
+                    scaled_vector = scaler.transform(feature_vector.reshape(1, -1))
+                except Exception as e:
+                    logger.warning(f"Error scaling features for {dimension}: {e}")
+                    scaled_vector = feature_vector.reshape(1, -1)
             else:
                 scaled_vector = feature_vector.reshape(1, -1)
             
@@ -672,35 +693,82 @@ class InsiderThreatDetector:
             if len(X_normal) < 20:
                 return
             
+            # Initialize feature names if not already done
+            if not hasattr(self, 'all_feature_names'):
+                self._initialize_feature_names()
+            
+            # Ensure consistent feature dimensions
+            expected_features = len(self.all_feature_names)
+            
             # Train each dimensional model
             for dimension, model in self.models.items():
                 try:
                     if dimension in ['access_patterns', 'data_usage', 'temporal_behavior']:
                         # Unsupervised models - train on normal data only
                         if len(X_normal) > 0:
-                            if dimension in self.scalers:
-                                X_scaled = self.scalers[dimension].fit_transform(X_normal)
+                            # Ensure consistent feature dimensions for training
+                            if X_normal.shape[1] != expected_features:
+                                # Pad or truncate features to match expected dimensions
+                                if X_normal.shape[1] < expected_features:
+                                    padding = np.zeros((X_normal.shape[0], expected_features - X_normal.shape[1]))
+                                    X_normal_padded = np.hstack([X_normal, padding])
+                                else:
+                                    X_normal_padded = X_normal[:, :expected_features]
                             else:
-                                X_scaled = X_normal
+                                X_normal_padded = X_normal
+                            
+                            if dimension in self.scalers:
+                                X_scaled = self.scalers[dimension].fit_transform(X_normal_padded)
+                            else:
+                                # Initialize scaler for this dimension
+                                self.scalers[dimension] = StandardScaler()
+                                X_scaled = self.scalers[dimension].fit_transform(X_normal_padded)
                             
                             if hasattr(model, 'fit'):
                                 model.fit(X_scaled)
                     
                     else:
                         # Supervised models - need both normal and threat data
-                        if len(X_threat) > 5:  # Need some threat examples
-                            X_combined = np.vstack([X_normal, X_threat])
+                        # For now, create synthetic threat data if we don't have enough real threat examples
+                        if len(X_threat) < 5:
+                            # Generate synthetic threat examples by adding noise to normal data
+                            np.random.seed(42)
+                            synthetic_threat = X_normal_padded + np.random.normal(0, 0.5, X_normal_padded.shape)
+                            # Take a small subset as synthetic threats
+                            n_synthetic = min(10, len(X_normal_padded) // 10)
+                            X_threat_synthetic = synthetic_threat[:n_synthetic]
+                            
+                            X_combined = np.vstack([X_normal_padded, X_threat_synthetic])
                             y_combined = np.hstack([
-                                np.zeros(len(X_normal)),
-                                np.ones(len(X_threat))
+                                np.zeros(len(X_normal_padded)),
+                                np.ones(len(X_threat_synthetic))
                             ])
-                            
-                            if dimension in self.scalers:
-                                X_scaled = self.scalers[dimension].fit_transform(X_combined)
+                        else:
+                            # Use real threat data
+                            # Ensure consistent feature dimensions for threat data
+                            if X_threat.shape[1] != expected_features:
+                                if X_threat.shape[1] < expected_features:
+                                    padding = np.zeros((X_threat.shape[0], expected_features - X_threat.shape[1]))
+                                    X_threat_padded = np.hstack([X_threat, padding])
+                                else:
+                                    X_threat_padded = X_threat[:, :expected_features]
                             else:
-                                X_scaled = X_combined
+                                X_threat_padded = X_threat
                             
-                            model.fit(X_scaled, y_combined)
+                            X_combined = np.vstack([X_normal_padded, X_threat_padded])
+                            y_combined = np.hstack([
+                                np.zeros(len(X_normal_padded)),
+                                np.ones(len(X_threat_padded))
+                            ])
+                        
+                        if dimension in self.scalers:
+                            X_scaled = self.scalers[dimension].fit_transform(X_combined)
+                        else:
+                            # Initialize scaler for this dimension
+                            self.scalers[dimension] = StandardScaler()
+                            X_scaled = self.scalers[dimension].fit_transform(X_combined)
+                        
+                        model.fit(X_scaled, y_combined)
                     
                     logger.info(f"Trained {dimension} model")
                     
@@ -899,7 +967,7 @@ class InsiderThreatDetector:
         
         clipboard_events = sum(1 for a in self.recent_activities 
                              if a['event'].get('type') == 'clipboard')
-        return clipboard_events / len(self.recent_activities)
+        return clipboard_events / max(len(self.recent_activities), 1)
     
     def _get_device_connection_time(self) -> float:
         """Get time since last device connection."""
@@ -953,10 +1021,10 @@ class InsiderThreatDetector:
         profile = {
             'activity_rate': len(baseline) / (len(baseline) * 10),  # Normalized
             'clipboard_usage': sum(1 for b in baseline 
-                                 if b['event_type'] == 'clipboard') / len(baseline),
+                                 if b['event_type'] == 'clipboard') / max(len(baseline), 1),
             'application_switches': 0.1,  # Simplified
             'after_hours_activity': sum(1 for b in baseline 
-                                      if self._is_after_hours(b['timestamp'])) / len(baseline)
+                                      if self._is_after_hours(b['timestamp'])) / max(len(baseline), 1)
         }
         
         return profile

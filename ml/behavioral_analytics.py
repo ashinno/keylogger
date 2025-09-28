@@ -239,13 +239,21 @@ class BehavioralAnalyticsEngine:
         data = event.get('data', {})
         
         content = data.get('content', '')
+        # Handle None content
+        if content is None:
+            content = ''
+        
+        # Ensure content is a string
+        if not isinstance(content, str):
+            content = str(content) if content is not None else ''
+        
         features.update({
             'clipboard_length': len(content),
-            'clipboard_words': len(content.split()),
-            'clipboard_lines': content.count('\n'),
-            'clipboard_has_url': 'http' in content.lower(),
-            'clipboard_has_email': '@' in content and '.' in content,
-            'clipboard_numeric_ratio': sum(c.isdigit() for c in content) / max(len(content), 1)
+            'clipboard_words': len(content.split()) if content else 0,
+            'clipboard_lines': content.count('\n') if content else 0,
+            'clipboard_has_url': 'http' in content.lower() if content else False,
+            'clipboard_has_email': '@' in content and '.' in content if content else False,
+            'clipboard_numeric_ratio': sum(c.isdigit() for c in content) / max(len(content), 1) if content else 0.0
         })
         
         return features
@@ -286,7 +294,7 @@ class BehavioralAnalyticsEngine:
         type_counts = {t: event_types.count(t) for t in set(event_types)}
         
         for event_type, count in type_counts.items():
-            features[f'recent_{event_type}_ratio'] = count / len(recent_events)
+            features[f'recent_{event_type}_ratio'] = count / max(len(recent_events), 1)
         
         # Timing patterns
         timestamps = [datetime.fromisoformat(e['event'].get('timestamp')) 
@@ -761,7 +769,7 @@ class BehavioralAnalyticsEngine:
         if len(self.recent_data) > 0:
             recent_anomalies = sum(1 for data in self.recent_data 
                                  if self._is_likely_anomaly(data['features']))
-            stats['recent_anomaly_rate'] = recent_anomalies / len(self.recent_data)
+            stats['recent_anomaly_rate'] = recent_anomalies / max(len(self.recent_data), 1)
         
         return stats
     
@@ -951,7 +959,7 @@ class BehavioralAnalyticsEngine:
             majority_vote = 1 if sum(predictions) > len(predictions) / 2 else 0
             agreement_count = sum(1 for pred in predictions if pred == majority_vote)
             
-            return agreement_count / len(predictions)
+            return agreement_count / max(len(predictions), 1)
             
         except Exception as e:
             logger.error(f"Error calculating ensemble agreement: {e}")

@@ -233,8 +233,41 @@
 
 {% block scripts %}
 <script>
+let autoRefreshEnabled = true;
+let refreshInterval = null;
+
 function refreshData() {
-    location.reload();
+    // Use AJAX to refresh data instead of full page reload
+    fetch('/api/status')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                updateDashboardData(data);
+            }
+        })
+        .catch(error => {
+            console.error('Error refreshing data:', error);
+        });
+}
+
+function updateDashboardData(data) {
+    // Update session stats
+    if (data.session_stats) {
+        const stats = data.session_stats;
+        document.querySelector('.card-body .row:nth-child(1) .col-md-3:nth-child(1) .h4').textContent = stats.keystrokes || '0';
+        document.querySelector('.card-body .row:nth-child(1) .col-md-3:nth-child(2) .h4').textContent = stats.mouse_clicks || '0';
+        document.querySelector('.card-body .row:nth-child(1) .col-md-3:nth-child(3) .h4').textContent = stats.clipboard_events || '0';
+        document.querySelector('.card-body .row:nth-child(1) .col-md-3:nth-child(4) .h4').textContent = stats.window_changes || '0';
+    }
+    
+    // Update status badge
+    if (data.status) {
+        const statusBadge = document.querySelector('.badge');
+        if (statusBadge) {
+            statusBadge.textContent = data.status;
+            statusBadge.className = data.status === 'Running' ? 'badge bg-success' : 'badge bg-danger';
+        }
+    }
 }
 
 function startKeylogger() {
@@ -242,7 +275,7 @@ function startKeylogger() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                location.reload();
+                refreshData(); // Refresh data instead of full page reload
             } else {
                 alert('Failed to start keylogger: ' + data.error);
             }
@@ -257,7 +290,7 @@ function stopKeylogger() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                location.reload();
+                refreshData(); // Refresh data instead of full page reload
             } else {
                 alert('Failed to stop keylogger: ' + data.error);
             }
@@ -267,7 +300,38 @@ function stopKeylogger() {
         });
 }
 
-// Auto-refresh every 30 seconds
-setInterval(refreshData, 30000);
+function toggleAutoRefresh() {
+    autoRefreshEnabled = !autoRefreshEnabled;
+    
+    if (autoRefreshEnabled) {
+        // Start auto-refresh with longer interval (60 seconds instead of 30)
+        refreshInterval = setInterval(refreshData, 60000);
+        console.log('Auto-refresh enabled (60s interval)');
+    } else {
+        // Stop auto-refresh
+        if (refreshInterval) {
+            clearInterval(refreshInterval);
+            refreshInterval = null;
+        }
+        console.log('Auto-refresh disabled');
+    }
+}
+
+// Initialize auto-refresh on page load with a more reasonable interval
+document.addEventListener('DOMContentLoaded', function() {
+    // Start with auto-refresh enabled but with a longer interval
+    refreshInterval = setInterval(refreshData, 60000); // 60 seconds instead of 30
+});
+
+// Add manual refresh button functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const refreshButton = document.querySelector('button[onclick="refreshData()"]');
+    if (refreshButton) {
+        refreshButton.onclick = function(e) {
+            e.preventDefault();
+            refreshData();
+        };
+    }
+});
 </script>
 {% endblock %}

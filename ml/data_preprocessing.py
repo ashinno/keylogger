@@ -280,7 +280,7 @@ class DataPreprocessor:
         if mouse_events:
             # Click patterns
             clicks = [e for e in mouse_events if e.get('data', {}).get('action') == 'click']
-            features['click_rate'] = len(clicks) / len(mouse_events) if mouse_events else 0
+            features['click_rate'] = len(clicks) / max(len(mouse_events), 1) if mouse_events else 0
             
             # Movement patterns
             movements = [e for e in mouse_events if e.get('data', {}).get('action') == 'move']
@@ -338,11 +338,11 @@ class DataPreprocessor:
         if timestamps:
             # After-hours activity (outside 9-17)
             after_hours = sum(1 for ts in timestamps if ts.hour < 9 or ts.hour > 17)
-            features['after_hours_ratio'] = after_hours / len(timestamps)
-            
-            # Weekend activity
-            weekend_activity = sum(1 for ts in timestamps if ts.weekday() >= 5)
-            features['weekend_ratio'] = weekend_activity / len(timestamps)
+            features['after_hours_ratio'] = after_hours / max(len(timestamps), 1)
+        
+        # Weekend activity
+        weekend_activity = sum(1 for ts in timestamps if ts.weekday() >= 5)
+        features['weekend_ratio'] = weekend_activity / max(len(timestamps), 1)
         
         return features
     

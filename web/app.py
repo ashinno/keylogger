@@ -700,6 +700,26 @@ def create_web_app(keylogger_core, config_manager):
                 'components': {}
             }
     
+    @app.route('/api/status')
+    @login_required
+    def api_status():
+        """API endpoint to get current system status."""
+        try:
+            # Get basic system status
+            is_running = hasattr(keylogger_core, 'is_running') and keylogger_core.is_running()
+            session_stats = keylogger_core.get_session_stats()
+            
+            return jsonify({
+                'success': True,
+                'status': 'Running' if is_running else 'Stopped',
+                'running': is_running,
+                'session_stats': _json_safe(session_stats),
+                'timestamp': datetime.now().isoformat()
+            })
+        except Exception as e:
+            logger.exception("Error getting system status via API")
+            return jsonify({'success': False, 'error': str(e)}), 500
+
     @app.route('/api/start', methods=['POST'])
     @login_required
     def api_start():

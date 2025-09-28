@@ -367,7 +367,7 @@ class KeystrokeDynamicsAnalyzer:
         recent_keys = [ks['event'].get('data', {}).get('key', '') 
                       for ks in list(self.keystroke_buffer)[-50:]]
         
-        return recent_keys.count(key) / len(recent_keys)
+        return recent_keys.count(key) / max(len(recent_keys), 1)
     
     def _get_bigram_frequency(self, bigram: str) -> float:
         """Get frequency of key bigram in recent typing."""
@@ -509,8 +509,8 @@ class KeystrokeDynamicsAnalyzer:
         
         features.update({
             'unique_keys': len(unique_keys),
-            'key_diversity': len(unique_keys) / len(keys_used) if keys_used else 0,
-            'most_common_key_freq': max([keys_used.count(k) for k in unique_keys]) / len(keys_used) if unique_keys else 0
+            'key_diversity': len(unique_keys) / max(len(keys_used), 1) if keys_used else 0,
+            'most_common_key_freq': max([keys_used.count(k) for k in unique_keys]) / max(len(keys_used), 1) if unique_keys else 0
         })
         
         return features

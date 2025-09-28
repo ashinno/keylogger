@@ -414,7 +414,7 @@ class ConfidenceEngine:
                 if len(ensemble_array.shape) == 2:  # Classification probabilities
                     # Calculate agreement as inverse of variance in max predictions
                     max_predictions = np.argmax(ensemble_array, axis=1)
-                    agreement = 1.0 - (np.var(max_predictions) / len(np.unique(max_predictions)))
+                    agreement = 1.0 - (np.var(max_predictions) / max(len(np.unique(max_predictions)), 1))
                     metrics['ensemble_agreement'] = float(agreement)
                 
                 # Prediction interval width (for regression-like outputs)
