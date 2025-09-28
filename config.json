@@ -158,7 +158,7 @@
   "web": {
     "enabled": true,
     "host": "127.0.0.1",
-    "port": 5000,
+    "port": 8080,
     "debug": false,
     "admin_username": "admin",
     "admin_password": "admin123",
