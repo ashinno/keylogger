@@ -79,6 +79,11 @@ class BehavioralAnalyticsEngine:
         self.baseline_established = False
         self.feature_scaler = StandardScaler()
         self.pca = PCA(n_components=0.95)  # Keep 95% of variance
+        # Baseline manager for drift detection and cold-start handling
+        self._drift_threshold = float(self.config.get('ml.behavioral_analytics.drift_threshold', 0.15))
+        self._baseline_window = int(self.config.get('ml.behavioral_analytics.baseline_window', 1000))
+        self._baseline_stats = defaultdict(lambda: {'sum': 0.0, 'sq': 0.0})
+        self._baseline_samples = 0
         
         # Statistics
         self.stats = {
@@ -104,6 +109,20 @@ class BehavioralAnalyticsEngine:
             features = self._extract_event_features(event)
             if not features:
                 return {'anomaly_score': 0.0, 'is_anomaly': False}
+            # Cold-start baseline accumulation
+            if not self.baseline_established:
+                for k, v in features.items():
+                    try:
+                        val = float(v) if isinstance(v, (int, float)) else 0.0
+                        self._baseline_stats[k]['sum'] += val
+                        self._baseline_stats[k]['sq'] += val * val
+                    except Exception:
+                        continue
+                self._baseline_samples = min(self._baseline_samples + 1, self._baseline_window)
+                if self._baseline_samples >= max(10, self._baseline_window // 4):
+                    self.baseline_established = True
+                # Conservative anomaly during cold-start
+                return {'anomaly_score': 0.0, 'is_anomaly': False}
             
             # Add to recent data
             self.recent_data.append({
@@ -115,6 +134,31 @@ class BehavioralAnalyticsEngine:
             # Update statistics
             self.stats['events_processed'] += 1
             
+            # Drift detection: simple z-score across baseline means/vars
+            try:
+                drift_score = 0.0
+                checked = 0
+                for k, v in features.items():
+                    try:
+                        x = float(v) if isinstance(v, (int, float)) else 0.0
+                        mean = self._baseline_stats[k]['sum'] / max(1, self._baseline_samples)
+                        sq = self._baseline_stats[k]['sq'] / max(1, self._baseline_samples)
+                        var = max(0.0, sq - mean * mean)
+                        if var > 1e-8:
+                            z = abs((x - mean) / (var ** 0.5))
+                            drift_score += min(1.0, z / 5.0)
+                            checked += 1
+                    except Exception:
+                        continue
+                if checked:
+                    avg_drift = drift_score / checked
+                    if avg_drift > self._drift_threshold:
+                        # Refresh baseline to adapt
+                        self._baseline_stats = defaultdict(lambda: {'sum': 0.0, 'sq': 0.0})
+                        self._baseline_samples = 0
+            except Exception:
+                pass
+
             # Analyze anomaly with interpretability
             result = self._analyze_anomaly(features, event)
             
@@ -239,13 +283,14 @@ class BehavioralAnalyticsEngine:
         data = event.get('data', {})
         
         content = data.get('content', '')
-        # Handle None content
+        # Handle None content and non-string types safely
         if content is None:
             content = ''
-        
-        # Ensure content is a string
-        if not isinstance(content, str):
-            content = str(content) if content is not None else ''
+        elif not isinstance(content, str):
+            try:
+                content = str(content)
+            except Exception:
+                content = ''
         
         features.update({
             'clipboard_length': len(content),

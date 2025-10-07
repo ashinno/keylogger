@@ -1,4 +1,8 @@
-"""Real-time Risk Scoring system with dynamic scoring and automated alerting."""
+"""Real-time Risk Scoring system with dynamic scoring and automated alerting.
+
+Enhanced to support baseline drift detection, micro-batching, caching,
+and unified score calibration with confidence metadata.
+"""
 
 import numpy as np
 import pandas as pd
@@ -22,8 +26,126 @@ from scipy import stats
 from scipy.special import expit  # sigmoid function
 
 from .data_preprocessing import DataPreprocessor
+from .confidence_engine import ConfidenceEngine
 
 logger = logging.getLogger(__name__)
+
+
+class _ScoreCalibrator:
+    """Lightweight score calibration to map arbitrary scores to [0,1]."""
+    def __init__(self):
+        self._min = 0.0
+        self._max = 1.0
+
+    def fit(self, values: List[float]) -> None:
+        if not values:
+            return
+        self._min = float(min(values))
+        self._max = float(max(values))
+        if self._max <= self._min:
+            self._max = self._min + 1e-6
+
+    def to_unit_interval(self, x: float) -> float:
+        try:
+            # First, bound to [min,max]
+            x = max(self._min, min(self._max, float(x)))
+            # Min-max scale
+            scaled = (x - self._min) / (self._max - self._min)
+            # Smooth with sigmoid to avoid extremes
+            return float(expit(6.0 * (scaled - 0.5)))
+        except Exception:
+            return float(expit(x))
+
+
+class _BaselineManager:
+    """Maintain rolling baseline statistics and detect drift."""
+    def __init__(self, window_size: int = 1000, drift_threshold: float = 0.15):
+        self.window_size = int(max(10, window_size))
+        self.drift_threshold = float(drift_threshold)
+        self._feature_sums: Dict[str, float] = defaultdict(float)
+        self._feature_sq_sums: Dict[str, float] = defaultdict(float)
+        self._samples: deque = deque(maxlen=self.window_size)
+        self.samples_collected = 0
+
+    def add_baseline_sample(self, features: Dict[str, Any]) -> None:
+        self._samples.append(features)
+        self.samples_collected = min(self.samples_collected + 1, self.window_size)
+        for k, v in features.items():
+            try:
+                val = float(v) if isinstance(v, (int, float)) else 0.0
+                self._feature_sums[k] += val
+                self._feature_sq_sums[k] += val * val
+            except Exception:
+                continue
+
+    def _mean_var(self, k: str) -> Tuple[float, float]:
+        n = max(1, self.samples_collected)
+        mean = self._feature_sums.get(k, 0.0) / n
+        sq = self._feature_sq_sums.get(k, 0.0) / n
+        var = max(0.0, sq - mean * mean)
+        return mean, var
+
+    def detect_drift(self, features: Dict[str, Any]) -> bool:
+        if self.samples_collected < max(10, self.window_size // 10):
+            return False
+        drift_score = 0.0
+        checked = 0
+        for k, v in features.items():
+            try:
+                x = float(v) if isinstance(v, (int, float)) else 0.0
+                mean, var = self._mean_var(k)
+                if var <= 1e-8:
+                    continue
+                # Z-score magnitude as simple drift proxy
+                z = abs((x - mean) / (var ** 0.5))
+                drift_score += min(1.0, z / 5.0)
+                checked += 1
+            except Exception:
+                continue
+        if checked == 0:
+            return False
+        avg_drift = drift_score / checked
+        return avg_drift > self.drift_threshold
+
+    def refresh_baseline(self) -> None:
+        # Reset accumulators while keeping the latest samples to re-establish
+        recent = list(self._samples)[-self.window_size // 5:]
+        self._feature_sums.clear()
+        self._feature_sq_sums.clear()
+        self._samples.clear()
+        self.samples_collected = 0
+        for f in recent:
+            self.add_baseline_sample(f)
+
+
+class _MicroBatcher:
+    """Accumulate events and release micro-batches under latency and size constraints."""
+    def __init__(self, micro_batch_size: int = 32, max_latency_ms: int = 200):
+        self.size = int(max(1, micro_batch_size))
+        self.latency_ms = int(max(10, max_latency_ms))
+        self._buffer: List[Dict[str, Any]] = []
+        self._last_ts = time.time()
+
+    def add(self, item: Dict[str, Any]) -> Optional[List[Dict[str, Any]]]:
+        self._buffer.append(item)
+        now = time.time()
+        if len(self._buffer) >= self.size or (now - self._last_ts) * 1000 >= self.latency_ms:
+            batch = self._buffer
+            self._buffer = []
+            self._last_ts = now
+            return batch
+        return None
+
+    def flush_if_ready(self) -> Optional[List[Dict[str, Any]]]:
+        if not self._buffer:
+            return None
+        now = time.time()
+        if (now - self._last_ts) * 1000 >= self.latency_ms:
+            batch = self._buffer
+            self._buffer = []
+            self._last_ts = now
+            return batch
+        return None
 
 
 class RealTimeRiskScorer:
@@ -32,6 +154,7 @@ class RealTimeRiskScorer:
     def __init__(self, config):
         self.config = config
         self.preprocessor = DataPreprocessor(config)
+        self.confidence_engine = ConfidenceEngine(config)
         
         # Configuration
         self.risk_threshold = config.get('ml.risk_scoring.threshold', 0.8)
@@ -75,7 +198,9 @@ class RealTimeRiskScorer:
         
         # Event processing
         self.event_buffer = deque(maxlen=self.window_size)
-        self.risk_cache = {}
+        self._cache_capacity = int(self.config.get('ml.risk_scoring.cache_capacity', 500))
+        self._cache_order = deque(maxlen=self._cache_capacity)
+        self._risk_cache = {}
         self.last_update = datetime.now()
         
         # Alerting system
@@ -84,13 +209,22 @@ class RealTimeRiskScorer:
         self.alert_suppression = defaultdict(datetime)
         self.alert_escalation = defaultdict(int)
         
-        # Feature scaling
+        # Feature scaling / calibration
         self.scaler = StandardScaler()
         self.risk_scaler = MinMaxScaler()
+        self.calibrator = _ScoreCalibrator()
         
         # Model state
         self.models_trained = False
         self.baseline_established = False
+        self.baseline_manager = _BaselineManager(
+            window_size=int(self.config.get('ml.risk_scoring.baseline_window', 1000)),
+            drift_threshold=float(self.config.get('ml.risk_scoring.drift_threshold', 0.15))
+        )
+        self.micro_batcher = _MicroBatcher(
+            micro_batch_size=int(self.config.get('ml.risk_scoring.micro_batch_size', 32)),
+            max_latency_ms=int(self.config.get('ml.risk_scoring.max_latency_ms', 200))
+        )
         
         # Threading for continuous monitoring
         self.monitoring_thread = None
@@ -117,10 +251,15 @@ class RealTimeRiskScorer:
         logger.info("RealTimeRiskScorer initialized")
     
     def calculate_risk(self, event: Dict[str, Any]) -> float:
-        """Calculate real-time risk score for an event."""
+        """Calculate real-time risk score for an event.
+
+        For extended metadata, use `calculate_risk_with_metadata`.
+        """
         try:
             # Extract risk features
             risk_features = self._extract_risk_features(event)
+            if not risk_features:
+                return 0.0
             
             # Add to event buffer
             self.event_buffer.append({
@@ -128,9 +267,23 @@ class RealTimeRiskScorer:
                 'features': risk_features,
                 'event': event
             })
+            # Micro-batching for downstream processing
+            try:
+                _ = self.micro_batcher.add({'event': event, 'features': risk_features})
+            except Exception:
+                pass
             
             self.stats['events_processed'] += 1
             
+            # Cache lookup for repeated feature sets
+            cache_key = self._make_cache_key(risk_features)
+            cached = self._risk_cache.get(cache_key)
+            if cached is not None:
+                calibrated = self.calibrator.to_unit_interval(float(cached))
+                # Update stats and state minimally
+                self._update_risk_state(calibrated, {})
+                return calibrated
+
             # Calculate multi-dimensional risk scores
             dimension_scores = self._calculate_dimensional_risks(risk_features, event)
             
@@ -142,20 +295,67 @@ class RealTimeRiskScorer:
             
             # Apply dynamic adjustments
             adjusted_risk = self._apply_dynamic_adjustments(base_risk, event)
+
+            # Baseline / cold-start gating and drift detection
+            if not self.baseline_established:
+                self.baseline_manager.add_baseline_sample(risk_features)
+                # Establish baseline after collecting a fraction of window
+                if self.baseline_manager.samples_collected >= max(10, self.baseline_manager.window_size // 4):
+                    self.baseline_established = True
+                # Conservative cap during cold-start
+                adjusted_risk = min(adjusted_risk, 0.4)
+            else:
+                if self.baseline_manager.detect_drift(risk_features):
+                    logger.info("RiskScorer: drift detected, refreshing baseline")
+                    self.baseline_manager.refresh_baseline()
             
-            # Update risk state
-            self._update_risk_state(adjusted_risk, dimension_scores)
+            # Update risk state with calibrated score
+            calibrated_risk = self.calibrator.to_unit_interval(adjusted_risk)
+            self._update_risk_state(calibrated_risk, dimension_scores)
             
             # Check for alerts
-            self._check_alerts(adjusted_risk, event, dimension_scores)
+            self._check_alerts(calibrated_risk, event, dimension_scores)
+
+            # Maintain LRU cache
+            try:
+                self._risk_cache[cache_key] = float(adjusted_risk)
+                self._cache_order.append(cache_key)
+                # Evict oldest if capacity exceeded
+                if len(self._risk_cache) > self._cache_capacity:
+                    old_key = self._cache_order.popleft()
+                    if old_key in self._risk_cache:
+                        del self._risk_cache[old_key]
+            except Exception:
+                pass
             
             self.stats['risk_calculations'] += 1
             
-            return adjusted_risk
+            return calibrated_risk
             
         except Exception as e:
             logger.error(f"Error calculating risk score: {e}")
             return 0.0
+
+    def _make_cache_key(self, features: Dict[str, Any]) -> str:
+        try:
+            s = json.dumps(features, sort_keys=True, separators=(",", ":"))
+            return str(hash(s))
+        except Exception:
+            return str(id(features))
+
+    def calculate_risk_with_metadata(self, event: Dict[str, Any]) -> Dict[str, Any]:
+        """Calculate risk score and return standardized metadata."""
+        score = self.calculate_risk(event)
+        try:
+            confidence = float(self.confidence_engine.estimate_confidence({'risk_score': score}))
+        except Exception:
+            confidence = 0.5
+        return {
+            'risk_score': score,
+            'confidence': confidence,
+            'sources': list(self.risk_factors.keys()),
+            'timestamp': datetime.now().isoformat()
+        }
     
     def _extract_risk_features(self, event: Dict[str, Any]) -> Dict[str, Any]:
         """Extract features relevant to risk scoring."""
@@ -185,7 +385,11 @@ class RealTimeRiskScorer:
         # Contextual risk features
         features.update(self._extract_contextual_risk_features())
         
-        return features
+        # Deterministic ordering to improve cache hits
+        try:
+            return {k: features[k] for k in sorted(features.keys())}
+        except Exception:
+            return features
     
     def _extract_keyboard_risk_features(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Extract keyboard-specific risk features."""
@@ -814,6 +1018,17 @@ class RealTimeRiskScorer:
         if len(self.risk_history) > 100:
             # Retrain models with recent data
             self._train_models()
+        # Attempt to flush micro-batches within latency bounds
+        try:
+            batch = self.micro_batcher.flush_if_ready()
+            if batch:
+                for item in batch:
+                    try:
+                        _ = self.calculate_risk(item['event'])
+                    except Exception:
+                        continue
+        except Exception:
+            pass
     
     def _cleanup_old_data(self):
         """Clean up old data to prevent memory issues."""

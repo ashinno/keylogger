@@ -24,6 +24,80 @@ from sklearn.base import BaseEstimator
 logger = logging.getLogger(__name__)
 
 
+class _ModelRegistry:
+    """Simple file-based registry tracking model versions, signatures, and deployment flags."""
+    def __init__(self, registry_path: Path):
+        self.registry_path = registry_path
+        self._data: Dict[str, Any] = {}
+        self._load()
+
+    def _load(self) -> None:
+        try:
+            if self.registry_path.exists():
+                with open(self.registry_path, 'r', encoding='utf-8') as f:
+                    self._data = json.load(f)
+            else:
+                self._data = {}
+        except Exception:
+            self._data = {}
+
+    def _save(self) -> None:
+        try:
+            self.registry_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(self.registry_path, 'w', encoding='utf-8') as f:
+                json.dump(self._data, f, indent=2)
+        except Exception:
+            pass
+
+    def record_version(self, model_name: str, version: int, file_path: str, sha256: str,
+                        active: bool = True, shadow: bool = False, metadata: Dict[str, Any] = None) -> None:
+        entry = {
+            'version': version,
+            'file': file_path,
+            'sha256': sha256,
+            'active': active,
+            'shadow': shadow,
+            'saved_at': datetime.now().isoformat(),
+            'metadata': metadata or {}
+        }
+        self._data.setdefault(model_name, []).append(entry)
+        if active:
+            for e in self._data.get(model_name, []):
+                if e is not entry:
+                    e['active'] = False
+        self._save()
+
+    def set_active(self, model_name: str, version: int) -> bool:
+        versions = self._data.get(model_name, [])
+        ok = False
+        for e in versions:
+            e['active'] = (e['version'] == version)
+            if e['active']:
+                ok = True
+        self._save()
+        return ok
+
+    def set_shadow(self, model_name: str, version: int, shadow: bool = True) -> bool:
+        versions = self._data.get(model_name, [])
+        ok = False
+        for e in versions:
+            if e['version'] == version:
+                e['shadow'] = shadow
+                ok = True
+        self._save()
+        return ok
+
+    def get_active(self, model_name: str) -> Optional[Dict[str, Any]]:
+        versions = self._data.get(model_name, [])
+        for e in reversed(versions):
+            if e.get('active'):
+                return e
+        return None
+
+    def list_versions(self, model_name: str) -> List[Dict[str, Any]]:
+        return list(self._data.get(model_name, []))
+
+
 class ModelManager:
     """Centralized model management for ML anomaly detection system."""
     
@@ -44,6 +118,9 @@ class ModelManager:
         self.model_metadata = {}
         self.model_performance = {}
         self.model_versions = defaultdict(list)
+        # Initialize registry in configured directory (defaults to models/registry.json)
+        registry_dir = Path(self.config.get('ml.registry_dir', str(self.models_dir)))
+        self.registry = _ModelRegistry((registry_dir / 'registry.json').resolve())
         
         # Training data management
         self.training_data = defaultdict(list)
@@ -452,6 +529,9 @@ class ModelManager:
             
             with open(model_file, 'wb') as f:
                 pickle.dump(model_package, f)
+
+            # Compute signature
+            sha256 = self._sha256_file(model_file)
             
             # Create symlink to latest version
             latest_file = self.models_dir / f"{model_name}.pkl"
@@ -473,13 +553,32 @@ class ModelManager:
             })
             
             self.stats['model_deployments'] += 1
-            
+
             logger.info(f"Model '{model_name}' saved as version {version}")
+            # Record in registry (active by default)
+            try:
+                self.registry.record_version(
+                    model_name, version, str(model_file), sha256,
+                    active=True, shadow=False,
+                    metadata={'class_name': metadata.get('class_name')}
+                )
+            except Exception as e:
+                logger.debug(f"Registry record failed: {e}")
             return True
             
         except Exception as e:
             logger.error(f"Error saving model '{model_name}': {e}")
             return False
+
+    def _sha256_file(self, path: Path) -> str:
+        h = hashlib.sha256()
+        try:
+            with open(path, 'rb') as f:
+                for chunk in iter(lambda: f.read(8192), b''):
+                    h.update(chunk)
+            return h.hexdigest()
+        except Exception:
+            return ''
     
     def load_model(self, model_name: str, version: Optional[int] = None) -> bool:
         """Load a model from disk."""

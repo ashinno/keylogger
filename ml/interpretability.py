@@ -64,11 +64,14 @@ class ModelInterpretabilityEngine:
         self.interpretability_config = config.get('ml', {}).get('interpretability', {})
         
         # Configuration parameters
-        self.enabled = self.interpretability_config.get('enabled', True)
-        self.shap_enabled = self.interpretability_config.get('shap_enabled', True) and SHAP_AVAILABLE
-        self.lime_enabled = self.interpretability_config.get('lime_enabled', True) and LIME_AVAILABLE
-        self.feature_importance_enabled = self.interpretability_config.get('feature_importance_enabled', True)
-        self.decision_paths_enabled = self.interpretability_config.get('decision_paths_enabled', True)
+        self.enabled = bool(self.interpretability_config.get('enabled', True))
+        # Enable flags should reflect requested configuration regardless of library availability; fallbacks handled in setup methods
+        shap_requested = self.interpretability_config.get('shap_enabled', True)
+        lime_requested = self.interpretability_config.get('lime_enabled', True)
+        self.shap_enabled = bool(shap_requested)
+        self.lime_enabled = bool(lime_requested)
+        self.feature_importance_enabled = bool(self.interpretability_config.get('feature_importance_enabled', True))
+        self.decision_paths_enabled = bool(self.interpretability_config.get('decision_paths_enabled', True))
         
         # Storage for explanations
         self.explanations_cache = {}
@@ -149,10 +152,70 @@ class ModelInterpretabilityEngine:
             'explainers': explainers_setup,
             'feature_count': len(feature_names)
         }
+
+    def explain(self, model: Any, X: np.ndarray, instance_index: Optional[int] = None) -> Dict[str, Any]:
+        """Generate explanations with robust fallbacks when SHAP/LIME are unavailable.
+
+        Returns a dictionary with keys: 'method', 'values', 'feature_importance', 'notes'.
+        """
+        result: Dict[str, Any] = {'method': None, 'values': None, 'feature_importance': None, 'notes': ''}
+        if not self.enabled:
+            result['notes'] = 'Interpretability disabled by configuration'
+            return result
+
+        try:
+            model_id = id(model)
+            # Prefer SHAP when available and configured
+            if self.shap_enabled and SHAP_AVAILABLE and model_id in self.shap_explainers:
+                explainer = self.shap_explainers[model_id]
+                shap_values = explainer.shap_values(X)
+                result['method'] = 'shap'
+                result['values'] = shap_values
+                self.stats['shap_explanations'] += 1
+                return result
+        except Exception as e:
+            logger.debug(f"SHAP explanation failed: {e}")
+
+        try:
+            # Fallback to LIME when available
+            if self.lime_enabled and LIME_AVAILABLE and model_id in self.lime_explainers and instance_index is not None:
+                explainer = self.lime_explainers[model_id]
+                exp = explainer.explain_instance(
+                    X[instance_index],
+                    model.predict_proba if hasattr(model, 'predict_proba') else model.predict,
+                    num_features=min(10, X.shape[1])
+                )
+                result['method'] = 'lime'
+                result['values'] = exp.as_list()
+                self.stats['lime_explanations'] += 1
+                return result
+        except Exception as e:
+            logger.debug(f"LIME explanation failed: {e}")
+
+        # Hardened fallback: feature importance via model attribute or permutation
+        try:
+            importances = None
+            if hasattr(model, 'feature_importances_'):
+                importances = np.array(getattr(model, 'feature_importances_'))
+                method = 'feature_importances_'
+            else:
+                # Permutation importance as a generic fallback
+                pi = permutation_importance(model, X, model.predict(X), n_repeats=5, random_state=42)
+                importances = pi.importances_mean
+                method = 'permutation_importance'
+            result['method'] = method
+            result['feature_importance'] = importances.tolist() if importances is not None else None
+            self.stats['feature_importance_calculated'] += 1
+        except Exception as e:
+            result['notes'] = f'No interpretability libraries available and feature importance failed: {e}'
+            logger.debug(result['notes'])
+        return result
     
     def _setup_shap_explainer(self, model: Any, X_train: np.ndarray, model_type: str) -> Optional[Any]:
         """Setup SHAP explainer based on model type."""
         try:
+            if not SHAP_AVAILABLE:
+                return None
             # Determine appropriate SHAP explainer
             if hasattr(model, 'predict_proba'):
                 # Tree-based models
@@ -174,6 +237,8 @@ class ModelInterpretabilityEngine:
                              model_type: str) -> Optional[Any]:
         """Setup LIME explainer."""
         try:
+            if not LIME_AVAILABLE:
+                return None
             if model_type == 'classifier':
                 explainer = lime_tabular.LimeTabularExplainer(
                     X_train,

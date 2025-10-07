@@ -576,6 +576,7 @@ class ConfidenceEngine:
             
             # Statistical tests for drift
             drift_analysis = {
+                'status': 'success',  # Explicit success status for test expectations
                 'timestamp': datetime.now().isoformat(),
                 'window_size': window_size,
                 'older_window_stats': {

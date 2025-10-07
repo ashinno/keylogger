@@ -286,7 +286,17 @@ class InsiderThreatDetector:
         
         # Clipboard usage patterns
         if event_type == 'clipboard':
-            content = data.get('content', '')
+            raw_content = data.get('content', '')
+            # Normalize content to a safe string
+            if raw_content is None:
+                content = ''
+            elif isinstance(raw_content, str):
+                content = raw_content
+            else:
+                try:
+                    content = str(raw_content)
+                except Exception:
+                    content = ''
             
             features.update({
                 'clipboard_size': len(content),
@@ -299,7 +309,7 @@ class InsiderThreatDetector:
             })
         
         # File access patterns
-        content = str(data.get('content', '')).lower()
+        content = str(data.get('content', '') or '').lower()
         features.update({
             'database_access': any(db in content for db in 
                                  ['database', 'sql', 'mysql', 'postgres', 'oracle']),
@@ -532,15 +542,24 @@ class InsiderThreatDetector:
             if len(recent_indicators) < 5:
                 return 0.0
             
-            # Calculate correlation matrix
-            correlation_matrix = np.corrcoef(np.array(recent_indicators).T)
+            # Guard against constant or invalid columns
+            indicators_array = np.array(recent_indicators).T
+            if indicators_array.ndim != 2 or indicators_array.shape[0] < 2:
+                return 0.0
+            
+            # Compute correlation with robust NaN/Inf handling
+            with np.errstate(divide='ignore', invalid='ignore'):
+                correlation_matrix = np.corrcoef(indicators_array)
+            correlation_matrix = np.nan_to_num(correlation_matrix, nan=0.0, posinf=0.0, neginf=0.0)
             
             # Get average correlation (excluding diagonal)
             mask = ~np.eye(correlation_matrix.shape[0], dtype=bool)
+            if correlation_matrix.size == 0 or np.count_nonzero(mask) == 0:
+                return 0.0
             avg_correlation = np.mean(np.abs(correlation_matrix[mask]))
             
             # High correlation indicates coordinated suspicious activity
-            return min(1.0, avg_correlation)
+            return float(min(1.0, max(0.0, avg_correlation)))
             
         except Exception as e:
             logger.warning(f"Error in correlation analysis: {e}")

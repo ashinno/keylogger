@@ -274,6 +274,15 @@ class ClipboardListener:
     def _detect_content_type(self, content: str) -> str:
         """Detect the type of clipboard content."""
         try:
+            # Normalize content
+            if content is None:
+                content = ''
+            elif not isinstance(content, str):
+                try:
+                    content = str(content)
+                except Exception:
+                    content = ''
+            
             if not content.strip():
                 return 'empty'
             
@@ -306,6 +315,15 @@ class ClipboardListener:
     def _is_sensitive_content(self, content: str) -> bool:
         """Check if content contains sensitive information."""
         try:
+            # Normalize content
+            if content is None:
+                content = ''
+            elif not isinstance(content, str):
+                try:
+                    content = str(content)
+                except Exception:
+                    content = ''
+            
             content_lower = content.lower()
             
             # Check for sensitive patterns
