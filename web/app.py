@@ -1082,10 +1082,18 @@ def create_web_app(keylogger_core, config_manager):
                     threat_score = keylogger_core.insider_threat_detector.analyze_event(event)
                     event_result['anomaly_scores']['insider_threat'] = threat_score
                 
-                # Risk scoring
+                # Risk scoring with confidence metadata
                 if hasattr(keylogger_core, 'risk_scorer') and keylogger_core.risk_scorer:
-                    risk_score = keylogger_core.risk_scorer.calculate_risk(event)
-                    event_result['anomaly_scores']['risk'] = risk_score
+                    try:
+                        risk_meta = keylogger_core.risk_scorer.calculate_risk_with_metadata(event)
+                        event_result['anomaly_scores']['risk'] = risk_meta.get('risk_score', 0.0)
+                        event_result['risk_metadata'] = {
+                            'confidence': risk_meta.get('confidence', 0.0),
+                            'sources': risk_meta.get('sources', []),
+                            'timestamp': risk_meta.get('timestamp')
+                        }
+                    except Exception as e:
+                        logger.debug(f"Risk metadata calculation failed: {e}")
                 
                 results.append(event_result)
             

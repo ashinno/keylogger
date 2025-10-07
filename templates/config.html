@@ -205,6 +205,35 @@
                         <!-- Privacy Settings -->
                         <div class="row g-3 mt-0">
                             <div class="col-md-12">
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h4 class="m-0">ML Risk Scoring Settings</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-2">
+                                                    <label for="riskBaselineWindow">Baseline Window</label>
+                                                    <input type="number" class="form-control" id="riskBaselineWindow" name="ml.risk_scoring.baseline_window" placeholder="1000">
+                                                </div>
+                                                <div class="form-group mb-2">
+                                                    <label for="riskDriftThreshold">Drift Threshold</label>
+                                                    <input type="number" step="0.01" class="form-control" id="riskDriftThreshold" name="ml.risk_scoring.drift_threshold" placeholder="0.15">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-2">
+                                                    <label for="riskMicroBatchSize">Micro-batch Size</label>
+                                                    <input type="number" class="form-control" id="riskMicroBatchSize" name="ml.risk_scoring.micro_batch_size" placeholder="32">
+                                                </div>
+                                                <div class="form-group mb-2">
+                                                    <label for="riskMaxLatencyMs">Max Latency (ms)</label>
+                                                    <input type="number" class="form-control" id="riskMaxLatencyMs" name="ml.risk_scoring.max_latency_ms" placeholder="200">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="card">
                                     <div class="card-header">
                                         <h4 class="m-0">Privacy Settings</h4>
@@ -352,6 +381,14 @@ function loadConfig() {
                 setValue('performance.buffer_size', cfg.performance.buffer_size);
                 setValue('performance.flush_interval', cfg.performance.flush_interval);
                 setValue('performance.screenshot_interval', cfg.performance.screenshot_interval);
+            }
+
+            // ML Risk Scoring
+            if (cfg.ml && cfg.ml.risk_scoring) {
+                setValue('ml.risk_scoring.baseline_window', cfg.ml.risk_scoring.baseline_window);
+                setValue('ml.risk_scoring.drift_threshold', cfg.ml.risk_scoring.drift_threshold);
+                setValue('ml.risk_scoring.micro_batch_size', cfg.ml.risk_scoring.micro_batch_size);
+                setValue('ml.risk_scoring.max_latency_ms', cfg.ml.risk_scoring.max_latency_ms);
             }
 
             // Web
