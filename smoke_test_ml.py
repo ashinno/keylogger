@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+"""Smoke test for ML API endpoints - not a pytest test file."""
+
 import requests
 import json
 
@@ -6,7 +9,7 @@ s = requests.Session()
 
 
 def log(msg: str):
-    print(msg, flush=True)
+    print(f"[SMOKE] {msg}")
 
 
 def preview_json(data):
@@ -18,7 +21,7 @@ def preview_json(data):
         return text if len(text) <= 600 else text[:600] + '...'
 
 
-def test(method: str, path: str, payload=None):
+def test_endpoint(method: str, path: str, payload=None):
     url = BASE + path
     try:
         if method.upper() == 'GET':
@@ -34,34 +37,40 @@ def test(method: str, path: str, payload=None):
         if isinstance(data, (dict, list)):
             log(preview_json(data))
         else:
-            body = data
-            if isinstance(body, bytes):
-                body = body.decode('utf-8', errors='ignore')
-            body = body if len(body) <= 600 else body[:600] + '...'
-            log(body)
+            log(f"Response: {str(data)[:200]}...")
     except Exception as e:
-        log(f"[{method}] {path} -> ERROR {e}")
+        log(f"[{method}] {path} -> ERROR: {e}")
 
 
-# Login
-try:
-    r = s.post(BASE + '/login', data={'username': 'admin', 'password': 'admin123'}, allow_redirects=False, timeout=10)
-    log(f"Login status: HTTP {r.status_code}; session_cookie={bool(s.cookies.get_dict().get('session'))}")
-except Exception as e:
-    log(f"Login failed: {e}")
+def main():
+    """Main smoke test function."""
+    log("Starting ML API smoke test")
+    
+    # Login first
+    try:
+        r = s.post(BASE + '/login', data={'username': 'admin', 'password': 'admin123'}, allow_redirects=False, timeout=10)
+        log(f"Login status: HTTP {r.status_code}; session_cookie={bool(s.cookies.get_dict().get('session'))}")
+    except Exception as e:
+        log(f"Login failed: {e}")
 
-# Smoke tests
-endpoints = [
-    ('GET', '/api/ml/status', None),
-    ('GET', '/api/ml/behavioral/baseline', None),
-    ('POST', '/api/ml/keystroke/enroll', {'user_id': 'test_user', 'typing_samples': [{'durations': [100, 120, 110], 'keys': 'test'}]}),
-    ('GET', '/api/ml/threat/summary', None),
-    ('GET', '/api/ml/risk/current', None),
-    ('GET', '/api/ml/risk/alerts', None),
-    ('POST', '/api/ml/analytics/events', {'events': [{'id': 'e1', 'timestamp': '2025-09-13T14:16:00Z', 'type': 'keyboard', 'key': 'A'}]}),
-    ('GET', '/api/ml/models/status', None),
-    ('POST', '/api/ml/export/data', {'type': 'all'}),
-]
+    # Test ML endpoints
+    endpoints = [
+        ('GET', '/api/ml/status', None),
+        ('GET', '/api/ml/behavioral/baseline', None),
+        ('POST', '/api/ml/keystroke/enroll', {'user_id': 'test_user', 'typing_samples': [{'durations': [100, 120, 110], 'keys': 'test'}]}),
+        ('GET', '/api/ml/threat/summary', None),
+        ('GET', '/api/ml/risk/current', None),
+        ('GET', '/api/ml/risk/alerts', None),
+        ('POST', '/api/ml/analytics/events', {'events': [{'id': 'e1', 'timestamp': '2025-09-13T14:16:00Z', 'type': 'keyboard', 'key': 'A'}]}),
+        ('GET', '/api/ml/models/status', None),
+        ('POST', '/api/ml/export/data', {'type': 'all'}),
+    ]
 
-for method, path, payload in endpoints:
-    test(method, path, payload)
+    for method, path, payload in endpoints:
+        test_endpoint(method, path, payload)
+    
+    log("ML API smoke test completed")
+
+
+if __name__ == '__main__':
+    main()

@@ -5,6 +5,14 @@ All notable changes to the Enhanced Keylogger Project will be documented in this
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2025-10-15
+
+### Removed
+- Legacy, unreferenced model artifacts from `models/` directory (`baseline_rf.pkl`, `baseline_rf_v1.pkl`, `tuned_rf.pkl`, `tuned_rf_v1.pkl`). These files were not part of the current ML pipeline and could cause confusion.
+
+### Improved
+- Verified ML interpretability components with comprehensive tests; system remains functional with robust fallbacks when optional libraries are unavailable.
+
 ## [2.0.0] - 2024-01-01
 
 ### 🎉 Major Release - Complete Architectural Refactor

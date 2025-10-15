@@ -497,16 +497,21 @@ class InsiderThreatDetector:
                     else:
                         feature_vector = feature_vector[:expected_features]
             
-            # Scale features
+            # Initialize scaled_vector with default value
+            scaled_vector = feature_vector.reshape(1, -1)
+            
+            # Scale features if scaler is available and fitted
             if dimension in self.scalers:
                 scaler = self.scalers[dimension]
                 try:
-                    scaled_vector = scaler.transform(feature_vector.reshape(1, -1))
+                    # Check if scaler is fitted by looking for fitted attributes
+                    if hasattr(scaler, 'mean_') or hasattr(scaler, 'scale_') or hasattr(scaler, 'center_'):
+                        scaled_vector = scaler.transform(feature_vector.reshape(1, -1))
+                    else:
+                        logger.debug(f"Scaler for {dimension} not fitted yet, using unscaled features")
                 except Exception as e:
                     logger.warning(f"Error scaling features for {dimension}: {e}")
-                    scaled_vector = feature_vector.reshape(1, -1)
-            else:
-                scaled_vector = feature_vector.reshape(1, -1)
+                    # scaled_vector already set to default above
             
             # Check if model is fitted (avoid triggering properties on unfitted models)
             if hasattr(model, 'fit_predict'):

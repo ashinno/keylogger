@@ -588,8 +588,12 @@ class BehavioralAnalyticsEngine:
     def _train_supervised_model(self, X_baseline: np.ndarray):
         """Train supervised model using baseline and anomaly data."""
         try:
+            # Ensure X_baseline is a 2D array
+            if X_baseline.ndim == 1:
+                X_baseline = X_baseline.reshape(1, -1)
+            
             # Create labels: 0 for normal, 1 for anomaly
-            y_baseline = np.zeros(len(X_baseline))
+            y_baseline = np.zeros(X_baseline.shape[0])
             
             # Get anomaly features
             anomaly_features = []

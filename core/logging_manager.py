@@ -40,8 +40,33 @@ class LogEntry:
         }
 
     def to_json(self) -> str:
-        """Convert entry to JSON string."""
-        return json.dumps(self.to_dict(), ensure_ascii=False)
+        """Convert entry to JSON string with numpy type handling."""
+        return json.dumps(self.to_dict(), ensure_ascii=False, default=self._json_serializer)
+    
+    @staticmethod
+    def _json_serializer(obj):
+        """Custom JSON serializer to handle numpy types and other non-serializable objects."""
+        try:
+            import numpy as np
+            if isinstance(obj, np.bool_):
+                return bool(obj)
+            elif isinstance(obj, np.integer):
+                return int(obj)
+            elif isinstance(obj, np.floating):
+                return float(obj)
+            elif isinstance(obj, np.ndarray):
+                return obj.tolist()
+        except ImportError:
+            pass
+        
+        # Handle other common non-serializable types
+        if hasattr(obj, 'isoformat'):  # datetime objects
+            return obj.isoformat()
+        elif hasattr(obj, '__dict__'):  # Custom objects
+            return str(obj)
+        
+        # Fallback to string representation
+        return str(obj)
 
 
 class LogEvent(LogEntry):
@@ -454,10 +479,10 @@ class LoggingManager:
             return []
     
     def _export_json(self, events: List[Dict[str, Any]], output_file: str) -> bool:
-        """Export events to JSON format."""
+        """Export events to JSON format with numpy type handling."""
         try:
             with open(output_file, 'w', encoding='utf-8') as f:
-                json.dump(events, f, indent=2, ensure_ascii=False)
+                json.dump(events, f, indent=2, ensure_ascii=False, default=LogEntry._json_serializer)
             
             logger.info(f"Exported {len(events)} events to JSON: {output_file}")
             return True
