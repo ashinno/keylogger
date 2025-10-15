@@ -20,6 +20,8 @@ from sklearn.decomposition import PCA, FastICA
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import silhouette_score, classification_report
+from sklearn.utils.validation import check_is_fitted
+from sklearn.exceptions import NotFittedError
 from scipy import stats
 from scipy.spatial.distance import mahalanobis
 
@@ -139,8 +141,16 @@ class InsiderThreatDetector:
                 return 0.0
             
             # Add to recent activities
+            ts_value = event.get('timestamp')
+            if isinstance(ts_value, str) and ts_value:
+                timestamp_str = ts_value
+            elif isinstance(ts_value, datetime):
+                timestamp_str = ts_value.isoformat()
+            else:
+                timestamp_str = datetime.now().isoformat()
+
             self.recent_activities.append({
-                'timestamp': event.get('timestamp'),
+                'timestamp': timestamp_str,
                 'features': threat_features,
                 'event': event
             })
@@ -214,15 +224,23 @@ class InsiderThreatDetector:
         # Activity timing patterns
         if len(self.recent_activities) > 0:
             last_activity = self.recent_activities[-1]
-            last_timestamp = datetime.fromisoformat(last_activity['timestamp'])
-            time_gap = (timestamp - last_timestamp).total_seconds()
-            
-            features.update({
-                'time_gap': time_gap,
-                'rapid_activity': time_gap < 1.0,  # Less than 1 second
-                'extended_gap': time_gap > 3600.0,  # More than 1 hour
-                'burst_activity': self._detect_activity_burst(timestamp)
-            })
+            last_timestamp = self._safe_parse_iso(last_activity.get('timestamp'))
+            if last_timestamp is not None:
+                time_gap = (timestamp - last_timestamp).total_seconds()
+                features.update({
+                    'time_gap': time_gap,
+                    'rapid_activity': time_gap < 1.0,  # Less than 1 second
+                    'extended_gap': time_gap > 3600.0,  # More than 1 hour
+                    'burst_activity': self._detect_activity_burst(timestamp)
+                })
+            else:
+                # Fallback defaults when previous timestamp is invalid
+                features.update({
+                    'time_gap': 0.0,
+                    'rapid_activity': False,
+                    'extended_gap': False,
+                    'burst_activity': self._detect_activity_burst(timestamp)
+                })
         
         return features
     
@@ -479,12 +497,6 @@ class InsiderThreatDetector:
                     else:
                         feature_vector = feature_vector[:expected_features]
             
-            # Check if model is fitted
-            if not hasattr(model, 'n_features_in_') and not hasattr(model, 'feature_importances_') and not hasattr(model, 'support_vectors_'):
-                # Model is not fitted, return neutral score
-                logger.warning(f"{dimension} model is not fitted yet")
-                return 0.0
-            
             # Scale features
             if dimension in self.scalers:
                 scaler = self.scalers[dimension]
@@ -496,6 +508,18 @@ class InsiderThreatDetector:
             else:
                 scaled_vector = feature_vector.reshape(1, -1)
             
+            # Check if model is fitted (avoid triggering properties on unfitted models)
+            if hasattr(model, 'fit_predict'):
+                # Unsupervised clustering (e.g., DBSCAN) - fit per sample window
+                prediction = model.fit_predict(scaled_vector)[0]
+                return 1.0 if prediction == -1 else 0.0
+            else:
+                try:
+                    check_is_fitted(model)
+                except Exception:
+                    logger.warning(f"{dimension} model is not fitted yet")
+                    return 0.0
+
             # Get score based on model type
             if hasattr(model, 'decision_function'):
                 score = model.decision_function(scaled_vector)[0]
@@ -505,11 +529,6 @@ class InsiderThreatDetector:
             elif hasattr(model, 'predict_proba'):
                 proba = model.predict_proba(scaled_vector)[0]
                 return proba[1] if len(proba) > 1 else proba[0]
-            
-            elif hasattr(model, 'fit_predict'):
-                # For DBSCAN
-                prediction = model.fit_predict(scaled_vector)[0]
-                return 1.0 if prediction == -1 else 0.0
             
             else:
                 prediction = model.predict(scaled_vector)[0]
@@ -938,11 +957,16 @@ class InsiderThreatDetector:
         if len(self.recent_activities) < 5:
             return False
         
-        recent_times = [datetime.fromisoformat(a['timestamp']) 
-                       for a in list(self.recent_activities)[-5:]]
+        recent_times = []
+        for a in list(self.recent_activities)[-5:]:
+            ts = self._safe_parse_iso(a.get('timestamp'))
+            if ts is not None:
+                recent_times.append(ts)
         recent_times.append(current_time)
         
         # Check if all activities are within a short time window
+        if not recent_times:
+            return False
         time_span = (max(recent_times) - min(recent_times)).total_seconds()
         return time_span < 60  # 1 minute
     
@@ -1055,6 +1079,15 @@ class InsiderThreatDetector:
             return timestamp.hour < 8 or timestamp.hour > 18
         except:
             return False
+
+    def _safe_parse_iso(self, timestamp_str: Optional[str]) -> Optional[datetime]:
+        """Safely parse ISO timestamp strings, returning None if invalid."""
+        try:
+            if not timestamp_str:
+                return None
+            return datetime.fromisoformat(timestamp_str)
+        except Exception:
+            return None
     
     def _save_models(self):
         """Save trained models and data."""

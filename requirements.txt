@@ -50,7 +50,8 @@ statsmodels>=0.14.0
 featuretools>=1.26.0
 
 # Model persistence and management
-pickle5>=0.0.12
+# Use pickle5 only for Python < 3.8 (backport not needed on newer Python)
+pickle5>=0.0.12; python_version < '3.8'
 dill>=0.3.7
 
 # Performance optimization
