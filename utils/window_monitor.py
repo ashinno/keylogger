@@ -4,6 +4,7 @@ import time
 import threading
 import logging
 from typing import Optional, Dict, Any, List
+import re
 import psutil
 
 try:
@@ -49,12 +50,23 @@ class WindowMonitor:
         }
         
         # Title sanitization patterns
-        self.sensitive_patterns = [
-            r'password', r'login', r'signin', r'auth',
-            r'private', r'confidential', r'secret',
-            r'\b\d{4}\b',  # Potential years or codes
-            r'@\w+\.\w+',  # Email domains
+        self._sensitive_word_regexes = [
+            re.compile(pattern, re.IGNORECASE)
+            for pattern in [
+                r"\bpassword\b",
+                r"\blogin\b",
+                r"\bsignin\b",
+                r"\bsecret\b",
+                r"\bprivate\b",
+                r"\bconfidential\b",
+                r"\bauth\b",
+                r"\btoken\b",
+                r"\bpin\b",
+                r"\bpasscode\b"
+            ]
         ]
+        self._sensitive_number_regex = re.compile(r"\b\d{4}\b")
+        self._email_regex = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
     
     def run(self) -> None:
         """Main monitoring loop."""
@@ -121,6 +133,7 @@ class WindowMonitor:
                 window_title = "Unknown Window"
             
             # Get process information
+            process_id = None
             try:
                 _, process_id = win32process.GetWindowThreadProcessId(hwnd)
                 process = psutil.Process(process_id)
@@ -138,6 +151,7 @@ class WindowMonitor:
                 'hwnd': hwnd,
                 'title': window_title,
                 'process_name': process_name,
+                'process_id': process_id,
                 'executable_path': executable_path,
                 'timestamp': time.time()
             }
@@ -151,25 +165,71 @@ class WindowMonitor:
     def _sanitize_window_title(self, title: str) -> str:
         """Sanitize window title to remove sensitive information."""
         try:
-            import re
-            
+            if not isinstance(title, str):
+                return "Unknown Window"
             sanitized_title = title
             
-            # Apply sanitization patterns
-            for pattern in self.sensitive_patterns:
-                sanitized_title = re.sub(pattern, '[REDACTED]', sanitized_title, flags=re.IGNORECASE)
+            # Replace email addresses with dedicated placeholder
+            sanitized_title = self._email_regex.sub('[EMAIL]', sanitized_title)
             
-            # Remove potential file paths
-            sanitized_title = re.sub(r'[A-Za-z]:\\[^\n]*', '[FILE_PATH]', sanitized_title)
+            # Replace known sensitive keywords
+            for regex in self._sensitive_word_regexes:
+                sanitized_title = regex.sub('[SENSITIVE]', sanitized_title)
             
-            # Remove potential URLs
+            # Mask simple numeric secrets (e.g., PIN codes)
+            sanitized_title = self._sensitive_number_regex.sub('[SENSITIVE]', sanitized_title)
+            
+            # Remove potential file paths and URLs
+            sanitized_title = re.sub(r'[A-Za-z]:\\[^\s]*', '[FILE_PATH]', sanitized_title)
             sanitized_title = re.sub(r'https?://[^\s]+', '[URL]', sanitized_title)
             
-            return sanitized_title
+            # Normalize whitespace
+            sanitized_title = re.sub(r'\s+', ' ', sanitized_title).strip()
             
+            return sanitized_title or '[SENSITIVE]'
         except Exception as e:
             logger.error(f"Error sanitizing window title: {e}")
             return "[SANITIZATION_ERROR]"
+    
+    def _has_window_changed(self, window_info: Dict[str, Any]) -> bool:
+        """Determine if the active window has changed."""
+        if not window_info:
+            return False
+        if not self.current_window:
+            return True
+        try:
+            current_handle = self.current_window.get('hwnd', self.current_window.get('handle'))
+            new_handle = window_info.get('hwnd', window_info.get('handle'))
+            comparable_keys = ['title', 'process_name', 'process_id']
+            if current_handle != new_handle:
+                return True
+            for key in comparable_keys:
+                if window_info.get(key) != self.current_window.get(key):
+                    return True
+            return False
+        except Exception:
+            return True
+    
+    def _update_current_window(self, window_info: Dict[str, Any]) -> None:
+        """Update the current window tracking state."""
+        self.current_window = window_info.copy()
+        self.window_start_time = time.time()
+        self.stats['window_changes'] += 1
+    
+    def _update_application_usage(self, app_name: str, time_spent: float) -> None:
+        """Track time spent per application."""
+        if time_spent <= 0:
+            return
+        app_name = app_name or 'Unknown'
+        self.application_usage[app_name] = self.application_usage.get(app_name, 0.0) + time_spent
+    
+    def export_window_data(self) -> Dict[str, Any]:
+        """Export window monitoring data for reporting."""
+        return {
+            'window_history': self.get_window_history(),
+            'application_usage': self.get_application_usage(),
+            'statistics': self.get_stats()
+        }
     
     def _handle_window_change(self, new_window_info: Dict[str, Any]) -> None:
         """Handle window change event."""
@@ -183,14 +243,10 @@ class WindowMonitor:
                 
                 # Update application usage statistics
                 app_name = self.current_window.get('process_name', 'Unknown')
-                if app_name not in self.application_usage:
-                    self.application_usage[app_name] = 0
-                self.application_usage[app_name] += time_spent
+                self._update_application_usage(app_name, time_spent)
             
             # Update current window
-            self.current_window = new_window_info
-            self.window_start_time = current_time
-            self.stats['window_changes'] += 1
+            self._update_current_window(new_window_info)
             
             # Add to history
             self._add_to_history(new_window_info)
@@ -200,7 +256,8 @@ class WindowMonitor:
             
             # Update keylogger's active window
             window_name = self._format_window_name(new_window_info)
-            self.keylogger.update_active_window(window_name)
+            process_name = new_window_info.get('process_name')
+            self.keylogger.update_active_window(window_name, process_name)
             
         except Exception as e:
             logger.error(f"Error handling window change: {e}")

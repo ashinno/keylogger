@@ -154,6 +154,9 @@ class PerformanceMonitor:
                     '15min': load_avg[2]
                 }
             }
+            metrics['cpu_percent'] = metrics['cpu']['percent']
+            metrics['memory_percent'] = metrics['memory']['percent']
+            metrics['disk_percent'] = metrics['disk']['percent']
             
             # Add detailed metrics if enabled
             if self.detailed_monitoring:
@@ -211,6 +214,10 @@ class PerformanceMonitor:
                     'errors': keylogger_stats.get('errors', 0)
                 }
             }
+            metrics['memory_mb'] = metrics['process']['memory_rss_mb']
+            metrics['cpu_percent'] = cpu_percent
+            metrics['thread_count'] = thread_count
+            metrics['open_files'] = open_files
             
             # Add component-specific metrics
             if hasattr(self.keylogger, 'keyboard_listener'):
@@ -299,42 +306,46 @@ class PerformanceMonitor:
             alerts = []
             
             # CPU usage alert
-            cpu_percent = latest_system['cpu']['percent']
+            cpu_percent = latest_system.get('cpu_percent', latest_system.get('cpu', {}).get('percent', 0))
             if cpu_percent > self.alert_thresholds['cpu_percent']:
                 alerts.append({
-                    'type': 'high_cpu',
+                    'metric': 'cpu_percent',
                     'value': cpu_percent,
                     'threshold': self.alert_thresholds['cpu_percent'],
+                    'severity': 'high',
                     'message': f"High CPU usage: {cpu_percent:.1f}%"
                 })
             
             # Memory usage alert
-            memory_percent = latest_system['memory']['percent']
+            memory_percent = latest_system.get('memory_percent', latest_system.get('memory', {}).get('percent', 0))
             if memory_percent > self.alert_thresholds['memory_percent']:
                 alerts.append({
-                    'type': 'high_memory',
+                    'metric': 'memory_percent',
                     'value': memory_percent,
                     'threshold': self.alert_thresholds['memory_percent'],
+                    'severity': 'medium',
                     'message': f"High memory usage: {memory_percent:.1f}%"
                 })
             
             # Disk usage alert
-            disk_percent = latest_system['disk']['percent']
+            disk_percent = latest_system.get('disk_percent', latest_system.get('disk', {}).get('percent', 0))
             if disk_percent > self.alert_thresholds['disk_percent']:
                 alerts.append({
-                    'type': 'high_disk',
+                    'metric': 'disk_percent',
                     'value': disk_percent,
                     'threshold': self.alert_thresholds['disk_percent'],
+                    'severity': 'medium',
                     'message': f"High disk usage: {disk_percent:.1f}%"
                 })
             
             # Keylogger memory alert
-            keylogger_memory = latest_keylogger['process']['memory_rss_mb']
+            keylogger_memory = latest_keylogger.get('memory_mb', latest_keylogger.get('process', {}).get('memory_rss_mb', 0))
             if keylogger_memory > self.alert_thresholds['keylogger_memory_mb']:
                 alerts.append({
-                    'type': 'keylogger_memory',
+                    'metric': 'keylogger_memory_mb',
                     'value': keylogger_memory,
                     'threshold': self.alert_thresholds['keylogger_memory_mb'],
+                    'severity': 'high',
                     'message': f"High keylogger memory usage: {keylogger_memory:.1f}MB"
                 })
             
@@ -362,10 +373,10 @@ class PerformanceMonitor:
                 alert['message'],
                 "System",
                 metadata={
-                    'alert_type': alert['type'],
-                    'value': alert['value'],
-                    'threshold': alert['threshold'],
-                    'priority': 'high'
+                    'metric': alert.get('metric'),
+                    'value': alert.get('value'),
+                    'threshold': alert.get('threshold'),
+                    'severity': alert.get('severity', 'medium')
                 }
             )
             
@@ -450,47 +461,76 @@ class PerformanceMonitor:
             if not self.system_metrics or not self.keylogger_metrics:
                 return {}
             
-            # Calculate averages and trends
-            recent_system = list(self.system_metrics)[-10:]  # Last 10 readings
-            recent_keylogger = list(self.keylogger_metrics)[-10:]
+            system_samples = list(self.system_metrics)
+            keylogger_samples = list(self.keylogger_metrics)
             
-            avg_cpu = sum(m['cpu']['percent'] for m in recent_system) / len(recent_system)
-            avg_memory = sum(m['memory']['percent'] for m in recent_system) / len(recent_system)
-            avg_keylogger_memory = sum(m['process']['memory_rss_mb'] for m in recent_keylogger) / len(recent_keylogger)
+            avg_cpu = sum(m.get('cpu_percent', 0) for m in system_samples) / len(system_samples)
+            avg_memory = sum(m.get('memory_percent', 0) for m in system_samples) / len(system_samples)
+            avg_disk = sum(m.get('disk_percent', 0) for m in system_samples) / len(system_samples)
+            avg_keylogger_memory = sum(m.get('memory_mb', 0) for m in keylogger_samples) / len(keylogger_samples)
+            avg_keylogger_cpu = sum(m.get('cpu_percent', 0) for m in keylogger_samples) / len(keylogger_samples)
+            avg_thread_count = sum(m.get('thread_count', 0) for m in keylogger_samples) / len(keylogger_samples)
             
-            return {
-                'averages': {
-                    'cpu_percent': avg_cpu,
-                    'memory_percent': avg_memory,
-                    'keylogger_memory_mb': avg_keylogger_memory
+            summary = {
+                'system_metrics': {
+                    'avg_cpu_percent': avg_cpu,
+                    'avg_memory_percent': avg_memory,
+                    'avg_disk_percent': avg_disk,
+                    'peak_cpu_percent': self.stats['peak_cpu_percent'],
+                    'peak_memory_mb': self.stats['peak_memory_mb']
                 },
-                'peaks': {
-                    'cpu_percent': self.stats['peak_cpu_percent'],
-                    'memory_mb': self.stats['peak_memory_mb']
+                'keylogger_metrics': {
+                    'avg_memory_mb': avg_keylogger_memory,
+                    'avg_cpu_percent': avg_keylogger_cpu,
+                    'avg_thread_count': avg_thread_count
                 },
-                'current': self.get_current_metrics(),
-                'alerts': {
-                    'total_triggered': self.stats['alerts_triggered'],
-                    'recent_alerts': self.get_alerts_history(5)
+                'alerts_summary': {
+                    'total_alerts': self.stats['alerts_triggered'],
+                    'recent_alerts': list(self.alerts_history)[-5:]
                 },
                 'monitoring': {
-                    'duration_hours': self.stats['monitoring_duration'] / 3600,
+                    'duration_hours': self.stats['monitoring_duration'] / 3600 if self.stats['monitoring_duration'] else 0,
                     'total_checks': self.stats['total_checks'],
                     'errors': self.stats['errors']
                 }
             }
-            
+            summary['recommendations'] = self._generate_recommendations(summary)
+            return summary
         except Exception as e:
             logger.error(f"Error generating performance summary: {e}")
             return {}
     
+    def _generate_recommendations(self, summary: Dict[str, Any]) -> List[str]:
+        """Generate human-readable recommendations based on current metrics."""
+        recommendations: List[str] = []
+        system_metrics = summary.get('system_metrics', {})
+        keylogger_metrics = summary.get('keylogger_metrics', {})
+        avg_cpu = system_metrics.get('avg_cpu_percent', 0)
+        avg_memory = system_metrics.get('avg_memory_percent', 0)
+        avg_disk = system_metrics.get('avg_disk_percent', 0)
+        avg_keylogger_memory = keylogger_metrics.get('avg_memory_mb', 0)
+        
+        if avg_cpu > self.alert_thresholds['cpu_percent'] * 0.8:
+            recommendations.append('Investigate CPU-intensive processes or reduce system workload.')
+        if avg_memory > self.alert_thresholds['memory_percent'] * 0.8:
+            recommendations.append('Consider closing unused applications to free system memory.')
+        if avg_disk > self.alert_thresholds['disk_percent'] * 0.8:
+            recommendations.append('Free up disk space or plan for additional storage capacity.')
+        if avg_keylogger_memory > self.alert_thresholds['keylogger_memory_mb'] * 0.8:
+            recommendations.append('Evaluate keylogger modules for potential memory optimizations.')
+        if not recommendations:
+            recommendations.append('System performance metrics are within expected parameters.')
+        return recommendations
+    
     def export_performance_data(self) -> Dict[str, Any]:
         """Export all performance data for analysis."""
+        summary = self.get_performance_summary()
         return {
-            'stats': self.get_stats(),
-            'current_metrics': self.get_current_metrics(),
-            'metrics_history': self.get_metrics_history(),
-            'alerts_history': self.get_alerts_history(),
-            'performance_summary': self.get_performance_summary(),
+            'statistics': self.get_stats(),
+            'system_metrics': list(self.system_metrics),
+            'keylogger_metrics': list(self.keylogger_metrics),
+            'alerts_history': list(self.alerts_history),
+            'performance_summary': summary,
+            'recommendations': summary.get('recommendations', []) if summary else [],
             'export_timestamp': time.time()
         }

@@ -29,9 +29,9 @@ class ScreenshotMonitor:
         
         # Screenshot settings
         self.capture_interval = float(self.config.get('screenshots.interval_seconds', self.config.get('performance.screenshot_interval', 60.0)))
-        self.screenshot_quality = self.config.get('screenshots.quality', self.config.get('performance.screenshot_quality', 85))
-        # Force PNG format for high quality and accessibility
-        self.screenshot_format = 'PNG'
+        self.screenshot_quality = int(self.config.get('screenshots.quality', self.config.get('performance.screenshot_quality', 85)))
+        configured_format = self.config.get('screenshots.format', self.config.get('performance.screenshot_format', 'PNG'))
+        self.screenshot_format = str(configured_format or 'PNG').upper()
          
         # Privacy settings
         self.blur_sensitive_areas = self.config.get('privacy.blur_sensitive_areas', True)
@@ -167,14 +167,17 @@ class ScreenshotMonitor:
             
             # Process screenshot
             processed_screenshot = self._process_screenshot(screenshot)
+            metadata = self._extract_metadata(processed_screenshot)
+            timestamp = time.time()
+            metadata['timestamp'] = timestamp
+            metadata['window_name'] = window_name
             
             # Generate filename
-            timestamp = time.time()
             filename = self._generate_filename(timestamp, window_name)
             filepath = self.screenshot_dir / filename
             
             # Save screenshot
-            file_size = self._save_screenshot(processed_screenshot, filepath)
+            file_size, final_path, encrypted = self._save_screenshot(processed_screenshot, filepath)
             
             if file_size > 0:
                 # Update statistics
@@ -182,19 +185,21 @@ class ScreenshotMonitor:
                 self.stats['total_size_bytes'] += file_size
                 self.stats['average_size_bytes'] = self.stats['total_size_bytes'] / self.stats['screenshots_taken']
                 
-                # Store metadata
-                self._store_metadata(filename, {
-                    'timestamp': timestamp,
-                    'window_name': window_name,
+                metadata.update({
                     'file_size': file_size,
                     'resolution': processed_screenshot.size,
-                    'format': self.screenshot_format
+                    'format': self.screenshot_format.upper(),
+                    'encrypted': encrypted
                 })
+                final_filename = final_path.name
+                
+                # Store metadata
+                self._store_metadata(final_filename, metadata)
                 
                 # Log screenshot event
-                self._log_screenshot_event(filename, window_name, file_size)
+                self._log_screenshot_event(final_filename, window_name, file_size, encrypted)
                 
-                return str(filepath)
+                return str(final_path)
             
         except Exception as e:
             logger.error(f"Error capturing screenshot: {e}")
@@ -205,62 +210,127 @@ class ScreenshotMonitor:
         """Process screenshot with privacy and performance optimizations."""
         try:
             processed = screenshot.copy()
+            processed = self._resize_image(processed)
             
-            # Resize if too large
-            if processed.size[0] > self.max_resolution[0] or processed.size[1] > self.max_resolution[1]:
-                processed.thumbnail(self.max_resolution, Image.Resampling.LANCZOS)
-            
-            # Apply privacy filters
             if self.blur_sensitive_areas:
-                processed = self._blur_sensitive_areas(processed)
+                sensitive_areas = self._detect_sensitive_areas(processed)
+                processed = self._blur_sensitive_areas(processed, sensitive_areas)
             
             if self.redact_text:
                 processed = self._redact_text_areas(processed)
             
-            # Convert to RGB if necessary (for JPEG)
+            # Convert to RGB if necessary for JPEG output
             if self.screenshot_format.upper() == 'JPEG' and processed.mode in ('RGBA', 'LA', 'P'):
                 rgb_image = Image.new('RGB', processed.size, (255, 255, 255))
                 if processed.mode == 'P':
                     processed = processed.convert('RGBA')
-                rgb_image.paste(processed, mask=processed.split()[-1] if processed.mode == 'RGBA' else None)
+                alpha_channel = processed.split()[-1] if processed.mode == 'RGBA' else None
+                rgb_image.paste(processed, mask=alpha_channel)
                 processed = rgb_image
             
             return processed
-            
         except Exception as e:
             logger.error(f"Error processing screenshot: {e}")
             return screenshot
     
-    def _blur_sensitive_areas(self, image: Image.Image) -> Image.Image:
-        """Blur potentially sensitive areas of the screenshot."""
+    def _resize_image(self, image: Image.Image) -> Image.Image:
+        """Resize image to configured maximum resolution."""
+        try:
+            max_width, max_height = self.max_resolution
+            if image.size[0] <= max_width and image.size[1] <= max_height:
+                return image
+            resized = image.copy()
+            resized.thumbnail((max_width, max_height), Image.Resampling.LANCZOS)
+            return resized
+        except Exception as e:
+            logger.error(f"Error resizing screenshot: {e}")
+            return image
+    
+    def _detect_sensitive_areas(self, image: Image.Image) -> list:
+        """Detect regions likely to contain sensitive UI elements."""
+        try:
+            width, height = image.size
+            if width == 0 or height == 0:
+                return []
+            areas = []
+            taskbar_height = int(height * 0.1)
+            title_height = int(height * 0.05)
+            if taskbar_height > 0:
+                areas.append((0, max(height - taskbar_height, 0), width, height))
+            if title_height > 0:
+                areas.append((0, 0, width, title_height))
+            return areas
+        except Exception as e:
+            logger.error(f"Error detecting sensitive areas: {e}")
+            return []
+    
+    def _blur_sensitive_areas(self, image: Image.Image, areas: list) -> Image.Image:
+        """Blur specific areas within an image."""
+        if not areas:
+            return image
         try:
             from PIL import ImageFilter
-            
-            # Simple implementation: blur bottom portion where taskbar/dock might be
-            width, height = image.size
-            
-            # Create a copy for blurring
             blurred = image.copy()
-            
-            # Blur bottom 10% of screen (taskbar area)
-            taskbar_height = int(height * 0.1)
-            if taskbar_height > 0:
-                taskbar_area = image.crop((0, height - taskbar_height, width, height))
-                blurred_taskbar = taskbar_area.filter(ImageFilter.GaussianBlur(radius=10))
-                blurred.paste(blurred_taskbar, (0, height - taskbar_height))
-            
-            # Blur top portion (title bars)
-            title_height = int(height * 0.05)
-            if title_height > 0:
-                title_area = image.crop((0, 0, width, title_height))
-                blurred_title = title_area.filter(ImageFilter.GaussianBlur(radius=5))
-                blurred.paste(blurred_title, (0, 0))
-            
+            for area in areas:
+                left, top, right, bottom = area
+                region = blurred.crop((left, top, right, bottom))
+                blurred_region = region.filter(ImageFilter.GaussianBlur(radius=8))
+                blurred.paste(blurred_region, (left, top))
             return blurred
-            
         except Exception as e:
             logger.error(f"Error blurring sensitive areas: {e}")
             return image
+    
+    def _compress_screenshot(self, image: Image.Image) -> bytes:
+        """Serialize screenshot image to bytes with compression."""
+        try:
+            buffer = io.BytesIO()
+            save_kwargs: Dict[str, Any] = {}
+            fmt = self.screenshot_format.upper()
+            if fmt == 'JPEG':
+                if image.mode in ('RGBA', 'LA', 'P'):
+                    image = image.convert('RGB')
+                save_kwargs['quality'] = self.screenshot_quality
+                save_kwargs['optimize'] = True
+            elif fmt == 'PNG':
+                save_kwargs['optimize'] = True
+                save_kwargs['compress_level'] = 6
+            image.save(buffer, format=fmt, **save_kwargs)
+            return buffer.getvalue()
+        except Exception as e:
+            logger.error(f"Error compressing screenshot: {e}")
+            return b''
+    
+    def _extract_metadata(self, image: Image.Image) -> Dict[str, Any]:
+        """Collect metadata for the processed screenshot."""
+        try:
+            return {
+                'timestamp': time.time(),
+                'resolution': image.size,
+                'format': self.screenshot_format.upper(),
+                'quality': self.screenshot_quality
+            }
+        except Exception as e:
+            logger.error(f"Error extracting screenshot metadata: {e}")
+            return {'timestamp': time.time()}
+    
+    def _encrypt_screenshot(self, image_data: bytes) -> bytes:
+        """Encrypt screenshot bytes when encryption is enabled."""
+        try:
+            if not image_data:
+                return b''
+            encryption_manager = getattr(self.keylogger_core, 'encryption', None)
+            if not encryption_manager:
+                encryption_manager = getattr(self.keylogger_core, 'encryption_manager', None)
+            if not encryption_manager:
+                return b''
+            encrypt_fn = getattr(encryption_manager, 'encrypt_data', None) or getattr(encryption_manager, 'encrypt', None)
+            if not callable(encrypt_fn):
+                return b''
+            return encrypt_fn(image_data)
+        except Exception as e:
+            logger.warning(f"Screenshot encryption failed: {e}")
+            return b''
     
     def _redact_text_areas(self, image: Image.Image) -> Image.Image:
         """Redact potential text areas in the screenshot."""
@@ -310,54 +380,31 @@ class ScreenshotMonitor:
             logger.error(f"Error generating filename: {e}")
             return f"screenshot_{int(timestamp)}.{self.screenshot_format.lower()}"
     
-    def _save_screenshot(self, image: Image.Image, filepath: Path) -> int:
+    def _save_screenshot(self, image: Image.Image, filepath: Path) -> tuple[int, Path, bool]:
         """Save screenshot with optional encryption."""
         try:
-            # Save to memory buffer first
-            buffer = io.BytesIO()
-            
-            save_kwargs = {}
-            if self.screenshot_format.upper() == 'JPEG':
-                save_kwargs['quality'] = self.screenshot_quality
-                save_kwargs['optimize'] = True
-            elif self.screenshot_format.upper() == 'PNG':
-                # PNG settings for high quality
-                save_kwargs['optimize'] = True
-                save_kwargs['compress_level'] = 6  # Good balance between compression and speed
-            
-            image.save(buffer, format=self.screenshot_format, **save_kwargs)
-            image_data = buffer.getvalue()
-            
-            # Check file size
-            if len(image_data) > self.max_file_size:
-                logger.warning(f"Screenshot too large ({len(image_data)} bytes), skipping")
-                return 0
-            
-            # Encrypt if enabled
-            enc = getattr(self.keylogger_core, 'encryption', None)
-            if self.encrypt_screenshots and enc and getattr(enc, 'is_initialized', lambda: False)():
-                try:
-                    encrypted_data = enc.encrypt(image_data)
-                    if not encrypted_data:
-                        raise ValueError("Encryption returned no data")
-                    filepath = filepath.with_suffix(filepath.suffix + '.enc')
-                    with open(filepath, 'wb') as f:
-                        f.write(encrypted_data)
+            image_bytes = self._compress_screenshot(image)
+            if not image_bytes:
+                return 0, filepath, False
+            if len(image_bytes) > self.max_file_size:
+                logger.warning(f"Screenshot too large ({len(image_bytes)} bytes), skipping")
+                return 0, filepath, False
+            output_path = filepath
+            data_to_write = image_bytes
+            encrypted = False
+            if self.encrypt_screenshots:
+                encrypted_bytes = self._encrypt_screenshot(image_bytes)
+                if encrypted_bytes:
+                    data_to_write = encrypted_bytes
+                    output_path = filepath.with_suffix(filepath.suffix + '.enc')
+                    encrypted = True
                     self.stats['screenshots_encrypted'] += 1
-                except Exception as e:
-                    logger.warning(f"Encryption unavailable or failed, saving unencrypted: {e}")
-                    with open(filepath, 'wb') as f:
-                        f.write(image_data)
-            else:
-                # Save unencrypted
-                with open(filepath, 'wb') as f:
-                    f.write(image_data)
-            
-            return len(image_data)
-            
+            with open(output_path, 'wb') as f:
+                f.write(data_to_write)
+            return len(data_to_write), output_path, encrypted
         except Exception as e:
             logger.error(f"Error saving screenshot: {e}")
-            return 0
+            return 0, filepath, False
     
     def _store_metadata(self, filename: str, metadata: Dict[str, Any]) -> None:
         """Store screenshot metadata."""
@@ -375,7 +422,7 @@ class ScreenshotMonitor:
         except Exception as e:
             logger.error(f"Error storing metadata: {e}")
     
-    def _log_screenshot_event(self, filename: str, window_name: str, file_size: int) -> None:
+    def _log_screenshot_event(self, filename: str, window_name: str, file_size: int, encrypted: bool) -> None:
         """Log screenshot capture event."""
         try:
             details = f"Screenshot captured: {filename} ({file_size} bytes)"
@@ -387,8 +434,8 @@ class ScreenshotMonitor:
                 metadata={
                     'filename': filename,
                     'file_size': file_size,
-                    'encrypted': self.encrypt_screenshots,
-                    'format': self.screenshot_format
+                    'encrypted': encrypted,
+                    'format': self.screenshot_format.upper()
                 }
             )
             

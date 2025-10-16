@@ -127,11 +127,11 @@ class USBMonitor:
     def _get_usb_devices(self) -> Dict[str, Dict[str, Any]]:
         """Get currently connected USB devices."""
         devices = {}
-        
+
         try:
             # Use psutil to get disk partitions (includes USB drives)
             partitions = psutil.disk_partitions()
-            
+
             for partition in partitions:
                 try:
                     # Check if it's a removable device
@@ -140,23 +140,37 @@ class USBMonitor:
                         if device_info:
                             device_id = self._generate_device_id(partition, device_info)
                             devices[device_id] = device_info
-                
+
                 except Exception as e:
                     logger.debug(f"Error processing partition {partition.device}: {e}")
                     continue
-            
+
             # Add Windows-specific USB device detection if available
             if win32file:
                 devices.update(self._get_windows_usb_devices())
-            
+
         except Exception as e:
             logger.error(f"Error getting USB devices: {e}")
             self.stats['errors'] += 1
-        
+
         return devices
-    
+
+    def _get_current_usb_devices(self) -> Set[str]:
+        """Return a simplified set of currently connected device paths."""
+        devices = self._get_usb_devices()
+        simplified = set()
+        for device_id, info in devices.items():
+            simplified.add(info.get('device', device_id))
+        return simplified
+
+    def _detect_device_changes(self, current_devices: Set[str]) -> tuple[Set[str], Set[str]]:
+        """Compare current devices against tracked devices and return changes."""
+        connected = set(current_devices) - set(self.connected_devices)
+        disconnected = set(self.connected_devices) - set(current_devices)
+        return connected, disconnected
+
     def _is_usb_drive(self, partition) -> bool:
-        """Check if partition is likely a USB drive."""
+
         try:
             # Check mount point patterns that suggest USB
             mount_point = partition.mountpoint.lower()

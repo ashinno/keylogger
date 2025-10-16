@@ -24,17 +24,22 @@ class KeyboardListener:
         self.key_sequence = []
         self.modifier_keys: Set[Key] = set()
         
-        # Security patterns
-        self.password_patterns = [
-            r'password',
-            r'passwd',
-            r'pwd',
-            r'pin',
-            r'secret',
-            r'token',
-            r'key',
-            r'auth'
+        # Security patterns (compiled regex for fast matching)
+        base_sensitive_patterns = [
+            r"\bpassword[\w]*",
+            r"\bpasswd[\w]*",
+            r"\bpwd[\w]*",
+            r"\bpin[\w]*",
+            r"\bsecret[\w]*",
+            r"\btoken[\w]*",
+            r"\bkey[\w]*",
+            r"\bauth[\w]*"
         ]
+        extra_keywords = self.config.get('privacy.sensitive_keywords', []) or []
+        for keyword in extra_keywords:
+            if isinstance(keyword, str) and keyword:
+                base_sensitive_patterns.append(rf"\b{re.escape(keyword)}[\w]*")
+        self._sensitive_regexes = [re.compile(pattern, re.IGNORECASE) for pattern in base_sensitive_patterns]
         
         # Performance settings
         self.text_flush_interval = self.config.get('performance.text_flush_interval', 5.0)
@@ -174,7 +179,10 @@ class KeyboardListener:
     def _handle_shortcut(self, key) -> None:
         """Handle keyboard shortcuts."""
         try:
-            modifiers = "+".join([self._key_to_string(mod) for mod in sorted(self.modifier_keys)])
+            modifiers = "+".join(
+                self._key_to_string(mod)
+                for mod in sorted(self.modifier_keys, key=lambda m: getattr(m, 'name', str(m)))
+            )
             key_str = self._key_to_string(key)
             shortcut = f"{modifiers}+{key_str}"
             
@@ -275,17 +283,14 @@ class KeyboardListener:
     def _is_sensitive_data(self, text: str) -> bool:
         """Check if text contains sensitive data."""
         try:
-            text_lower = text.lower()
+            if text is None:
+                return False
+            if not isinstance(text, str):
+                text = str(text)
             
-            # Check for password patterns
-            for pattern in self.password_patterns:
-                if re.search(pattern, text_lower):
-                    return True
-            
-            # Check for sensitive keywords from config
-            sensitive_keywords = self.config.get('privacy.sensitive_keywords', [])
-            for keyword in sensitive_keywords:
-                if keyword.lower() in text_lower:
+            # Regex based sensitive pattern detection
+            for regex in self._sensitive_regexes:
+                if regex.search(text):
                     return True
             
             # Check for potential credit card numbers
@@ -303,28 +308,32 @@ class KeyboardListener:
             return False
     
     def _sanitize_sensitive_data(self, text: str) -> str:
-        """Sanitize sensitive data based on configuration."""
+        """Sanitize sensitive data with a consistent placeholder."""
         try:
-            sanitization_method = self.config.get('privacy.sanitization_method', 'hash')
-            
-            if sanitization_method == 'hash':
-                # Hash the sensitive data
-                if self.keylogger.encryption:
-                    return f"[SENSITIVE_DATA_HASH:{self.keylogger.encryption.hash_data(text)[:16]}]"
-                else:
-                    return "[SENSITIVE_DATA_DETECTED]"
-            elif sanitization_method == 'mask':
-                # Mask with asterisks
-                return '*' * min(len(text), 20)
-            elif sanitization_method == 'remove':
-                # Remove completely
-                return "[SENSITIVE_DATA_REMOVED]"
-            else:
-                return "[SENSITIVE_DATA_DETECTED]"
-            
+            if text is None:
+                return ""
+            if not isinstance(text, str):
+                text = str(text)
+            placeholder = "[SENSITIVE_DATA_FILTERED]"
+            sanitized = text
+            replaced = False
+            for regex in self._sensitive_regexes:
+                if regex.search(sanitized):
+                    sanitized = regex.sub(placeholder, sanitized)
+                    replaced = True
+            if not replaced:
+                return text
+            # Collapse duplicate placeholders
+            while placeholder + placeholder in sanitized:
+                sanitized = sanitized.replace(placeholder + placeholder, placeholder)
+            # If nothing non-sensitive remains, return placeholder only
+            meaningful_segments = [segment.strip() for segment in sanitized.split(placeholder) if segment.strip()]
+            if not meaningful_segments:
+                return placeholder
+            return sanitized
         except Exception as e:
             logger.error(f"Error sanitizing sensitive data: {e}")
-            return "[SENSITIVE_DATA_ERROR]"
+            return "[SENSITIVE_DATA_FILTERED]"
     
     def _manage_key_sequence(self, key) -> None:
         """Manage key sequence for analysis."""
@@ -346,12 +355,18 @@ class KeyboardListener:
         """Convert key to string representation."""
         try:
             if isinstance(key, Key):
-                return key.name
+                name = key.name or str(key)
+                name = name.replace('_l', '').replace('_r', '')
+                if name.lower() == 'cmd':
+                    return 'Cmd'
+                return name.replace('_', ' ').title()
             elif isinstance(key, KeyCode):
                 if hasattr(key, 'char') and key.char:
                     return key.char
-                else:
+                elif hasattr(key, 'vk') and key.vk is not None:
                     return f"KeyCode({key.vk})"
+                else:
+                    return str(key)
             else:
                 return str(key)
         except Exception:

@@ -177,16 +177,26 @@ class ClipboardListener:
     
     def _add_to_history(self, content: str) -> None:
         """Add content to history with size management."""
+        normalized_content = content if isinstance(content, str) else ("" if content is None else str(content))
+        content_type = self._detect_content_type(normalized_content)
         history_entry = {
-            'content_hash': self._hash_content(content),
-            'length': len(content),
+            'content_hash': self._hash_content(normalized_content),
+            'length': len(normalized_content),
             'timestamp': time.time(),
-            'content_type': self._detect_content_type(content)
+            'content_type': content_type,
+            'is_sensitive': self._is_sensitive_content(normalized_content)
         }
         
-        # Store limited content for analysis (not full content for privacy)
-        if len(content) <= 100:  # Only store short content
-            history_entry['preview'] = content[:50] + ('...' if len(content) > 50 else '')
+        # Store content (truncated if very long) for analysis/export
+        if len(normalized_content) > self.max_content_length:
+            stored_content = normalized_content[:self.max_content_length] + "...[truncated]"
+        else:
+            stored_content = normalized_content
+        history_entry['content'] = stored_content
+        
+        # Provide preview for short items
+        if len(normalized_content) <= 100:
+            history_entry['preview'] = normalized_content[:50] + ('...' if len(normalized_content) > 50 else '')
         
         self.content_history.append(history_entry)
         
@@ -252,7 +262,7 @@ class ClipboardListener:
             
             # Handle based on content length only setting
             if self.content_length_only:
-                return f"Content copied ({content_type}): {len(content)} characters"
+                return f"Content copied ({content_type}) - Length: {len(content)} characters"
             
             # Truncate long content
             if len(content) > self.max_content_length:
@@ -381,6 +391,7 @@ class ClipboardListener:
         type_distribution = {}
         length_distribution = {'short': 0, 'medium': 0, 'long': 0}
         hourly_activity = {}
+        sensitive_entries = 0
         
         for entry in self.content_history:
             # Type distribution
@@ -400,13 +411,20 @@ class ClipboardListener:
             timestamp = entry.get('timestamp', 0)
             hour = time.strftime('%H', time.localtime(timestamp))
             hourly_activity[hour] = hourly_activity.get(hour, 0) + 1
+            
+            if entry.get('is_sensitive'):
+                sensitive_entries += 1
+        
+        total_entries = len(self.content_history)
+        average_length = sum(e.get('length', 0) for e in self.content_history) / total_entries if total_entries else 0
         
         return {
             'type_distribution': type_distribution,
             'length_distribution': length_distribution,
             'hourly_activity': hourly_activity,
-            'total_entries': len(self.content_history),
-            'average_length': sum(e.get('length', 0) for e in self.content_history) / len(self.content_history)
+            'total_entries': total_entries,
+            'average_length': average_length,
+            'sensitive_entries': sensitive_entries
         }
     
     def clear_history(self) -> None:
@@ -426,8 +444,12 @@ class ClipboardListener:
                 'content_hash': entry['content_hash']
             }
             
-            # Include preview if available and not sensitive
-            if 'preview' in entry and (include_sensitive or entry['content_type'] not in ['password', 'api_key']):
+            is_sensitive = entry.get('is_sensitive', False)
+            if include_sensitive or not is_sensitive:
+                exported_entry['content'] = entry.get('content', '')
+            
+            # Include preview if available and permitted
+            if 'preview' in entry and (include_sensitive or not is_sensitive):
                 exported_entry['preview'] = entry['preview']
             
             exported_history.append(exported_entry)
