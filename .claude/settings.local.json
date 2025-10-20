@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python test_ml_fixes.py)",
+      "Bash(python -c \"import main; print(''Main module imports successfully'')\")",
+      "Bash(python -m py_compile ml/behavioral_analytics.py ml/risk_scoring.py ml/keystroke_dynamics.py ml/insider_threat.py)",
+      "Bash(python -c \"from web.app import create_web_app; from core.keylogger import KeyloggerCore; from core.config_manager import ConfigManager; print(''All core modules import successfully'')\")",
+      "Bash(python test_comprehensive.py)",
+      "Bash(python main.py --help)",
+      "Bash(python -c \"from ml.behavioral_analytics import BehavioralAnalyticsEngine; from ml.risk_scoring import RealTimeRiskScorer; from ml.insider_threat import InsiderThreatDetector; from ml.keystroke_dynamics import KeystrokeDynamicsAnalyzer; print(''✓ All ML modules import successfully''); print(''✓ No import errors''); print(''✓ Project is production ready'')\")",
+      "Bash(python -c \"from ml.behavioral_analytics import BehavioralAnalyticsEngine; from ml.risk_scoring import RealTimeRiskScorer; from ml.insider_threat import InsiderThreatDetector; from ml.keystroke_dynamics import KeystrokeDynamicsAnalyzer; print(''All ML modules import successfully''); print(''No import errors''); print(''Project is production ready'')\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

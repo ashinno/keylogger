@@ -515,9 +515,54 @@ class InsiderThreatDetector:
             
             # Check if model is fitted (avoid triggering properties on unfitted models)
             if hasattr(model, 'fit_predict'):
-                # Unsupervised clustering (e.g., DBSCAN) - fit per sample window
-                prediction = model.fit_predict(scaled_vector)[0]
-                return 1.0 if prediction == -1 else 0.0
+                # Unsupervised clustering (e.g., DBSCAN) - requires multiple samples
+                # DBSCAN needs at least min_samples points to work properly
+                # For single sample prediction, we need to use stored baseline data
+                if dimension == 'temporal_behavior' and hasattr(self, 'baseline_behaviors') and len(self.baseline_behaviors) >= 5:
+                    # Get recent baseline samples for temporal analysis
+                    baseline_samples = list(self.baseline_behaviors)[-100:]  # Last 100 samples
+                    baseline_features = []
+
+                    # Extract temporal features from baseline
+                    for sample in baseline_samples:
+                        if 'features' in sample:
+                            temp_features = []
+                            for key, value in sample['features'].items():
+                                if 'temporal' in key:
+                                    temp_features.append(float(value) if isinstance(value, (int, float, bool)) else 0.0)
+                            if temp_features:
+                                baseline_features.append(temp_features)
+
+                    if len(baseline_features) >= 5:
+                        # Ensure all feature vectors have same length
+                        max_len = max(len(f) for f in baseline_features)
+                        baseline_features = [f + [0.0] * (max_len - len(f)) for f in baseline_features]
+                        baseline_array = np.array(baseline_features)
+
+                        # Add current sample
+                        current_features = scaled_vector[0].tolist()
+                        if len(current_features) < max_len:
+                            current_features += [0.0] * (max_len - len(current_features))
+                        elif len(current_features) > max_len:
+                            current_features = current_features[:max_len]
+
+                        combined_data = np.vstack([baseline_array, np.array(current_features).reshape(1, -1)])
+
+                        try:
+                            predictions = model.fit_predict(combined_data)
+                            # Check if current sample (last one) is anomaly
+                            return 1.0 if predictions[-1] == -1 else 0.0
+                        except Exception as e:
+                            logger.debug(f"DBSCAN fit_predict failed: {e}")
+                            return 0.0
+                    else:
+                        # Not enough baseline data for DBSCAN
+                        logger.debug(f"Insufficient baseline data for {dimension} DBSCAN")
+                        return 0.0
+                else:
+                    # For DBSCAN without sufficient baseline, return neutral score
+                    logger.debug(f"DBSCAN model for {dimension} requires baseline data")
+                    return 0.0
             else:
                 try:
                     check_is_fitted(model)

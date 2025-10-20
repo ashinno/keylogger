@@ -3,7 +3,7 @@
 import numpy as np
 import pandas as pd
 from typing import Dict, List, Any, Optional, Tuple
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from collections import defaultdict, deque
 import logging
 import pickle
@@ -188,14 +188,33 @@ class BehavioralAnalyticsEngine:
         """Extract behavioral features from a single event."""
         features = {}
         
-        # Temporal features
-        timestamp = datetime.fromisoformat(event.get('timestamp', datetime.now().isoformat()))
-        features.update({
-            'hour': timestamp.hour,
-            'day_of_week': timestamp.weekday(),
-            'is_weekend': timestamp.weekday() >= 5,
-            'is_business_hours': 9 <= timestamp.hour <= 17
-        })
+        try:
+            # Temporal features with timezone handling
+            timestamp_str = event.get('timestamp', datetime.now(timezone.utc).isoformat())
+            if isinstance(timestamp_str, str):
+                # Handle both timezone-aware and naive timestamps
+                if '+' in timestamp_str or 'Z' in timestamp_str:
+                    timestamp = datetime.fromisoformat(timestamp_str.replace('Z', '+00:00'))
+                else:
+                    timestamp = datetime.fromisoformat(timestamp_str).replace(tzinfo=timezone.utc)
+            else:
+                timestamp = datetime.now(timezone.utc)
+            
+            features.update({
+                'hour': timestamp.hour,
+                'day_of_week': timestamp.weekday(),
+                'is_weekend': timestamp.weekday() >= 5,
+                'is_business_hours': 9 <= timestamp.hour <= 17
+            })
+        except Exception as e:
+            logger.warning(f"Error extracting temporal features: {e}")
+            current_time = datetime.now(timezone.utc)
+            features.update({
+                'hour': current_time.hour,
+                'day_of_week': current_time.weekday(),
+                'is_weekend': current_time.weekday() >= 5,
+                'is_business_hours': 9 <= current_time.hour <= 17
+            })
         
         # Event type features
         event_type = event.get('type', 'unknown')
@@ -341,19 +360,33 @@ class BehavioralAnalyticsEngine:
         for event_type, count in type_counts.items():
             features[f'recent_{event_type}_ratio'] = count / max(len(recent_events), 1)
         
-        # Timing patterns
-        timestamps = [datetime.fromisoformat(e['event'].get('timestamp')) 
-                     for e in recent_events if e['event'].get('timestamp')]
-        
-        if len(timestamps) > 1:
-            intervals = [(timestamps[i] - timestamps[i-1]).total_seconds() 
-                        for i in range(1, len(timestamps))]
+        try:
+            # Timing patterns with timezone handling
+            timestamps = []
+            for e in recent_events:
+                timestamp_str = e['event'].get('timestamp')
+                if timestamp_str:
+                    try:
+                        if isinstance(timestamp_str, str):
+                            if '+' in timestamp_str or 'Z' in timestamp_str:
+                                timestamp = datetime.fromisoformat(timestamp_str.replace('Z', '+00:00'))
+                            else:
+                                timestamp = datetime.fromisoformat(timestamp_str).replace(tzinfo=timezone.utc)
+                            timestamps.append(timestamp)
+                    except Exception:
+                        continue
             
-            features.update({
-                'avg_interval': np.mean(intervals),
-                'interval_variance': np.var(intervals),
-                'activity_burst': sum(1 for interval in intervals if interval < 0.1)
-            })
+            if len(timestamps) > 1:
+                intervals = [(timestamps[i] - timestamps[i-1]).total_seconds() 
+                            for i in range(1, len(timestamps))]
+                
+                features.update({
+                    'avg_interval': np.mean(intervals),
+                    'interval_variance': np.var(intervals),
+                    'activity_burst': sum(1 for interval in intervals if interval < 0.1)
+                })
+        except Exception as e:
+            logger.warning(f"Error extracting timing patterns: {e}")
         
         return features
     

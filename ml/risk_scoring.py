@@ -7,23 +7,25 @@ and unified score calibration with confidence metadata.
 import numpy as np
 import pandas as pd
 from typing import Dict, List, Any, Optional, Tuple, Callable
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from collections import defaultdict, deque
 import logging
 import pickle
 import json
-from pathlib import Path
-import threading
 import time
+import threading
+from pathlib import Path
 
 # ML imports
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.ensemble import IsolationForest, RandomForestClassifier, GradientBoostingClassifier, RandomForestRegressor, GradientBoostingRegressor
 from sklearn.linear_model import LinearRegression, Ridge
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.utils.validation import check_is_fitted
+from sklearn.exceptions import NotFittedError
 from scipy import stats
-from scipy.special import expit  # sigmoid function
+from scipy.special import expit
 
 from .data_preprocessing import DataPreprocessor
 from .confidence_engine import ConfidenceEngine
@@ -360,15 +362,38 @@ class RealTimeRiskScorer:
     def _extract_risk_features(self, event: Dict[str, Any]) -> Dict[str, Any]:
         """Extract features relevant to risk scoring."""
         features = {}
-        
-        # Basic event features
-        features.update({
-            'event_type': event.get('type', 'unknown'),
-            'timestamp': event.get('timestamp'),
-            'hour': datetime.fromisoformat(event.get('timestamp', datetime.now().isoformat())).hour,
-            'day_of_week': datetime.fromisoformat(event.get('timestamp', datetime.now().isoformat())).weekday()
-        })
-        
+
+        try:
+            # Basic event features
+            timestamp_str = event.get('timestamp', datetime.now(timezone.utc).isoformat())
+            if isinstance(timestamp_str, str):
+                # Handle both timezone-aware and naive timestamps
+                if '+' in timestamp_str or 'Z' in timestamp_str:
+                    timestamp = datetime.fromisoformat(timestamp_str.replace('Z', '+00:00'))
+                else:
+                    timestamp = datetime.fromisoformat(timestamp_str).replace(tzinfo=timezone.utc)
+            else:
+                timestamp = datetime.now(timezone.utc)
+
+            # Ensure current time is timezone-aware
+            current_time = datetime.now(timezone.utc)
+
+            features.update({
+                'event_type': event.get('type', 'unknown'),
+                'timestamp': timestamp.isoformat(),
+                'hour': timestamp.hour,
+                'day_of_week': timestamp.weekday()
+            })
+        except Exception as e:
+            logger.warning(f"Error extracting timestamp features: {e}")
+            current_time = datetime.now(timezone.utc)
+            features.update({
+                'event_type': event.get('type', 'unknown'),
+                'timestamp': current_time.isoformat(),
+                'hour': current_time.hour,
+                'day_of_week': current_time.weekday()
+            })
+
         # Event-specific risk features
         event_type = event.get('type', '')
         data = event.get('data', {})
@@ -650,15 +675,30 @@ class RealTimeRiskScorer:
     
     def _calculate_temporal_weight(self, event: Dict[str, Any]) -> float:
         """Calculate temporal weighting factor."""
-        timestamp = datetime.fromisoformat(event.get('timestamp', datetime.now().isoformat()))
-        
-        # Recent events have higher weight
-        time_diff = (datetime.now() - timestamp).total_seconds()
-        
-        # Exponential decay
-        weight = np.exp(-time_diff / 3600)  # 1-hour half-life
-        
-        return max(0.1, min(1.0, weight))
+        try:
+            timestamp_str = event.get('timestamp', datetime.now(timezone.utc).isoformat())
+            if isinstance(timestamp_str, str):
+                # Handle both timezone-aware and naive timestamps
+                if '+' in timestamp_str or 'Z' in timestamp_str:
+                    timestamp = datetime.fromisoformat(timestamp_str.replace('Z', '+00:00'))
+                else:
+                    timestamp = datetime.fromisoformat(timestamp_str).replace(tzinfo=timezone.utc)
+            else:
+                timestamp = datetime.now(timezone.utc)
+            
+            # Ensure current time is timezone-aware
+            current_time = datetime.now(timezone.utc)
+            
+            # Recent events have higher weight
+            time_diff = (current_time - timestamp).total_seconds()
+            
+            # Exponential decay
+            weight = np.exp(-time_diff / 3600)  # 1-hour half-life
+            
+            return max(0.1, min(1.0, weight))
+        except Exception as e:
+            logger.warning(f"Error calculating temporal weight: {e}")
+            return 0.5  # Default weight
     
     def _calculate_base_risk(self, dimension_scores: Dict[str, float], 
                            temporal_weight: float) -> float:
@@ -1000,7 +1040,7 @@ class RealTimeRiskScorer:
         """Generate system-level risk alert."""
         alert = {
             'id': f"system_alert_{int(time.time() * 1000)}",
-            'timestamp': datetime.now().isoformat(),
+            'timestamp': datetime.now(timezone.utc).isoformat(),
             'type': 'system_risk',
             'avg_risk': avg_risk,
             'trend': trend,
@@ -1032,17 +1072,24 @@ class RealTimeRiskScorer:
     
     def _cleanup_old_data(self):
         """Clean up old data to prevent memory issues."""
-        # Clean up alert suppression (older than 1 hour)
-        current_time = datetime.now()
-        expired_keys = []
-        
-        for key, timestamp in self.alert_suppression.items():
-            if (current_time - timestamp).total_seconds() > 3600:
-                expired_keys.append(key)
-        
-        for key in expired_keys:
-            del self.alert_suppression[key]
-        
+        try:
+            # Clean up alert suppression (older than 1 hour)
+            current_time = datetime.now(timezone.utc)
+            expired_keys = []
+            
+            for key, timestamp in self.alert_suppression.items():
+                # Ensure timestamp is timezone-aware
+                if isinstance(timestamp, datetime):
+                    if timestamp.tzinfo is None:
+                        timestamp = timestamp.replace(tzinfo=timezone.utc)
+                    if (current_time - timestamp).total_seconds() > 3600:
+                        expired_keys.append(key)
+            
+            for key in expired_keys:
+                del self.alert_suppression[key]
+        except Exception as e:
+            logger.warning(f"Error cleaning up old data: {e}")
+
         # Reset escalation counters periodically
         if len(self.alert_history) % 100 == 0:
             self.alert_escalation.clear()
@@ -1173,12 +1220,28 @@ class RealTimeRiskScorer:
         if len(mouse_events) < 3:
             return False
         
-        # Check for rapid succession
-        timestamps = [datetime.fromisoformat(e['timestamp']) for e in mouse_events]
-        intervals = [(timestamps[i] - timestamps[i-1]).total_seconds() 
-                    for i in range(1, len(timestamps))]
-        
-        return any(interval < 0.1 for interval in intervals)  # Less than 100ms
+        try:
+            # Check for rapid succession
+            timestamps = []
+            for e in mouse_events:
+                timestamp_str = e.get('timestamp', datetime.now(timezone.utc).isoformat())
+                if isinstance(timestamp_str, str):
+                    if '+' in timestamp_str or 'Z' in timestamp_str:
+                        timestamp = datetime.fromisoformat(timestamp_str.replace('Z', '+00:00'))
+                    else:
+                        timestamp = datetime.fromisoformat(timestamp_str).replace(tzinfo=timezone.utc)
+                    timestamps.append(timestamp)
+            
+            if len(timestamps) < 2:
+                return False
+                
+            intervals = [(timestamps[i] - timestamps[i-1]).total_seconds() 
+                        for i in range(1, len(timestamps))]
+            
+            return any(interval < 0.1 for interval in intervals)  # Less than 100ms
+        except Exception as e:
+            logger.warning(f"Error detecting rapid clicking: {e}")
+            return False
     
     def _detect_unusual_mouse_patterns(self, x: int, y: int) -> bool:
         """Detect unusual mouse movement patterns."""
