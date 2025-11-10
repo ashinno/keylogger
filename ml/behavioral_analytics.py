@@ -80,8 +80,8 @@ class BehavioralAnalyticsEngine:
         self.feature_scaler = StandardScaler()
         self.pca = PCA(n_components=0.95)  # Keep 95% of variance
         # Baseline manager for drift detection and cold-start handling
-        self._drift_threshold = float(self.config.get('ml.behavioral_analytics.drift_threshold', 0.15))
-        self._baseline_window = int(self.config.get('ml.behavioral_analytics.baseline_window', 1000))
+        self._drift_threshold = float(self.config.get('ml.behavioral_analytics.drift_threshold', 0.15) or 0.15)
+        self._baseline_window = int(self.config.get('ml.behavioral_analytics.baseline_window', 1000) or 1000)
         self._baseline_stats = defaultdict(lambda: {'sum': 0.0, 'sq': 0.0})
         self._baseline_samples = 0
         
@@ -312,8 +312,8 @@ class BehavioralAnalyticsEngine:
                 content = ''
         
         features.update({
-            'clipboard_length': len(content),
-            'clipboard_words': len(content.split()) if content else 0,
+            'clipboard_length': len(content) if content else 0,
+            'clipboard_words': len(content.split()) if content and content.strip() else 0,
             'clipboard_lines': content.count('\n') if content else 0,
             'clipboard_has_url': 'http' in content.lower() if content else False,
             'clipboard_has_email': '@' in content and '.' in content if content else False,
@@ -849,9 +849,11 @@ class BehavioralAnalyticsEngine:
         
         # Recent anomaly rate
         if len(self.recent_data) > 0:
-            recent_anomalies = sum(1 for data in self.recent_data 
+            # Create a copy to avoid mutation during iteration
+            recent_data_copy = list(self.recent_data)
+            recent_anomalies = sum(1 for data in recent_data_copy 
                                  if self._is_likely_anomaly(data['features']))
-            stats['recent_anomaly_rate'] = recent_anomalies / max(len(self.recent_data), 1)
+            stats['recent_anomaly_rate'] = recent_anomalies / max(len(recent_data_copy), 1)
         
         return stats
     

@@ -200,7 +200,7 @@ class RealTimeRiskScorer:
         
         # Event processing
         self.event_buffer = deque(maxlen=self.window_size)
-        self._cache_capacity = int(self.config.get('ml.risk_scoring.cache_capacity', 500))
+        self._cache_capacity = int(self.config.get('ml.risk_scoring.cache_capacity', 500) or 500)
         self._cache_order = deque(maxlen=self._cache_capacity)
         self._risk_cache = {}
         self.last_update = datetime.now()
@@ -220,12 +220,12 @@ class RealTimeRiskScorer:
         self.models_trained = False
         self.baseline_established = False
         self.baseline_manager = _BaselineManager(
-            window_size=int(self.config.get('ml.risk_scoring.baseline_window', 1000)),
-            drift_threshold=float(self.config.get('ml.risk_scoring.drift_threshold', 0.15))
+            window_size=int(self.config.get('ml.risk_scoring.baseline_window', 1000) or 1000),
+            drift_threshold=float(self.config.get('ml.risk_scoring.drift_threshold', 0.15) or 0.15)
         )
         self.micro_batcher = _MicroBatcher(
-            micro_batch_size=int(self.config.get('ml.risk_scoring.micro_batch_size', 32)),
-            max_latency_ms=int(self.config.get('ml.risk_scoring.max_latency_ms', 200))
+            micro_batch_size=int(self.config.get('ml.risk_scoring.micro_batch_size', 32) or 32),
+            max_latency_ms=int(self.config.get('ml.risk_scoring.max_latency_ms', 200) or 200)
         )
         
         # Threading for continuous monitoring

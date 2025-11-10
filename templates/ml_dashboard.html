@@ -184,36 +184,93 @@ function initializeCharts(){
 }
 
 function refreshDashboard(){
+    // Show loading state
+    const refreshBtn = document.querySelector('[onclick="refreshDashboard()"]');
+    if (refreshBtn) {
+        refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+        refreshBtn.disabled = true;
+    }
+    
     // Use AJAX to refresh data instead of full page reload
     Promise.all([
-        fetch('/api/ml/status').then(r => r.json()),
-        fetch('/api/ml/behavioral/baseline').then(r => r.json()),
-        fetch('/api/ml/threat/summary').then(r => r.json()),
-        fetch('/api/ml/risk/current').then(r => r.json())
+        fetch('/api/ml/status').then(r => r.json()).catch(err => ({success: false, error: 'Status API failed'})),
+        fetch('/api/ml/behavioral/baseline').then(r => r.json()).catch(err => ({success: false, error: 'Behavioral API failed'})),
+        fetch('/api/ml/threat/summary').then(r => r.json()).catch(err => ({success: false, error: 'Threat API failed'})),
+        fetch('/api/ml/risk/current').then(r => r.json()).catch(err => ({success: false, error: 'Risk API failed'}))
     ]).then(([mlStatus, behavioral, threat, risk]) => {
+        let errorCount = 0;
+        
         // Update ML status
         if (mlStatus.success) {
             updateMLStatus(mlStatus);
+            updateSystemStatus(mlStatus.ml_components);
+        } else {
+            console.error('ML Status API error:', mlStatus.error);
+            errorCount++;
         }
         
         // Update behavioral analytics
         if (behavioral.success) {
             updateBehavioralData(behavioral);
+        } else {
+            console.error('Behavioral API error:', behavioral.error);
+            errorCount++;
+            // Show error message in behavioral section
+            const behavioralMetrics = document.getElementById('behavioralMetrics');
+            if (behavioralMetrics) {
+                behavioralMetrics.innerHTML = '<div class="alert alert-warning">Behavioral analytics unavailable</div>';
+            }
         }
         
         // Update threat data
         if (threat.success) {
             updateThreatData(threat);
+        } else {
+            console.error('Threat API error:', threat.error);
+            errorCount++;
+            // Show error message in threat section
+            const threatMetrics = document.getElementById('threatMetrics');
+            if (threatMetrics) {
+                threatMetrics.innerHTML = '<div class="alert alert-warning">Threat detection unavailable</div>';
+            }
         }
         
         // Update risk data
         if (risk.success) {
             updateRiskData(risk);
+            updateRiskStatus(risk.risk_status);
+        } else {
+            console.error('Risk API error:', risk.error);
+            errorCount++;
+            // Show error message in risk section
+            const currentRisk = document.getElementById('currentRisk');
+            if (currentRisk) {
+                currentRisk.className = 'alert alert-warning text-center mb-3';
+                currentRisk.textContent = 'Risk scoring unavailable';
+            }
+        }
+        
+        // Update alerts if risk data is available
+        if (risk.success && risk.risk_status) {
+            const alerts = risk.risk_status.recent_alerts || [];
+            updateAlerts(alerts);
+        }
+        
+        // Show overall error message if too many APIs failed
+        if (errorCount >= 2) {
+            showError('Multiple ML services are unavailable. Please check the server logs.');
         }
         
         console.log('Dashboard refreshed via AJAX');
     }).catch(error => {
         console.error('Error refreshing dashboard:', error);
+        showError('Failed to refresh dashboard: ' + error.message);
+    }).finally(() => {
+        // Reset button state
+        if (refreshBtn) {
+            refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+            refreshBtn.disabled = false;
+        }
     });
 }
 

@@ -788,7 +788,21 @@ def create_web_app(keylogger_core, config_manager):
         """Get behavioral analytics baseline summary."""
         try:
             if not hasattr(keylogger_core, 'behavioral_analytics') or not keylogger_core.behavioral_analytics:
-                return jsonify({'success': False, 'error': 'Behavioral analytics not available'}), 404
+                logger.warning("Behavioral analytics not available")
+                # Return default baseline when component is unavailable
+                default_baseline = {
+                    'total_samples': 0,
+                    'anomalies_detected': 0,
+                    'baseline_established': False,
+                    'last_updated': datetime.now().isoformat(),
+                    'feature_stats': {}
+                }
+                return jsonify({
+                    'success': True,
+                    'baseline': default_baseline,
+                    'timestamp': datetime.now().isoformat(),
+                    'warning': 'Behavioral analytics temporarily unavailable'
+                })
             
             baseline_summary = keylogger_core.behavioral_analytics.get_baseline_summary()
             
@@ -915,7 +929,22 @@ def create_web_app(keylogger_core, config_manager):
         """Get current risk status."""
         try:
             if not hasattr(keylogger_core, 'risk_scorer') or not keylogger_core.risk_scorer:
-                return jsonify({'success': False, 'error': 'Risk scoring not available'}), 404
+                logger.warning("Risk scorer not available - may have failed initialization")
+                # Return a default risk status when scorer is unavailable
+                default_status = {
+                    'current_score': 0.0,
+                    'risk_level': 'unknown',
+                    'risk_factors': {},
+                    'trend': 'stable',
+                    'recent_alerts': 0,
+                    'system_status': 'unavailable'
+                }
+                return jsonify({
+                    'success': True,
+                    'risk_status': default_status,
+                    'timestamp': datetime.now().isoformat(),
+                    'warning': 'Risk scoring temporarily unavailable'
+                })
             
             risk_status = keylogger_core.risk_scorer.get_current_risk_status()
             

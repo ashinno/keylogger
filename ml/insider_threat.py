@@ -1035,6 +1035,8 @@ class InsiderThreatDetector:
     
     def _contains_credentials(self, content: str) -> bool:
         """Check if content contains credential patterns."""
+        if not content:
+            return False
         credential_keywords = ['password', 'passwd', 'pwd', 'token', 'key', 'secret', 'auth']
         return any(keyword in content.lower() for keyword in credential_keywords)
     
@@ -1076,11 +1078,15 @@ class InsiderThreatDetector:
     
     def _detect_network_upload(self, content: str) -> bool:
         """Detect network upload activity."""
+        if not content:
+            return False
         upload_keywords = ['upload', 'send', 'post', 'put', 'transfer']
         return any(keyword in content.lower() for keyword in upload_keywords)
     
     def _detect_large_file_operations(self, content: str) -> bool:
         """Detect large file operations."""
+        if not content:
+            return False
         large_file_keywords = ['gb', 'gigabyte', 'tb', 'terabyte', 'large', 'big']
         return any(keyword in content.lower() for keyword in large_file_keywords)
     
