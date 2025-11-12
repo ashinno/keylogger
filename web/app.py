@@ -101,6 +101,7 @@ def create_web_app(keylogger_core, config_manager):
         return redirect(url_for('login'))
     
     @app.route('/')
+    @app.route('/dashboard', endpoint='dashboard_alias')
     @login_required
     def dashboard():
         """Main dashboard."""
@@ -298,6 +299,16 @@ def create_web_app(keylogger_core, config_manager):
         except Exception as e:
             logger.exception("Error loading ML dashboard")
             return render_template('error.html', error_title='ML Dashboard Error', error_message=str(e))
+
+    @app.route('/interpretability-dashboard')
+    @login_required
+    def interpretability_dashboard():
+        """Interpretability Dashboard page."""
+        try:
+            return render_template('interpretability_dashboard.html')
+        except Exception as e:
+            logger.exception("Error rendering Interpretability dashboard")
+            return render_template('error.html', error_title='Interpretability Error', error_message=str(e))
 
     @app.route('/api/performance')
     @login_required
@@ -1216,7 +1227,150 @@ def create_web_app(keylogger_core, config_manager):
         except Exception as e:
             logger.exception("Error exporting ML data")
             return jsonify({'success': False, 'error': str(e)}), 500
-    
+
+    # ==================== ML INTERPRETABILITY API ENDPOINTS ====================
+
+    @app.route('/api/ml/interpretability/latest')
+    @login_required
+    def interpretability_latest():
+        """Get latest prediction explanation and confidence assessment."""
+        try:
+            ba = getattr(keylogger_core, 'behavioral_analytics', None)
+            if not ba:
+                return jsonify({'status': 'success', 'message': 'Behavioral analytics not available', 'prediction': None, 'confidence': 0.0, 'confidence_level': 'unknown', 'reliability_score': 0.0, 'explanations': {}, 'timestamp': datetime.now().isoformat()})
+
+            # Ensure models are ready
+            if not getattr(ba, 'models_trained', False) or not getattr(ba, 'baseline_established', False):
+                return jsonify({'status': 'success', 'message': 'Models not trained or baseline not established', 'prediction': None, 'confidence': 0.0, 'confidence_level': 'unknown', 'reliability_score': 0.0, 'explanations': {}, 'timestamp': datetime.now().isoformat()})
+
+            # Use the most recent event if available
+            recent = getattr(ba, 'recent_data', [])
+            if not recent:
+                return jsonify({'status': 'success', 'message': 'No recent events available', 'prediction': None, 'confidence': 0.0, 'confidence_level': 'unknown', 'reliability_score': 0.0, 'explanations': {}, 'timestamp': datetime.now().isoformat()})
+
+            last = recent[-1]
+            features = last.get('features', {})
+            event = last.get('event', {})
+
+            # Analyze anomaly to get ensemble predictions without mutating baseline
+            try:
+                result = ba._analyze_anomaly(features, event)  # pylint: disable=protected-access
+            except Exception as e:
+                logger.debug(f"Analyze anomaly failed: {e}")
+                result = {'anomaly_score': 0.0, 'is_anomaly': False, 'ensemble_predictions': {}}
+
+            # Build explanation
+            try:
+                explanation = ba._generate_prediction_explanation(features, event, result)  # pylint: disable=protected-access
+            except Exception as e:
+                logger.debug(f"Generate prediction explanation failed: {e}")
+                explanation = {'prediction': None, 'confidence': 0.0, 'explanations': {}, 'behavioral_context': {'event_type': event.get('type'), 'timestamp': event.get('timestamp')}}
+
+            # Confidence assessment
+            try:
+                confidence_assessment = ba._assess_prediction_confidence(features, result)  # pylint: disable=protected-access
+            except Exception as e:
+                logger.debug(f"Confidence assessment failed: {e}")
+                confidence_assessment = {'confidence_level': 'unknown', 'reliability_score': 0.0, 'confidence_metrics': {}}
+
+            response = {
+                'status': 'success',
+                'timestamp': explanation.get('timestamp', datetime.now().isoformat()),
+                'prediction': explanation.get('prediction'),
+                'confidence': explanation.get('confidence', 0.0),
+                'confidence_level': confidence_assessment.get('confidence_level', 'unknown'),
+                'reliability_score': confidence_assessment.get('reliability_score', 0.0),
+                'confidence_metrics': _json_safe(confidence_assessment.get('confidence_metrics', {})),
+                'explanations': _json_safe(explanation.get('explanations', {})),
+                'behavioral_context': _json_safe(explanation.get('behavioral_context', {}))
+            }
+
+            return jsonify(_json_safe(response))
+
+        except Exception as e:
+            logger.exception("Error getting latest interpretability data")
+            return jsonify({'status': 'error', 'message': str(e)}), 500
+
+    @app.route('/api/ml/interpretability/statistics')
+    @login_required
+    def interpretability_statistics():
+        """Get aggregated interpretability and confidence statistics."""
+        try:
+            ba = getattr(keylogger_core, 'behavioral_analytics', None)
+            if not ba:
+                return jsonify({'status': 'success', 'statistics': {}, 'calibrated_models': 0, 'timestamp': datetime.now().isoformat()})
+
+            summary = ba.get_interpretability_summary()
+            interp_stats = summary.get('interpretability_engine', {}).get('statistics', {})
+            conf_stats = summary.get('confidence_engine', {}).get('statistics', {})
+            calibrated_models = summary.get('confidence_engine', {}).get('calibrated_models', 0)
+
+            # Merge key statistics expected by UI
+            merged_stats = {
+                'explanations_generated': interp_stats.get('explanations_generated', 0),
+                'shap_explanations': interp_stats.get('shap_explanations', 0),
+                'lime_explanations': interp_stats.get('lime_explanations', 0),
+                'feature_importance_calculated': interp_stats.get('feature_importance_calculated', 0),
+                'decision_paths_extracted': interp_stats.get('decision_paths_extracted', 0),
+                'total_predictions': conf_stats.get('total_predictions', 0),
+                'high_confidence_predictions': conf_stats.get('high_confidence_predictions', 0),
+                'low_confidence_predictions': conf_stats.get('low_confidence_predictions', 0),
+                'average_confidence': conf_stats.get('average_confidence', 0.0),
+                'confidence_distribution': _json_safe(conf_stats.get('confidence_distribution', {}))
+            }
+
+            return jsonify({'status': 'success', 'statistics': _json_safe(merged_stats), 'calibrated_models': calibrated_models, 'timestamp': datetime.now().isoformat()})
+
+        except Exception as e:
+            logger.exception("Error getting interpretability statistics")
+            return jsonify({'status': 'error', 'message': str(e)}), 500
+
+    @app.route('/api/ml/interpretability/historical')
+    @login_required
+    def interpretability_historical():
+        """Get historical confidence and uncertainty trend data."""
+        try:
+            period = request.args.get('period', '1h')
+            now = datetime.now()
+            cutoff = now - timedelta(hours=1)
+            if isinstance(period, str):
+                try:
+                    if period.endswith('h'):
+                        cutoff = now - timedelta(hours=int(period[:-1]))
+                    elif period.endswith('d'):
+                        cutoff = now - timedelta(days=int(period[:-1]))
+                    elif period.endswith('m'):
+                        cutoff = now - timedelta(minutes=int(period[:-1]))
+                except Exception:
+                    pass
+
+            ba = getattr(keylogger_core, 'behavioral_analytics', None)
+            if not ba or not hasattr(ba, 'confidence_engine'):
+                return jsonify({'status': 'success', 'historical_data': {'timestamps': [], 'confidence_scores': [], 'uncertainty_scores': []}, 'timestamp': now.isoformat()})
+
+            history = list(getattr(ba.confidence_engine, 'uncertainty_history', []))
+            timestamps = []
+            confidence_scores = []
+            uncertainty_scores = []
+
+            for h in history:
+                ts = h.get('timestamp')
+                try:
+                    ts_dt = ts if isinstance(ts, datetime) else datetime.fromisoformat(str(ts))
+                except Exception:
+                    continue
+                if ts_dt >= cutoff:
+                    timestamps.append(ts_dt.isoformat())
+                    rel = float(h.get('reliability_score', 0.0))
+                    confidence_scores.append(rel)
+                    uncertainty_scores.append(max(0.0, 1.0 - rel))
+
+            return jsonify({'status': 'success', 'historical_data': {'timestamps': timestamps, 'confidence_scores': confidence_scores, 'uncertainty_scores': uncertainty_scores}, 'timestamp': now.isoformat()})
+
+        except Exception as e:
+            logger.exception("Error getting interpretability historical data")
+            return jsonify({'status': 'error', 'message': str(e)}), 500
+
     # ==================== END ML API ENDPOINTS ====================
     
     logger.info(f"Registered login route: {app.url_map}")
